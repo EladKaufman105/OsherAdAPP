@@ -3,459 +3,942 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="theme-color" content="#1565C0"/>
+<meta name="theme-color" content="#6750A4"/>
 <meta name="mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="קבלות"/>
 <link rel="manifest" href="manifest.json"/>
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>"/>
 <title>מערכת קבלות</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet"/>
 <style>
+/* ═══════════════════════════════════════════════
+   MD3 TOKEN SYSTEM
+═══════════════════════════════════════════════ */
 :root {
-  /* MD3 Color Scheme */
-  --md-primary: #1565C0;
-  --md-primary-container: #D3E4FF;
-  --md-on-primary: #FFFFFF;
-  --md-on-primary-container: #001B3D;
-  --md-secondary: #545F71;
-  --md-secondary-container: #D8E3F8;
-  --md-surface: #F8F9FF;
-  --md-surface-variant: #DFE2EB;
-  --md-surface-container: #ECEEF4;
-  --md-surface-container-high: #E6E8EF;
-  --md-on-surface: #191C20;
-  --md-on-surface-variant: #43474E;
-  --md-outline: #73777F;
-  --md-outline-variant: #C3C7CF;
-  --md-error: #BA1A1A;
-  --md-error-container: #FFDAD6;
-  --md-green: #1B873A;
-  --md-green-container: #A6F4B8;
-  --md-yellow: #7B5800;
-  --md-yellow-container: #FFDEA0;
+  /* Primary */
+  --md-sys-color-primary: #6750A4;
+  --md-sys-color-on-primary: #FFFFFF;
+  --md-sys-color-primary-container: #EADDFF;
+  --md-sys-color-on-primary-container: #21005D;
 
-  /* Legacy aliases */
-  --bg: var(--md-surface);
-  --card: #FFFFFF;
-  --dark: #191C20;
-  --primary: var(--md-primary);
-  --primary2: #4A4FF7;
-  --green: var(--md-green);
-  --yellow: var(--md-yellow);
-  --red: var(--md-error);
-  --border: var(--md-outline-variant);
-  --text: var(--md-on-surface);
-  --muted: var(--md-on-surface-variant);
-  --light: var(--md-surface-container);
+  /* Secondary */
+  --md-sys-color-secondary: #625B71;
+  --md-sys-color-on-secondary: #FFFFFF;
+  --md-sys-color-secondary-container: #E8DEF8;
+  --md-sys-color-on-secondary-container: #1D192B;
 
-  /* MD3 Elevation shadows */
-  --elev1: 0 1px 2px rgba(0,0,0,.08), 0 1px 3px rgba(0,0,0,.06);
-  --elev2: 0 2px 6px rgba(0,0,0,.10), 0 1px 2px rgba(0,0,0,.06);
-  --elev3: 0 4px 12px rgba(0,0,0,.12), 0 2px 4px rgba(0,0,0,.06);
+  /* Tertiary */
+  --md-sys-color-tertiary: #7D5260;
+  --md-sys-color-tertiary-container: #FFD8E4;
+  --md-sys-color-on-tertiary-container: #31111D;
 
-  /* MD3 Shape */
-  --r-xs: 4px;
-  --r-sm: 8px;
-  --r-md: 12px;
-  --r-lg: 16px;
-  --r-xl: 28px;
-  --r-full: 50px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;min-height:100vh;overflow-x:hidden}
-body{font-family:'Noto Sans Hebrew',sans-serif;background:var(--bg);direction:rtl;color:var(--text)}
+  /* Error */
+  --md-sys-color-error: #B3261E;
+  --md-sys-color-on-error: #FFFFFF;
+  --md-sys-color-error-container: #F9DEDC;
+  --md-sys-color-on-error-container: #410E0B;
 
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes spinR{to{transform:rotate(360deg)}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
-@keyframes slideIn{from{opacity:0;transform:translateX(20px)}to{opacity:1;transform:translateX(0)}}
+  /* Surface */
+  --md-sys-color-surface: #FFFBFE;
+  --md-sys-color-on-surface: #1C1B1F;
+  --md-sys-color-surface-variant: #E7E0EC;
+  --md-sys-color-on-surface-variant: #49454F;
+  --md-sys-color-surface-container-lowest: #FFFFFF;
+  --md-sys-color-surface-container-low: #F7F2FA;
+  --md-sys-color-surface-container: #F3EDF7;
+  --md-sys-color-surface-container-high: #ECE6F0;
+  --md-sys-color-surface-container-highest: #E6E0E9;
 
-/* HEADER - MD3 Top App Bar */
-header{
-  background:var(--md-surface-container-high);
-  padding:0 16px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  height:64px;
-  box-shadow:var(--elev1);
-  position:sticky;top:0;z-index:100;
-}
-.logo{color:var(--md-on-surface);font-weight:700;font-size:22px;display:flex;align-items:center;gap:8px;letter-spacing:-.3px}
-.nav{display:flex;gap:4px}
-.nav-btn{
-  padding:6px 16px;border-radius:var(--r-full);border:none;
-  background:transparent;color:var(--md-on-surface-variant);cursor:pointer;
-  font-weight:600;font-size:13px;font-family:inherit;transition:all .2s;
-  position:relative;overflow:hidden;
-}
-.nav-btn::before{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity .2s;border-radius:inherit}
-.nav-btn:hover::before{opacity:.08}
-.nav-btn.active{background:var(--md-secondary-container);color:var(--md-on-surface)}
+  /* Outline */
+  --md-sys-color-outline: #79747E;
+  --md-sys-color-outline-variant: #CAC4D0;
 
-/* MAIN */
-main{display:flex;justify-content:center;align-items:flex-start;padding:24px 16px}
+  /* Custom semantic */
+  --md-custom-green: #386A20;
+  --md-custom-green-container: #B7F397;
+  --md-custom-yellow: #6B5E00;
+  --md-custom-yellow-container: #FAEEA0;
 
-/* CARD - MD3 Surface */
-.card{
-  background:var(--card);border-radius:var(--r-xl);
-  box-shadow:var(--elev2);
-  padding:28px 24px;width:100%;max-width:520px;
-  display:flex;flex-direction:column;gap:16px;
-  animation:fadeUp .3s ease both;
-}
-.card.wide{max-width:1140px}
+  /* Shape */
+  --md-sys-shape-none: 0px;
+  --md-sys-shape-extra-small: 4px;
+  --md-sys-shape-small: 8px;
+  --md-sys-shape-medium: 12px;
+  --md-sys-shape-large: 16px;
+  --md-sys-shape-extra-large: 28px;
+  --md-sys-shape-full: 9999px;
 
-/* TYPOGRAPHY */
-.page-icon{font-size:44px;text-align:center}
-h2{font-size:22px;font-weight:700;color:var(--md-on-surface);letter-spacing:-.3px}
-.sub{color:var(--md-on-surface-variant);text-align:center;font-size:14px;line-height:1.5}
+  /* Elevation */
+  --md-sys-elevation-1: 0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15);
+  --md-sys-elevation-2: 0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15);
+  --md-sys-elevation-3: 0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.3);
 
-/* MD3 INPUTS */
-input:not([type=checkbox]):not([type=file]){
-  width:100%;padding:14px 16px;border-radius:var(--r-sm) var(--r-sm) 0 0;
-  border:none;border-bottom:1.5px solid var(--md-outline);
-  font-size:16px;outline:none;
-  background:var(--md-surface-container);
-  font-family:inherit;transition:all .2s;color:var(--md-on-surface);
-}
-input:not([type=checkbox]):not([type=file]):focus{
-  border-bottom:2px solid var(--md-primary);
-  background:var(--md-surface-container-high);
+  /* Typography */
+  --md-sys-typescale-display-large: 700 57px/64px 'Noto Sans Hebrew', sans-serif;
+  --md-sys-typescale-headline-large: 700 32px/40px 'Noto Sans Hebrew', sans-serif;
+  --md-sys-typescale-headline-medium: 700 28px/36px 'Noto Sans Hebrew', sans-serif;
+  --md-sys-typescale-title-large: 600 22px/28px 'Noto Sans Hebrew', sans-serif;
+  --md-sys-typescale-title-medium: 600 16px/24px 'Noto Sans Hebrew', sans-serif;
+  --md-sys-typescale-body-large: 400 16px/24px 'Noto Sans Hebrew', sans-serif;
+  --md-sys-typescale-body-medium: 400 14px/20px 'Noto Sans Hebrew', sans-serif;
+  --md-sys-typescale-label-large: 500 14px/20px 'Noto Sans Hebrew', sans-serif;
+  --md-sys-typescale-label-medium: 500 12px/16px 'Noto Sans Hebrew', sans-serif;
 }
 
-/* MD3 BUTTONS */
-.btn{
-  padding:0 24px;height:44px;border-radius:var(--r-full);border:none;cursor:pointer;
-  font-weight:600;font-size:14px;width:100%;font-family:inherit;
-  transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px;
-  position:relative;overflow:hidden;letter-spacing:.1px;
+/* ═══════════════════════════════════════════════
+   RESET & BASE
+═══════════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
+body {
+  font: var(--md-sys-typescale-body-large);
+  background: var(--md-sys-color-surface);
+  color: var(--md-sys-color-on-surface);
+  direction: rtl;
 }
-.btn::after{content:"";position:absolute;inset:0;background:currentColor;opacity:0;transition:opacity .2s;border-radius:inherit}
-.btn:hover::after{opacity:.08}
-.btn:active::after{opacity:.14}
-.btn-primary{background:var(--md-primary);color:var(--md-on-primary);box-shadow:var(--elev2)}
-.btn-dark{background:var(--md-on-surface);color:var(--card)}
-.btn-ghost{
-  padding:0 16px;height:36px;border-radius:var(--r-full);border:none;
-  background:transparent;color:var(--md-on-surface-variant);cursor:pointer;
-  font-size:13px;font-family:inherit;transition:all .2s;
+.material-symbols-rounded { font-size: 20px; vertical-align: middle; }
+
+/* ═══════════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════════ */
+@keyframes md-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-.btn-sm{
-  padding:0 14px;height:32px;border-radius:var(--r-full);
-  border:1px solid var(--md-outline-variant);
-  background:transparent;color:var(--md-on-surface);cursor:pointer;
-  font-size:12px;font-weight:500;font-family:inherit;transition:all .2s;
+@keyframes md-spin { to { transform: rotate(360deg); } }
+@keyframes md-ripple {
+  from { transform: scale(0); opacity: .3; }
+  to   { transform: scale(4); opacity: 0; }
 }
-.btn-sm:hover{background:var(--md-surface-container)}
+.md-anim { animation: md-fade-in .25s cubic-bezier(.2,0,0,1) both; }
 
-/* MD3 TABS */
-.tabs{display:flex;border-radius:var(--r-full);overflow:hidden;background:var(--md-surface-container);padding:2px;gap:2px}
-.tab{
-  flex:1;padding:8px 0;border:none;background:transparent;
-  color:var(--md-on-surface-variant);cursor:pointer;font-weight:600;font-size:13px;
-  font-family:inherit;transition:all .2s;border-radius:var(--r-full);
+/* ═══════════════════════════════════════════════
+   TOP APP BAR (MD3)
+═══════════════════════════════════════════════ */
+.top-app-bar {
+  background: var(--md-sys-color-surface-container);
+  height: 64px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: var(--md-sys-elevation-1);
 }
-.tab.active{background:var(--card);color:var(--md-primary);box-shadow:var(--elev1)}
-
-/* DROPZONE */
-.dropzone{
-  border:2px dashed #c7d2fe;border-radius:14px;padding:28px 20px;
-  text-align:center;cursor:pointer;color:var(--muted);background:#f8faff;transition:all .2s;
+.top-app-bar__headline {
+  font: var(--md-sys-typescale-title-large);
+  color: var(--md-sys-color-on-surface);
+  display: flex; align-items: center; gap: 8px;
 }
-.dropzone.drag,.dropzone:hover{border-color:var(--primary2);background:#f0f0ff}
+.top-app-bar__actions { display: flex; gap: 4px; align-items: center; }
 
-/* ALERTS */
-.error-box{background:#fee2e2;color:#991b1b;border-radius:10px;padding:10px 14px;font-size:14px;text-align:center}
-.success-box{background:#d1fae5;color:#065f46;border-radius:10px;padding:10px 14px;font-size:14px;text-align:center;animation:fadeUp .3s ease}
-
-/* MD3 BADGES */
-.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:var(--r-full);font-size:12px;font-weight:600}
-.badge-checked{background:var(--md-green-container);color:var(--md-green)}
-.badge-unchecked{background:var(--md-yellow-container);color:var(--md-yellow)}
-.type-badge{background:var(--md-secondary-container);color:var(--md-secondary);padding:3px 10px;border-radius:var(--r-full);font-size:12px;font-weight:600}
-
-/* MD3 ACTION BUTTONS */
-.action-btn{
-  padding:6px 12px;border-radius:var(--r-full);border:1px solid var(--md-outline-variant);
-  background:transparent;color:var(--md-on-surface);cursor:pointer;font-size:12px;
-  font-weight:500;font-family:inherit;white-space:nowrap;transition:all .15s;
+/* ═══════════════════════════════════════════════
+   NAVIGATION BAR (MD3) - bottom on mobile
+═══════════════════════════════════════════════ */
+.nav-bar {
+  display: none;
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+  background: var(--md-sys-color-surface-container);
+  box-shadow: 0 -1px 0 var(--md-sys-color-outline-variant);
+  height: 80px;
+  padding: 0 8px;
 }
-.action-btn:hover{background:var(--md-surface-container)}
-.delete-btn{padding:6px 10px;border-radius:var(--r-full);border:none;background:var(--md-error-container);color:var(--md-error);cursor:pointer;font-size:13px;font-family:inherit}
-.delete-btn:hover{background:#FFBAB1}
-
-/* MD3 STAT CARDS */
-.stats{display:flex;gap:12px;margin-bottom:20px;flex-wrap:wrap}
-.stat-card{
-  flex:1;min-width:90px;background:var(--md-surface-container);border-radius:var(--r-lg);
-  padding:14px 12px;text-align:center;cursor:pointer;transition:all .2s;border:none;
+.nav-bar__items { display: flex; height: 100%; align-items: center; }
+.nav-bar__item {
+  flex: 1; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 4px; cursor: pointer; border: none;
+  background: transparent; font-family: inherit; padding: 4px 0;
+  position: relative;
 }
-.stat-card:hover{background:var(--md-surface-container-high);box-shadow:var(--elev1)}
-.stat-num{font-size:24px;font-weight:700}
-.stat-label{font-size:11px;color:var(--md-on-surface-variant);margin-top:2px}
-
-/* MD3 ADMIN TABS */
-.admin-tabs{display:flex;border-bottom:1px solid var(--md-outline-variant);margin-bottom:20px;gap:4px}
-.admin-tab{
-  flex:1;padding:12px 0;border:none;background:transparent;
-  color:var(--md-on-surface-variant);cursor:pointer;font-weight:600;font-size:14px;
-  font-family:inherit;transition:all .2s;border-bottom:2px solid transparent;margin-bottom:-1px;
+.nav-bar__indicator {
+  width: 64px; height: 32px; border-radius: var(--md-sys-shape-full);
+  display: flex; align-items: center; justify-content: center;
+  transition: background .2s;
 }
-.admin-tab.active{color:var(--md-primary);border-bottom:2px solid var(--md-primary)}
-
-/* MD3 FILTER CHIPS */
-.filters{display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
-.filter-btn{
-  padding:6px 16px;border-radius:var(--r-full);border:1px solid var(--md-outline-variant);
-  background:transparent;color:var(--md-on-surface-variant);cursor:pointer;
-  font-weight:500;font-size:13px;font-family:inherit;transition:all .2s;
+.nav-bar__item.active .nav-bar__indicator {
+  background: var(--md-sys-color-secondary-container);
 }
-.filter-btn.active{background:var(--md-secondary-container);color:var(--md-on-surface);border-color:transparent}
+.nav-bar__label {
+  font: var(--md-sys-typescale-label-medium);
+  color: var(--md-sys-color-on-surface-variant);
+}
+.nav-bar__item.active .nav-bar__label,
+.nav-bar__item.active .material-symbols-rounded {
+  color: var(--md-sys-color-on-surface);
+  font-weight: 600;
+}
+.material-symbols-rounded { color: var(--md-sys-color-on-surface-variant); }
 
-/* MD3 TABLE */
-.table-wrap{overflow-x:auto;border-radius:var(--r-lg);border:1px solid var(--md-outline-variant)}
-table{width:100%;border-collapse:collapse;font-size:14px}
-th{padding:12px 16px;text-align:right;font-weight:600;color:var(--md-on-surface-variant);border-bottom:1px solid var(--md-outline-variant);background:var(--md-surface-container);white-space:nowrap;font-size:13px}
-td{padding:12px 16px;border-bottom:1px solid var(--md-surface-variant);color:var(--md-on-surface);vertical-align:middle}
-tr:hover td{background:var(--md-surface-container)}
-tr.selected td{background:var(--md-primary-container)!important}
-tr.last-viewed td{background:#E8F5E9!important}
+/* ═══════════════════════════════════════════════
+   SEGMENTED BUTTON (top nav on desktop)
+═══════════════════════════════════════════════ */
+.seg-btn-group {
+  display: flex; border: 1px solid var(--md-sys-color-outline);
+  border-radius: var(--md-sys-shape-full); overflow: hidden;
+}
+.seg-btn {
+  padding: 6px 20px; border: none; background: transparent;
+  color: var(--md-sys-color-on-surface); cursor: pointer;
+  font: var(--md-sys-typescale-label-large);
+  font-family: inherit; transition: background .2s;
+  position: relative; overflow: hidden;
+  display: flex; align-items: center; gap: 6px;
+}
+.seg-btn + .seg-btn { border-right: 1px solid var(--md-sys-color-outline); }
+.seg-btn.active { background: var(--md-sys-color-secondary-container); }
+.seg-btn:hover { background: rgba(103,80,164,.08); }
 
-/* MD3 USER FOLDERS */
-.users-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px}
-.user-folder{background:var(--md-surface-container);border-radius:var(--r-lg);padding:20px 16px;text-align:center;cursor:pointer;transition:all .2s;border:none}
-.user-folder:hover{background:var(--md-surface-container-high);box-shadow:var(--elev2)}
-.folder-icon{font-size:32px;margin-bottom:8px}
-.folder-name{font-weight:600;color:var(--md-on-surface);font-size:14px}
-.folder-count{font-size:12px;color:var(--md-on-surface-variant);margin-top:4px}
-.folder-pending{font-size:11px;color:var(--md-yellow);font-weight:600;margin-top:2px}
-.back-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r-full);border:1px solid var(--md-outline-variant);background:transparent;color:var(--md-on-surface);cursor:pointer;font-weight:500;font-size:13px;font-family:inherit;margin-bottom:16px;transition:all .2s}
-.back-btn:hover{background:var(--md-surface-container)}
+/* ═══════════════════════════════════════════════
+   ICON BUTTON (MD3)
+═══════════════════════════════════════════════ */
+.icon-btn {
+  width: 40px; height: 40px; border-radius: var(--md-sys-shape-full);
+  border: none; background: transparent; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--md-sys-color-on-surface-variant); transition: background .2s;
+  position: relative; overflow: hidden;
+}
+.icon-btn:hover { background: rgba(28,27,31,.08); }
 
-/* MD3 HISTORY */
-.history-item{background:var(--md-surface-container);border-radius:var(--r-lg);padding:14px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;animation:fadeUp .3s ease both}
-.history-meta{font-size:12px;color:var(--md-on-surface-variant);margin-top:4px}
+/* ═══════════════════════════════════════════════
+   MAIN LAYOUT
+═══════════════════════════════════════════════ */
+main {
+  display: flex; justify-content: center;
+  align-items: flex-start; padding: 24px 16px;
+  min-height: calc(100vh - 64px);
+}
 
-/* MD3 BULK BAR */
-#bulk-bar{background:var(--md-on-surface);border-radius:var(--r-lg);padding:10px 16px;display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap;animation:fadeUp .2s ease}
-#bulk-count{color:var(--card);font-weight:600;font-size:14px;flex:1}
-.bulk-btn{padding:6px 14px;border-radius:var(--r-full);border:none;cursor:pointer;font-weight:500;font-size:12px;font-family:inherit}
+/* ═══════════════════════════════════════════════
+   CARD (MD3 Surface)
+═══════════════════════════════════════════════ */
+.md-card {
+  background: var(--md-sys-color-surface-container-low);
+  border-radius: var(--md-sys-shape-extra-large);
+  padding: 28px 24px;
+  width: 100%; max-width: 480px;
+  display: flex; flex-direction: column; gap: 20px;
+  animation: md-fade-in .3s cubic-bezier(.2,0,0,1) both;
+}
+.md-card.wide { max-width: 1200px; }
 
-/* MD3 SPINNER */
-#spinner{position:fixed;inset:0;background:rgba(255,255,255,.9);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:16px}
-.spinner-ring{width:48px;height:48px;border:4px solid var(--md-surface-variant);border-top-color:var(--md-primary);border-radius:50%;animation:spinR .8s linear infinite}
-.spinner-text{color:var(--md-on-surface-variant);font-weight:500;font-size:15px}
+/* ═══════════════════════════════════════════════
+   FILLED TEXT FIELD (MD3)
+═══════════════════════════════════════════════ */
+.md-field {
+  position: relative;
+  background: var(--md-sys-color-surface-container-highest);
+  border-radius: var(--md-sys-shape-extra-small) var(--md-sys-shape-extra-small) 0 0;
+  border-bottom: 1px solid var(--md-sys-color-on-surface-variant);
+  transition: border-color .2s;
+}
+.md-field:focus-within {
+  border-bottom: 2px solid var(--md-sys-color-primary);
+}
+.md-field input {
+  width: 100%; padding: 20px 16px 8px;
+  border: none; background: transparent; outline: none;
+  font: var(--md-sys-typescale-body-large); font-family: inherit;
+  color: var(--md-sys-color-on-surface);
+}
+.md-field label {
+  position: absolute; right: 16px; top: 50%;
+  transform: translateY(-50%);
+  font: var(--md-sys-typescale-body-large); font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant);
+  pointer-events: none; transition: all .2s;
+}
+.md-field:focus-within label,
+.md-field.has-value label {
+  top: 10px; transform: none;
+  font: var(--md-sys-typescale-label-medium); font-family: inherit;
+  color: var(--md-sys-color-primary);
+}
 
-/* MD3 OVERLAY */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;z-index:1000;animation:fadeUp .2s ease}
-.confirm-box{background:var(--card);border-radius:var(--r-xl);padding:28px;max-width:340px;width:90%;text-align:center;box-shadow:var(--elev3)}
-.confirm-box h3{font-size:18px;font-weight:700;color:var(--md-on-surface);margin-bottom:10px}
-.confirm-box p{color:var(--md-on-surface-variant);font-size:14px;margin-bottom:24px;line-height:1.5}
-.confirm-btns{display:flex;gap:10px}
-.confirm-btns button{flex:1;padding:10px;border-radius:var(--r-full);border:none;cursor:pointer;font-weight:600;font-size:14px;font-family:inherit}
+/* ═══════════════════════════════════════════════
+   BUTTONS (MD3)
+═══════════════════════════════════════════════ */
+.md-btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 8px; height: 40px; padding: 0 24px;
+  border-radius: var(--md-sys-shape-full); border: none; cursor: pointer;
+  font: var(--md-sys-typescale-label-large); font-family: inherit;
+  letter-spacing: .1px; transition: box-shadow .2s;
+  position: relative; overflow: hidden; width: 100%;
+}
+.md-btn::after {
+  content: ''; position: absolute; inset: 0;
+  background: currentColor; opacity: 0; transition: opacity .2s;
+  border-radius: inherit;
+}
+.md-btn:hover::after { opacity: .08; }
+.md-btn:active::after { opacity: .12; }
 
-/* AUTH BANNER */
-.auth-banner{background:var(--md-yellow-container);border-radius:var(--r-md);padding:12px 16px;display:flex;justify-content:space-between;align-items:center;font-size:14px;color:var(--md-yellow);gap:10px;flex-wrap:wrap}
+.md-btn--filled {
+  background: var(--md-sys-color-primary);
+  color: var(--md-sys-color-on-primary);
+  box-shadow: var(--md-sys-elevation-1);
+}
+.md-btn--filled:hover { box-shadow: var(--md-sys-elevation-2); }
 
-/* DROPZONE */
-.dropzone{border:2px dashed var(--md-outline-variant);border-radius:var(--r-lg);padding:28px 20px;text-align:center;cursor:pointer;color:var(--md-on-surface-variant);background:var(--md-surface-container);transition:all .2s}
-.dropzone.drag,.dropzone:hover{border-color:var(--md-primary);background:var(--md-primary-container)}
+.md-btn--tonal {
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+}
 
-/* ALERTS */
-.error-box{background:var(--md-error-container);color:var(--md-error);border-radius:var(--r-md);padding:10px 14px;font-size:14px;text-align:center}
-.success-box{background:var(--md-green-container);color:var(--md-green);border-radius:var(--r-md);padding:10px 14px;font-size:14px;text-align:center;animation:fadeUp .3s ease}
+.md-btn--outlined {
+  background: transparent;
+  color: var(--md-sys-color-primary);
+  border: 1px solid var(--md-sys-color-outline);
+}
 
-/* MISC */
-a{color:var(--md-primary);text-decoration:none}
-input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--md-primary)}
-.hidden{display:none!important}
+.md-btn--text {
+  background: transparent;
+  color: var(--md-sys-color-primary);
+  padding: 0 12px; width: auto;
+}
 
-/* MD3 MOBILE */
-@media(max-width:600px){
-  header{padding:0 12px;height:56px}
-  .logo{font-size:18px}
-  .nav-btn{padding:5px 12px;font-size:12px}
-  main{padding:0;display:block}
-  .card{padding:20px 16px;border-radius:0;width:100%;max-width:100%!important;box-shadow:none;min-height:calc(100vh - 56px)}
-  .card.wide{padding:14px}
-  .stats{gap:8px}
-  .stat-card{padding:10px 8px;min-width:70px}
-  .stat-num{font-size:18px}
-  th,td{padding:8px 10px;font-size:13px}
-  .users-grid{grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-  .history-item{flex-direction:column;align-items:flex-start;gap:8px}
-  #bulk-bar{gap:6px}
-  .bulk-btn{padding:5px 10px;font-size:11px}
-  .filters{gap:6px}
+/* ═══════════════════════════════════════════════
+   CHIP (MD3 Filter/Assist Chips)
+═══════════════════════════════════════════════ */
+.md-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  height: 32px; padding: 0 16px;
+  border-radius: var(--md-sys-shape-small);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background: transparent; cursor: pointer;
+  font: var(--md-sys-typescale-label-large); font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant);
+  transition: all .2s; white-space: nowrap;
+}
+.md-chip:hover { background: rgba(103,80,164,.08); }
+.md-chip.selected {
+  background: var(--md-sys-color-secondary-container);
+  border-color: transparent;
+  color: var(--md-sys-color-on-secondary-container);
+}
+
+/* ═══════════════════════════════════════════════
+   SEGMENTED TABS (MD3)
+═══════════════════════════════════════════════ */
+.md-tabs {
+  display: flex; background: var(--md-sys-color-surface-container-highest);
+  border-radius: var(--md-sys-shape-full); padding: 2px; gap: 2px;
+}
+.md-tab {
+  flex: 1; height: 36px; border: none; background: transparent;
+  border-radius: var(--md-sys-shape-full); cursor: pointer;
+  font: var(--md-sys-typescale-label-large); font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant); transition: all .2s;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+}
+.md-tab.active {
+  background: var(--md-sys-color-surface-container-lowest);
+  color: var(--md-sys-color-on-surface);
+  box-shadow: var(--md-sys-elevation-1);
+}
+
+/* ═══════════════════════════════════════════════
+   BADGES
+═══════════════════════════════════════════════ */
+.md-badge {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 24px; padding: 0 10px;
+  border-radius: var(--md-sys-shape-full);
+  font: var(--md-sys-typescale-label-medium); font-family: inherit;
+  font-weight: 600;
+}
+.md-badge--green {
+  background: var(--md-custom-green-container);
+  color: var(--md-custom-green);
+}
+.md-badge--yellow {
+  background: var(--md-custom-yellow-container);
+  color: var(--md-custom-yellow);
+}
+.md-type-chip {
+  display: inline-flex; align-items: center;
+  height: 24px; padding: 0 10px;
+  border-radius: var(--md-sys-shape-small);
+  background: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-on-secondary-container);
+  font: var(--md-sys-typescale-label-medium); font-family: inherit;
+}
+
+/* ═══════════════════════════════════════════════
+   STAT CARDS
+═══════════════════════════════════════════════ */
+.stat-row { display: flex; gap: 12px; flex-wrap: wrap; }
+.stat-card {
+  flex: 1; min-width: 80px;
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-large);
+  padding: 16px 12px; text-align: center; cursor: pointer;
+  transition: all .2s; border: none;
+}
+.stat-card:hover {
+  background: var(--md-sys-color-surface-container-high);
+  box-shadow: var(--md-sys-elevation-1);
+}
+.stat-card__num {
+  font: var(--md-sys-typescale-headline-medium);
+  font-family: inherit; display: block;
+}
+.stat-card__label {
+  font: var(--md-sys-typescale-label-medium);
+  font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant);
+  display: block; margin-top: 2px;
+}
+
+/* ═══════════════════════════════════════════════
+   PRIMARY TABS (MD3) - admin
+═══════════════════════════════════════════════ */
+.md-primary-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+  margin-bottom: 20px;
+}
+.md-primary-tab {
+  flex: 1; height: 48px; border: none; background: transparent;
+  cursor: pointer; font: var(--md-sys-typescale-title-medium); font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant);
+  border-bottom: 3px solid transparent; margin-bottom: -1px;
+  transition: all .2s; display: flex; align-items: center;
+  justify-content: center; gap: 8px;
+}
+.md-primary-tab.active {
+  color: var(--md-sys-color-primary);
+  border-bottom-color: var(--md-sys-color-primary);
+}
+
+/* ═══════════════════════════════════════════════
+   TABLE (MD3)
+═══════════════════════════════════════════════ */
+.md-table-wrap {
+  overflow-x: auto;
+  border-radius: var(--md-sys-shape-large);
+  border: 1px solid var(--md-sys-color-outline-variant);
+}
+table { width: 100%; border-collapse: collapse; }
+thead { background: var(--md-sys-color-surface-container-high); }
+th {
+  padding: 12px 16px; text-align: right;
+  font: var(--md-sys-typescale-label-medium); font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant); white-space: nowrap;
+  border-bottom: 1px solid var(--md-sys-color-outline-variant);
+}
+td {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--md-sys-color-surface-variant);
+  font: var(--md-sys-typescale-body-medium); font-family: inherit;
+  color: var(--md-sys-color-on-surface); vertical-align: middle;
+}
+tbody tr { transition: background .15s; }
+tbody tr:hover td { background: rgba(103,80,164,.05); }
+tbody tr.selected td { background: var(--md-sys-color-primary-container); }
+tbody tr.last-viewed td { background: #E8F5E9; }
+
+/* ═══════════════════════════════════════════════
+   CHECKBOX (MD3)
+═══════════════════════════════════════════════ */
+input[type=checkbox] {
+  width: 18px; height: 18px; cursor: pointer;
+  accent-color: var(--md-sys-color-primary);
+}
+
+/* ═══════════════════════════════════════════════
+   USER FOLDER CARDS
+═══════════════════════════════════════════════ */
+.folders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 12px;
+}
+.folder-card {
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-large);
+  padding: 20px 16px; text-align: center; cursor: pointer;
+  border: none; transition: all .2s; display: block; width: 100%;
+}
+.folder-card:hover {
+  background: var(--md-sys-color-surface-container-high);
+  box-shadow: var(--md-sys-elevation-2);
+}
+.folder-card__icon { font-size: 40px; margin-bottom: 12px; display: block; }
+.folder-card__title {
+  font: var(--md-sys-typescale-title-medium); font-family: inherit;
+  color: var(--md-sys-color-on-surface); display: block;
+}
+.folder-card__sub {
+  font: var(--md-sys-typescale-body-medium); font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant); margin-top: 4px; display: block;
+}
+.folder-card__pending {
+  font: var(--md-sys-typescale-label-medium); font-family: inherit;
+  color: var(--md-custom-yellow); margin-top: 4px; display: block; font-weight: 600;
+}
+
+/* ═══════════════════════════════════════════════
+   HISTORY ITEMS
+═══════════════════════════════════════════════ */
+.history-list { display: flex; flex-direction: column; gap: 8px; }
+.history-item {
+  background: var(--md-sys-color-surface-container);
+  border-radius: var(--md-sys-shape-large);
+  padding: 16px; display: flex; justify-content: space-between;
+  align-items: center; gap: 12px;
+  animation: md-fade-in .25s ease both;
+}
+.history-item__meta {
+  font: var(--md-sys-typescale-label-medium); font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant); margin-top: 6px; display: block;
+}
+
+/* ═══════════════════════════════════════════════
+   DROPZONE
+═══════════════════════════════════════════════ */
+.md-dropzone {
+  border: 2px dashed var(--md-sys-color-outline-variant);
+  border-radius: var(--md-sys-shape-large);
+  padding: 32px 20px; text-align: center; cursor: pointer;
+  color: var(--md-sys-color-on-surface-variant);
+  background: var(--md-sys-color-surface-container);
+  transition: all .2s;
+}
+.md-dropzone:hover, .md-dropzone.drag {
+  border-color: var(--md-sys-color-primary);
+  background: var(--md-sys-color-primary-container);
+  color: var(--md-sys-color-on-primary-container);
+}
+
+/* ═══════════════════════════════════════════════
+   BANNER / ALERT
+═══════════════════════════════════════════════ */
+.md-banner {
+  background: var(--md-sys-color-surface-container-high);
+  border-radius: var(--md-sys-shape-medium);
+  padding: 14px 16px; display: flex; align-items: center;
+  gap: 12px; font: var(--md-sys-typescale-body-medium); font-family: inherit;
+}
+.md-banner--error {
+  background: var(--md-sys-color-error-container);
+  color: var(--md-sys-color-on-error-container);
+}
+.md-banner--success {
+  background: var(--md-custom-green-container);
+  color: var(--md-custom-green);
+}
+.md-banner--warning {
+  background: var(--md-custom-yellow-container);
+  color: var(--md-custom-yellow);
+}
+
+/* ═══════════════════════════════════════════════
+   BULK BAR
+═══════════════════════════════════════════════ */
+#bulk-bar {
+  background: var(--md-sys-color-on-surface);
+  border-radius: var(--md-sys-shape-large);
+  padding: 12px 16px; display: flex; align-items: center;
+  gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
+  animation: md-fade-in .2s ease;
+}
+#bulk-count {
+  color: var(--md-sys-color-surface); flex: 1;
+  font: var(--md-sys-typescale-label-large); font-family: inherit;
+}
+.bulk-btn {
+  height: 32px; padding: 0 14px; border-radius: var(--md-sys-shape-full);
+  border: none; cursor: pointer; font: var(--md-sys-typescale-label-medium);
+  font-family: inherit;
+}
+
+/* ═══════════════════════════════════════════════
+   DIALOG (MD3)
+═══════════════════════════════════════════════ */
+.md-scrim {
+  position: fixed; inset: 0; background: rgba(0,0,0,.32);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000; animation: md-fade-in .2s ease;
+}
+.md-dialog {
+  background: var(--md-sys-color-surface-container-high);
+  border-radius: var(--md-sys-shape-extra-large);
+  padding: 24px; max-width: 340px; width: 90%;
+  box-shadow: var(--md-sys-elevation-3);
+  animation: md-fade-in .2s cubic-bezier(.2,0,0,1) both;
+}
+.md-dialog__icon { text-align: center; font-size: 36px; margin-bottom: 16px; }
+.md-dialog__title {
+  font: var(--md-sys-typescale-headline-medium); font-family: inherit;
+  text-align: center; margin-bottom: 8px;
+}
+.md-dialog__body {
+  font: var(--md-sys-typescale-body-medium); font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant);
+  text-align: center; line-height: 1.5; margin-bottom: 24px;
+}
+.md-dialog__actions { display: flex; gap: 8px; justify-content: flex-end; }
+
+/* ═══════════════════════════════════════════════
+   PROGRESS INDICATOR (MD3)
+═══════════════════════════════════════════════ */
+#spinner {
+  position: fixed; inset: 0;
+  background: rgba(255,251,254,.85);
+  display: none; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 999; gap: 16px;
+  backdrop-filter: blur(4px);
+}
+.md-progress-ring {
+  width: 48px; height: 48px;
+  border: 4px solid var(--md-sys-color-surface-container-highest);
+  border-top-color: var(--md-sys-color-primary);
+  border-radius: 50%;
+  animation: md-spin .8s linear infinite;
+}
+.spinner-text {
+  font: var(--md-sys-typescale-label-large); font-family: inherit;
+  color: var(--md-sys-color-on-surface-variant);
+}
+
+/* ═══════════════════════════════════════════════
+   MISC
+═══════════════════════════════════════════════ */
+a { color: var(--md-sys-color-primary); text-decoration: none; }
+.hidden { display: none !important; }
+.md-divider { height: 1px; background: var(--md-sys-color-outline-variant); margin: 4px 0; }
+.back-btn {
+  display: inline-flex; align-items: center; gap: 4px;
+  height: 40px; padding: 0 16px 0 12px;
+  border-radius: var(--md-sys-shape-full);
+  border: 1px solid var(--md-sys-color-outline-variant);
+  background: transparent; cursor: pointer;
+  font: var(--md-sys-typescale-label-large); font-family: inherit;
+  color: var(--md-sys-color-on-surface); transition: background .2s;
+  margin-bottom: 16px;
+}
+.back-btn:hover { background: rgba(103,80,164,.08); }
+
+/* ═══════════════════════════════════════════════
+   MOBILE
+═══════════════════════════════════════════════ */
+@media (max-width: 600px) {
+  .top-app-bar { height: 56px; }
+  .top-app-bar .seg-btn-group { display: none; }
+  .nav-bar { display: flex; }
+  main {
+    padding: 16px;
+    padding-bottom: 96px;
+    display: block;
+  }
+  .md-card {
+    border-radius: var(--md-sys-shape-extra-large);
+    max-width: 100% !important;
+  }
+  .stat-row { gap: 8px; }
+  .stat-card { padding: 12px 8px; min-width: 70px; }
+  .stat-card__num { font-size: 20px; }
+  th, td { padding: 8px 10px; font-size: 13px; }
+  .folders-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+  .history-item { flex-direction: column; align-items: flex-start; gap: 8px; }
+  #bulk-bar { gap: 6px; }
+  .bulk-btn { padding: 0 10px; font-size: 11px; }
 }
 </style>
 </head>
 <body>
 
-<!-- SPINNER -->
+<!-- PROGRESS INDICATOR -->
 <div id="spinner">
-  <div class="spinner-ring"></div>
-  <div class="spinner-text" id="spinner-text">טוען...</div>
+  <div class="md-progress-ring"></div>
+  <span class="spinner-text" id="spinner-text">טוען...</span>
 </div>
 
-<!-- CONFIRM OVERLAY -->
-<div id="confirm-overlay" class="overlay hidden">
-  <div class="confirm-box">
-    <h3 id="confirm-title">אישור</h3>
-    <p id="confirm-msg"></p>
-    <div class="confirm-btns">
-      <button id="confirm-yes" style="background:#fee2e2;color:#991b1b">אישור</button>
-      <button id="confirm-no" style="background:#f1f5f9;color:#475569">ביטול</button>
+<!-- CONFIRM DIALOG -->
+<div id="confirm-overlay" class="md-scrim hidden">
+  <div class="md-dialog">
+    <div class="md-dialog__icon" id="confirm-icon">🗑️</div>
+    <div class="md-dialog__title" id="confirm-title">אישור</div>
+    <div class="md-dialog__body" id="confirm-msg"></div>
+    <div class="md-dialog__actions">
+      <button id="confirm-no" class="md-btn md-btn--text" style="color:var(--md-sys-color-on-surface-variant)">ביטול</button>
+      <button id="confirm-yes" class="md-btn md-btn--filled" style="background:var(--md-sys-color-error);width:auto;padding:0 24px">מחק</button>
     </div>
   </div>
 </div>
 
-<!-- HEADER -->
-<header>
-  <div class="logo">🧾 <span id="logo-text">מערכת קבלות</span></div>
-  <div class="nav">
-    <button id="btn-lang" class="nav-btn">EN</button>
-    <button id="nav-user" class="nav-btn active" data-he="👤 משתמש" data-en="👤 User">👤 משתמש</button>
-    <button id="nav-admin" class="nav-btn" data-he="🔐 מנהל" data-en="🔐 Admin">🔐 מנהל</button>
+<!-- TOP APP BAR -->
+<header class="top-app-bar">
+  <div class="top-app-bar__headline">
+    <span>🧾</span>
+    <span id="logo-text">מערכת קבלות</span>
+  </div>
+  <div class="top-app-bar__actions">
+    <button id="btn-lang" class="md-btn md-btn--text" style="width:auto;padding:0 12px;color:var(--md-sys-color-on-surface-variant)">EN</button>
+    <div class="seg-btn-group">
+      <button id="nav-user" class="seg-btn active" data-he="👤 משתמש" data-en="👤 User">
+        <span class="material-symbols-rounded">person</span> משתמש
+      </button>
+      <button id="nav-admin" class="seg-btn" data-he="🔐 מנהל" data-en="🔐 Admin">
+        <span class="material-symbols-rounded">admin_panel_settings</span> מנהל
+      </button>
+    </div>
   </div>
 </header>
 
+<!-- BOTTOM NAV (mobile) -->
+<nav class="nav-bar">
+  <div class="nav-bar__items">
+    <button id="mob-nav-user" class="nav-bar__item active">
+      <div class="nav-bar__indicator">
+        <span class="material-symbols-rounded">person</span>
+      </div>
+      <span class="nav-bar__label" id="mob-label-user">משתמש</span>
+    </button>
+    <button id="mob-nav-admin" class="nav-bar__item">
+      <div class="nav-bar__indicator">
+        <span class="material-symbols-rounded">admin_panel_settings</span>
+      </div>
+      <span class="nav-bar__label" id="mob-label-admin">מנהל</span>
+    </button>
+    <button id="mob-nav-lang" class="nav-bar__item">
+      <div class="nav-bar__indicator">
+        <span class="material-symbols-rounded">language</span>
+      </div>
+      <span class="nav-bar__label" id="mob-label-lang">EN</span>
+    </button>
+  </div>
+</nav>
+
 <main>
   <!-- USER LOGIN -->
-  <div class="card" id="user-login">
-    <div class="page-icon">🧾</div>
-    <h2 style="text-align:center" id="login-title">העלאת קבלה</h2>
-    <p class="sub" id="login-sub">הכנס את מספר הדירה כדי להתחיל</p>
-    <input id="username-input" placeholder="מספר הדירה" dir="rtl"/>
-    <button id="btn-user-login" class="btn btn-primary">כניסה →</button>
+  <div class="md-card md-anim" id="user-login">
+    <div style="text-align:center;font-size:56px">🧾</div>
+    <div>
+      <div style="font:var(--md-sys-typescale-headline-medium);font-family:inherit;text-align:center" id="login-title">העלאת קבלה</div>
+      <div style="font:var(--md-sys-typescale-body-medium);font-family:inherit;color:var(--md-sys-color-on-surface-variant);text-align:center;margin-top:8px" id="login-sub">הכנס את מספר הדירה כדי להתחיל</div>
+    </div>
+    <div class="md-field" id="username-field">
+      <label for="username-input" id="username-label">מספר הדירה</label>
+      <input id="username-input" dir="rtl" autocomplete="off"/>
+    </div>
+    <button id="btn-user-login" class="md-btn md-btn--filled">
+      <span class="material-symbols-rounded">login</span>
+      <span id="login-btn-text">כניסה</span>
+    </button>
   </div>
 
   <!-- USER UPLOAD -->
-  <div class="card hidden" id="user-upload">
+  <div class="md-card hidden" id="user-upload">
     <div style="display:flex;justify-content:space-between;align-items:center">
-      <h2 id="user-greeting"></h2>
-      <button id="btn-user-logout" class="btn-ghost">התנתק</button>
+      <div style="font:var(--md-sys-typescale-title-large);font-family:inherit" id="user-greeting"></div>
+      <button id="btn-user-logout" class="md-btn md-btn--text" style="width:auto;padding:0 12px">
+        <span class="material-symbols-rounded">logout</span>
+        <span id="logout-text">התנתק</span>
+      </button>
     </div>
-    <div id="auth-banner" class="auth-banner hidden">
-      <span id="auth-banner-text">נדרשת התחברות ל-Google לשמירת נתונים</span>
-      <button id="btn-signin" class="btn-sm">התחבר</button>
+
+    <div class="md-tabs">
+      <button id="tab-link" class="md-tab active" data-he="קישור" data-en="Link">
+        <span class="material-symbols-rounded">link</span>
+        <span>קישור</span>
+      </button>
+      <button id="tab-image" class="md-tab" data-he="תמונה" data-en="Image">
+        <span class="material-symbols-rounded">photo_camera</span>
+        <span>תמונה</span>
+      </button>
+      <button id="tab-history" class="md-tab" data-he="היסטוריה" data-en="History">
+        <span class="material-symbols-rounded">history</span>
+        <span>היסטוריה</span>
+      </button>
     </div>
-    <div class="tabs">
-      <button id="tab-link" class="tab active" data-he="🔗 קישור" data-en="🔗 Link">🔗 קישור</button>
-      <button id="tab-image" class="tab" data-he="📷 תמונה" data-en="📷 Image">📷 תמונה</button>
-      <button id="tab-history" class="tab" data-he="📋 היסטוריה" data-en="📋 History">📋 היסטוריה</button>
-    </div>
+
     <div id="panel-upload">
       <div id="link-section">
-        <input id="link-input" placeholder="הדבק קישור לקבלה..." dir="rtl"/>
+        <div class="md-field" id="link-field">
+          <label for="link-input" id="link-label">קישור לקבלה</label>
+          <input id="link-input" dir="ltr" autocomplete="off"/>
+        </div>
       </div>
       <div id="image-section" class="hidden">
-        <div class="dropzone" id="dropzone">
+        <div class="md-dropzone" id="dropzone">
           <div id="drop-placeholder">
-            <div style="font-size:36px">📁</div>
-            <div id="drop-main" style="font-weight:600;margin-top:8px">גרור קובץ לכאן</div>
-            <div id="drop-sub" style="font-size:12px;color:#888;margin-top:4px">או לחץ לבחירה · תמונה / PDF</div>
+            <div style="font-size:40px;margin-bottom:12px">☁️</div>
+            <div style="font:var(--md-sys-typescale-title-medium);font-family:inherit" id="drop-main">גרור קובץ לכאן</div>
+            <div style="font:var(--md-sys-typescale-body-medium);font-family:inherit;margin-top:4px" id="drop-sub">או לחץ לבחירה · תמונה / PDF</div>
           </div>
           <div id="drop-chosen" class="hidden"></div>
         </div>
         <input type="file" id="file-input" accept="image/*,.pdf" style="display:none"/>
       </div>
-      <div id="upload-error" class="error-box hidden"></div>
-      <div id="upload-success" class="success-box hidden">✅ הקבלה הועלתה בהצלחה!</div>
-      <button id="btn-submit" class="btn btn-primary" style="margin-top:4px">העלה קבלה →</button>
+      <div id="upload-error" class="md-banner md-banner--error hidden" style="margin-top:8px"></div>
+      <div id="upload-success" class="md-banner md-banner--success hidden" style="margin-top:8px">
+        <span class="material-symbols-rounded">check_circle</span>
+        <span id="success-text">הקבלה הועלתה בהצלחה!</span>
+      </div>
+      <button id="btn-submit" class="md-btn md-btn--filled" style="margin-top:8px">
+        <span class="material-symbols-rounded">upload</span>
+        <span id="submit-text">העלה קבלה</span>
+      </button>
     </div>
+
     <div id="panel-history" class="hidden">
-      <div id="history-loading" style="text-align:center;padding:30px;color:#888">
-        <div class="spinner-ring" style="margin:0 auto 10px"></div>
+      <div id="history-loading" style="text-align:center;padding:32px;color:var(--md-sys-color-on-surface-variant)">
+        <div class="md-progress-ring" style="margin:0 auto 12px"></div>
         <span id="hist-loading-text">טוען היסטוריה...</span>
       </div>
-      <div id="history-list" class="hidden" style="display:flex;flex-direction:column;gap:10px"></div>
-      <div id="history-empty" class="hidden" style="text-align:center;padding:30px;color:#94a3b8">
-        <div style="font-size:36px;margin-bottom:8px">📭</div>
-        <span id="hist-empty-text">עדיין לא העלית קבלות</span>
+      <div id="history-list" class="history-list hidden"></div>
+      <div id="history-empty" class="hidden" style="text-align:center;padding:32px;color:var(--md-sys-color-on-surface-variant)">
+        <div style="font-size:48px;margin-bottom:12px">📭</div>
+        <div style="font:var(--md-sys-typescale-body-large);font-family:inherit" id="hist-empty-text">עדיין לא העלית קבלות</div>
       </div>
     </div>
   </div>
 
   <!-- ADMIN LOGIN -->
-  <div class="card hidden" id="admin-login">
-    <div class="page-icon">🔐</div>
-    <h2 style="text-align:center">כניסת מנהל</h2>
-    <p class="sub">הכנס סיסמה להמשך</p>
-    <input type="password" id="admin-pass" placeholder="סיסמה..." dir="ltr"/>
-    <div id="admin-error" class="error-box hidden">סיסמה שגויה</div>
-    <button id="btn-admin-login" class="btn btn-dark">כניסה</button>
+  <div class="md-card hidden md-anim" id="admin-login">
+    <div style="text-align:center;font-size:56px">🔐</div>
+    <div>
+      <div style="font:var(--md-sys-typescale-headline-medium);font-family:inherit;text-align:center">כניסת מנהל</div>
+      <div style="font:var(--md-sys-typescale-body-medium);font-family:inherit;color:var(--md-sys-color-on-surface-variant);text-align:center;margin-top:8px">הכנס סיסמה להמשך</div>
+    </div>
+    <div class="md-field" id="pass-field">
+      <label for="admin-pass" id="pass-label">סיסמה</label>
+      <input type="password" id="admin-pass" dir="ltr"/>
+    </div>
+    <div id="admin-error" class="md-banner md-banner--error hidden">
+      <span class="material-symbols-rounded">error</span>
+      סיסמה שגויה
+    </div>
+    <button id="btn-admin-login" class="md-btn md-btn--filled">
+      <span class="material-symbols-rounded">lock_open</span>
+      כניסה
+    </button>
   </div>
 
   <!-- ADMIN DASH -->
-  <div class="card wide hidden" id="admin-dash">
-    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
-      <h2>לוח מנהל 🗂️</h2>
+  <div class="md-card wide hidden" id="admin-dash">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+      <div style="font:var(--md-sys-typescale-headline-medium);font-family:inherit">לוח מנהל</div>
       <div style="display:flex;gap:8px">
-        <button id="btn-refresh" class="btn-sm">🔄 רענן</button>
-        <button id="btn-admin-logout" class="btn-ghost">יציאה</button>
+        <button id="btn-refresh" class="md-btn md-btn--tonal" style="width:auto;padding:0 16px">
+          <span class="material-symbols-rounded">refresh</span>
+          רענן
+        </button>
+        <button id="btn-admin-logout" class="md-btn md-btn--outlined" style="width:auto;padding:0 16px">
+          <span class="material-symbols-rounded">logout</span>
+          יציאה
+        </button>
       </div>
     </div>
-    <div id="admin-auth-banner" class="auth-banner hidden" style="margin-bottom:16px">
-      <span>נדרשת התחברות ל-Google לצפייה בנתונים</span>
-      <button id="btn-admin-signin" class="btn-sm">התחבר</button>
+
+    <!-- STAT CARDS -->
+    <div class="stat-row">
+      <div class="stat-card" id="stat-card-total">
+        <span class="stat-card__num" style="color:var(--md-sys-color-primary)" id="stat-total">0</span>
+        <span class="stat-card__label">📥 סה"כ</span>
+      </div>
+      <div class="stat-card" id="stat-card-checked">
+        <span class="stat-card__num" style="color:var(--md-custom-green)" id="stat-checked">0</span>
+        <span class="stat-card__label">✅ נבדקו</span>
+      </div>
+      <div class="stat-card" id="stat-card-pending">
+        <span class="stat-card__num" style="color:var(--md-custom-yellow)" id="stat-pending">0</span>
+        <span class="stat-card__label">⏳ ממתינות</span>
+      </div>
+      <div class="stat-card" id="stat-users-card">
+        <span class="stat-card__num" style="color:var(--md-sys-color-tertiary)" id="stat-users">0</span>
+        <span class="stat-card__label">🏠 דירות</span>
+      </div>
     </div>
-    <div class="stats">
-      <div class="stat-card" style="border-top:3px solid var(--primary)"><div class="stat-num" style="color:var(--primary)" id="stat-total">0</div><div class="stat-label">📥 סה"כ</div></div>
-      <div class="stat-card" style="border-top:3px solid var(--green)"><div class="stat-num" style="color:var(--green)" id="stat-checked">0</div><div class="stat-label">✅ נבדקו</div></div>
-      <div class="stat-card" style="border-top:3px solid var(--yellow)"><div class="stat-num" style="color:var(--yellow)" id="stat-pending">0</div><div class="stat-label">⏳ ממתינות</div></div>
-      <div id="stat-users-card" class="stat-card" style="border-top:3px solid #8b5cf6"><div class="stat-num" style="color:#8b5cf6" id="stat-users">0</div><div class="stat-label">👥 דירות</div></div>
+
+    <!-- PRIMARY TABS -->
+    <div class="md-primary-tabs">
+      <button id="atab-all" class="md-primary-tab active">
+        <span class="material-symbols-rounded">receipt_long</span>
+        כל הקבלות
+      </button>
+      <button id="atab-users" class="md-primary-tab">
+        <span class="material-symbols-rounded">apartment</span>
+        לפי דירה
+      </button>
     </div>
-    <div class="admin-tabs">
-      <button id="atab-all" class="admin-tab active">📋 כל הקבלות</button>
-      <button id="atab-users" class="admin-tab">👥 לפי דירה</button>
-    </div>
+
+    <!-- ALL VIEW -->
     <div id="view-all">
-      <div class="filters">
-        <button data-filter="הכל" class="filter-btn active">הכל</button>
-        <button data-filter="לא נבדק" class="filter-btn">⏳ לא נבדק</button>
-        <button data-filter="נבדק" class="filter-btn">✅ נבדק</button>
-        <button id="btn-sort" style="padding:6px 14px;border-radius:8px;border:1.5px solid var(--border);background:var(--light);color:#475569;cursor:pointer;font-weight:600;font-size:13px;font-family:inherit;transition:all .2s">📅 חדש → ישן</button>
-        <input id="search-input" style="flex:1;min-width:140px;padding:8px 12px" placeholder="🔍 חיפוש..." dir="rtl"/>
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center">
+        <div class="md-field" style="flex:1;min-width:160px;border-radius:var(--md-sys-shape-full);background:var(--md-sys-color-surface-container-highest)">
+          <label for="search-input" style="right:16px">🔍 חיפוש</label>
+          <input id="search-input" dir="rtl" style="padding:16px 16px 8px" autocomplete="off"/>
+        </div>
+        <button id="btn-sort" class="md-chip">
+          <span class="material-symbols-rounded">sort</span>
+          חדש → ישן
+        </button>
       </div>
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <button class="md-chip selected" data-filter="הכל">הכל</button>
+        <button class="md-chip" data-filter="לא נבדק">⏳ לא נבדק</button>
+        <button class="md-chip" data-filter="נבדק">✅ נבדק</button>
+      </div>
+
       <div id="bulk-bar" class="hidden">
         <span id="bulk-count"></span>
-        <button class="bulk-btn" id="bulk-check" style="background:#d1fae5;color:#065f46">✓ סמן נבדק</button>
-        <button class="bulk-btn" id="bulk-uncheck" style="background:#fef3c7;color:#92400e">↩ לא נבדק</button>
-        <button class="bulk-btn" id="bulk-delete" style="background:#fee2e2;color:#991b1b">🗑️ מחק</button>
-        <button class="bulk-btn" id="bulk-cancel" style="background:#334155;color:#fff">ביטול</button>
+        <button class="bulk-btn" id="bulk-check" style="background:var(--md-custom-green-container);color:var(--md-custom-green)">✓ נבדק</button>
+        <button class="bulk-btn" id="bulk-uncheck" style="background:var(--md-custom-yellow-container);color:var(--md-custom-yellow)">↩ לא נבדק</button>
+        <button class="bulk-btn" id="bulk-delete" style="background:var(--md-sys-color-error-container);color:var(--md-sys-color-error)">🗑️ מחק</button>
+        <button class="bulk-btn" id="bulk-cancel" style="background:var(--md-sys-color-surface-variant);color:var(--md-sys-color-on-surface-variant)">ביטול</button>
       </div>
-      <div id="table-loading" style="text-align:center;padding:50px;color:#888"><div class="spinner-ring" style="margin:0 auto 12px"></div><span>טוען...</span></div>
-      <div id="table-empty" class="hidden" style="text-align:center;padding:50px;color:#888">אין קבלות</div>
-      <div class="table-wrap hidden" id="table-wrap">
+
+      <div id="table-loading" style="text-align:center;padding:48px;color:var(--md-sys-color-on-surface-variant)">
+        <div class="md-progress-ring" style="margin:0 auto 12px"></div>
+        <span>טוען...</span>
+      </div>
+      <div id="table-empty" class="hidden" style="text-align:center;padding:48px;color:var(--md-sys-color-on-surface-variant)">
+        <span class="material-symbols-rounded" style="font-size:48px">inbox</span>
+        <div style="margin-top:12px">אין קבלות להצגה</div>
+      </div>
+      <div class="md-table-wrap hidden" id="table-wrap">
         <table>
-          <thead><tr>
-            <th style="width:36px"><input type="checkbox" id="select-all"/></th>
-            <th>דירה</th><th>סוג</th><th>קבלה</th><th>תאריך</th><th>סטטוס</th><th>פעולות</th>
-          </tr></thead>
+          <thead>
+            <tr>
+              <th style="width:40px"><input type="checkbox" id="select-all"/></th>
+              <th>דירה</th><th>סוג</th><th>קבלה</th><th>תאריך</th><th>סטטוס</th><th>פעולות</th>
+            </tr>
+          </thead>
           <tbody id="table-body"></tbody>
         </table>
       </div>
     </div>
+
+    <!-- USERS VIEW -->
     <div id="view-users" class="hidden">
       <div id="users-grid-view">
-        <div id="users-grid" class="users-grid"></div>
-        <div id="users-empty" class="hidden" style="text-align:center;padding:50px;color:#888">אין דירות</div>
+        <div id="users-grid" class="folders-grid"></div>
+        <div id="users-empty" class="hidden" style="text-align:center;padding:48px;color:var(--md-sys-color-on-surface-variant)">
+          <span class="material-symbols-rounded" style="font-size:48px">apartment</span>
+          <div style="margin-top:12px">אין דירות עדיין</div>
+        </div>
       </div>
       <div id="user-detail-view" class="hidden">
-        <button id="btn-back" class="back-btn">← חזור</button>
+        <button id="btn-back" class="back-btn">
+          <span class="material-symbols-rounded">arrow_forward</span>
+          חזור
+        </button>
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-          <h2 id="user-detail-name" style="font-size:18px"></h2>
-          <span id="user-detail-stats" style="font-size:13px;color:var(--muted)"></span>
+          <div style="font:var(--md-sys-typescale-title-large);font-family:inherit" id="user-detail-name"></div>
+          <span style="font:var(--md-sys-typescale-body-medium);font-family:inherit;color:var(--md-sys-color-on-surface-variant)" id="user-detail-stats"></span>
         </div>
-        <div class="table-wrap">
-          <table><thead><tr><th>סוג</th><th>קבלה</th><th>תאריך</th><th>סטטוס</th><th>פעולות</th></tr></thead>
-          <tbody id="user-detail-body"></tbody></table>
+        <div class="md-table-wrap">
+          <table>
+            <thead><tr><th>סוג</th><th>קבלה</th><th>תאריך</th><th>סטטוס</th><th>פעולות</th></tr></thead>
+            <tbody id="user-detail-body"></tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -463,141 +946,141 @@ input[type=checkbox]{width:16px;height:16px;cursor:pointer;accent-color:var(--md
 </main>
 
 <script>
-// ── CONFIG ─────────────────────────────────────────────────────────────────
 var API_URL  = "https://osherad.hevrutagapyearprogram.workers.dev";
 var ADMIN_PASS = "admin123";
 
-// ── STATE ──────────────────────────────────────────────────────────────────
 var S = {
   view:"user", username:"", tab:"link", filter:"הכל",
   adminTab:"all", file:null, receipts:[], detailUser:null,
   selected:new Set(), confirmAction:null
 };
 var isEn = false;
+var sortAsc = false;
 
-// ── API ────────────────────────────────────────────────────────────────────
-function apiGet(action, params) {
-  var url = API_URL + "?action=" + action;
-  if (params) Object.keys(params).forEach(function(k){ url += "&"+k+"="+encodeURIComponent(params[k]); });
-  return fetch(url, {redirect:"follow"}).then(function(r){return r.json();});
-}
-
-function apiPost(data) {
-  return fetch(API_URL, {
-    method: "POST",
-    redirect: "follow",
-    body: JSON.stringify(data)
-  }).then(function(r){return r.json();});
-}
-
-function addReceipt(username, type, content) {
-  return apiPost({ action:"addReceipt", username:username, type:type, content:content });
-}
-
-function getReceipts() {
-  return apiGet("getReceipts").then(function(data){
-    return Array.isArray(data) ? data : [];
-  });
-}
-
-function setStatusAPI(rowIndex, status) {
-  return apiPost({ action:"setStatus", rowIndex:rowIndex, status:status });
-}
-
-function deleteRow(rowIndex) {
-  return apiPost({ action:"deleteReceipt", rowIndex:rowIndex });
-}
-
-function bulkDeleteRows(indexes) {
-  return apiPost({ action:"bulkDelete", rowIndexes:indexes });
-}
-
-function bulkSetStatusAPI(indexes, status) {
-  return apiPost({ action:"bulkSetStatus", rowIndexes:indexes, status:status });
-}
-
-function uploadToDrive(file) {
-  return new Promise(function(resolve, reject) {
-    var reader = new FileReader();
-    reader.onload = function(e) {
-      var b64 = e.target.result.split(",")[1];
-      apiPost({ action:"uploadImage", base64Data:b64, fileName:file.name, mimeType:file.type })
-        .then(function(d){ resolve(d.url||""); }).catch(reject);
-    };
-    reader.readAsDataURL(file);
-  });
-}
-
-// ── HELPERS ────────────────────────────────────────────────────────────────
 function $(id){return document.getElementById(id);}
 function show(id){var el=$(id);if(el)el.classList.remove("hidden");}
 function hide(id){var el=$(id);if(el)el.classList.add("hidden");}
 function spin(on,msg){$("spinner").style.display=on?"flex":"none";if(msg)$("spinner-text").textContent=msg;}
 
-// ── LANG ───────────────────────────────────────────────────────────────────
-var T = {
-  he:{loginTitle:"העלאת קבלה",loginSub:"הכנס את מספר הדירה כדי להתחיל",ph:"מספר הדירה",loginBtn:"כניסה →",logout:"התנתק",submitBtn:"העלה קבלה →",success:"✅ הקבלה הועלתה בהצלחה!",dropMain:"גרור קובץ לכאן",dropSub:"או לחץ לבחירה · תמונה / PDF",linkPH:"הדבק קישור לקבלה...",histLoad:"טוען היסטוריה...",histEmpty:"עדיין לא העלית קבלות",greet:"שלום, ",logo:"מערכת קבלות",authBanner:"נדרשת התחברות ל-Google לשמירת נתונים"},
-  en:{loginTitle:"Receipt Upload",loginSub:"Enter your apartment number to start",ph:"Apartment number",loginBtn:"Enter →",logout:"Logout",submitBtn:"Upload Receipt →",success:"✅ Receipt uploaded!",dropMain:"Drag file here",dropSub:"or click to select · Image / PDF",linkPH:"Paste receipt link...",histLoad:"Loading history...",histEmpty:"No receipts yet",greet:"Hello, ",logo:"Receipt System",authBanner:"Sign in with Google to save data"}
+// ── API ──────────────────────────────────────────────────────────────
+function apiGet(action){
+  return fetch(API_URL+"?action="+action,{redirect:"follow"}).then(function(r){return r.json();});
+}
+function apiPost(data){
+  return fetch(API_URL,{method:"POST",redirect:"follow",body:JSON.stringify(data)}).then(function(r){return r.json();});
+}
+function addReceipt(u,type,content){return apiPost({action:"addReceipt",username:u,type:type,content:content});}
+function getReceipts(){return apiGet("getReceipts").then(function(d){return Array.isArray(d)?d:[];});}
+function setStatusAPI(idx,s){return apiPost({action:"setStatus",rowIndex:idx,status:s});}
+function deleteRow(idx){return apiPost({action:"deleteReceipt",rowIndex:idx});}
+function bulkDeleteRows(idxs){return apiPost({action:"bulkDelete",rowIndexes:idxs});}
+function bulkSetStatusAPI(idxs,s){return apiPost({action:"bulkSetStatus",rowIndexes:idxs,status:s});}
+function uploadToDrive(file){
+  return new Promise(function(res,rej){
+    var r=new FileReader();
+    r.onload=function(e){
+      var b64=e.target.result.split(",")[1];
+      apiPost({action:"uploadImage",base64Data:b64,fileName:file.name,mimeType:file.type})
+        .then(function(d){res(d.url||"");}).catch(rej);
+    };
+    r.readAsDataURL(file);
+  });
+}
+
+// ── LANG ─────────────────────────────────────────────────────────────
+var T={
+  he:{loginTitle:"העלאת קבלה",loginSub:"הכנס את מספר הדירה כדי להתחיל",loginBtn:"כניסה",logout:"התנתק",submitBtn:"העלה קבלה",success:"הקבלה הועלתה בהצלחה!",dropMain:"גרור קובץ לכאן",dropSub:"או לחץ לבחירה · תמונה / PDF",linkLabel:"קישור לקבלה",histLoad:"טוען היסטוריה...",histEmpty:"עדיין לא העלית קבלות",greet:"שלום,",logo:"מערכת קבלות",userLabel:"מספר הדירה",passLabel:"סיסמה"},
+  en:{loginTitle:"Receipt Upload",loginSub:"Enter your apartment number to start",loginBtn:"Enter",logout:"Logout",submitBtn:"Upload Receipt",success:"Receipt uploaded successfully!",dropMain:"Drag file here",dropSub:"or click to select · Image / PDF",linkLabel:"Receipt link",histLoad:"Loading history...",histEmpty:"No receipts yet",greet:"Hello,",logo:"Receipt System",userLabel:"Apartment number",passLabel:"Password"}
 };
 function t(){return isEn?T.en:T.he;}
 function applyLang(){
   var l=t();
-  $("logo-text").textContent=l.logo;$("btn-lang").textContent=isEn?"עב":"EN";
-  $("login-title").textContent=l.loginTitle;$("login-sub").textContent=l.loginSub;
-  $("username-input").placeholder=l.ph;$("btn-user-login").textContent=l.loginBtn;
-  $("btn-user-logout").textContent=l.logout;$("btn-submit").textContent=l.submitBtn;
-  $("upload-success").textContent=l.success;$("link-input").placeholder=l.linkPH;
-  $("drop-main").textContent=l.dropMain;$("drop-sub").textContent=l.dropSub;
-  $("hist-loading-text").textContent=l.histLoad;$("hist-empty-text").textContent=l.histEmpty;
-  $("auth-banner-text").textContent=l.authBanner;
-  ["nav-user","nav-admin","tab-link","tab-image","tab-history"].forEach(function(id){
-    var el=$(id);if(el&&el.dataset[isEn?"en":"he"])el.textContent=el.dataset[isEn?"en":"he"];
+  $("logo-text").textContent=l.logo;
+  $("btn-lang").textContent=isEn?"עב":"EN";
+  $("mob-label-lang").textContent=isEn?"עב":"EN";
+  $("login-title").textContent=l.loginTitle;
+  $("login-sub").textContent=l.loginSub;
+  $("login-btn-text").textContent=l.loginBtn;
+  $("logout-text").textContent=l.logout;
+  $("submit-text").textContent=l.submitBtn;
+  $("success-text").textContent=l.success;
+  $("drop-main").textContent=l.dropMain;
+  $("drop-sub").textContent=l.dropSub;
+  $("hist-loading-text").textContent=l.histLoad;
+  $("hist-empty-text").textContent=l.histEmpty;
+  $("username-label").textContent=l.userLabel;
+  $("link-label").textContent=l.linkLabel;
+  $("pass-label").textContent=l.passLabel;
+  if(S.username)$("user-greeting").textContent=l.greet+" "+S.username+" 👋";
+  ["nav-user","nav-admin"].forEach(function(id){
+    var el=$(id);if(el&&el.dataset[isEn?"en":"he"]){
+      var txt=el.dataset[isEn?"en":"he"];
+      el.childNodes[el.childNodes.length-1].textContent=" "+txt.split(" ").slice(1).join(" ");
+    }
   });
-  if(S.username)$("user-greeting").textContent=l.greet+S.username+" 👋";
 }
 
-// ── VIEW ───────────────────────────────────────────────────────────────────
-function switchView(v) {
+// ── FIELD LABELS ──────────────────────────────────────────────────────
+function setupField(inputId, fieldId){
+  var input=$(inputId), field=$(fieldId);
+  if(!input||!field)return;
+  function update(){field.classList.toggle("has-value",input.value.length>0);}
+  input.addEventListener("input",update);
+  input.addEventListener("focus",function(){field.classList.add("has-value");});
+  input.addEventListener("blur",update);
+  update();
+}
+
+// ── VIEW ──────────────────────────────────────────────────────────────
+function switchView(v){
   S.view=v;
-  $("nav-user").classList.toggle("active",v==="user");
-  $("nav-admin").classList.toggle("active",v==="admin");
+  ["nav-user","nav-admin"].forEach(function(id){$(id).classList.remove("active");});
+  ["mob-nav-user","mob-nav-admin"].forEach(function(id){$(id).classList.remove("active");});
+  $(v==="user"?"nav-user":"nav-admin").classList.add("active");
+  $(v==="user"?"mob-nav-user":"mob-nav-admin").classList.add("active");
   ["user-login","user-upload","admin-login","admin-dash"].forEach(hide);
   if(v==="user"){S.username?show("user-upload"):show("user-login");}
   else{window.adminIn?show("admin-dash"):show("admin-login");}
 }
 
-// ── USER ───────────────────────────────────────────────────────────────────
+// ── USER ──────────────────────────────────────────────────────────────
 function userLogin(){
   var n=$("username-input").value.trim();if(!n)return;
   S.username=n;
-  $("user-greeting").textContent=t().greet+n+" 👋";
+  $("user-greeting").textContent=t().greet+" "+n+" 👋";
   hide("user-login");show("user-upload");
-  hide("auth-banner");
 }
-function userLogout(){S.username="";$("username-input").value="";hide("user-upload");show("user-login");}
+function userLogout(){S.username="";$("username-input").value="";$("username-field").classList.remove("has-value");hide("user-upload");show("user-login");}
+
 function switchTab(tab){
   S.tab=tab;S.file=null;
   ["tab-link","tab-image","tab-history"].forEach(function(id){$(id).classList.remove("active");});
   $(tab==="link"?"tab-link":tab==="image"?"tab-image":"tab-history").classList.add("active");
   if(tab==="history"){hide("panel-upload");show("panel-history");loadHistory();}
-  else{show("panel-upload");hide("panel-history");tab==="link"?show("link-section"):hide("link-section");tab==="image"?show("image-section"):hide("image-section");resetDrop();}
+  else{show("panel-upload");hide("panel-history");
+    tab==="link"?show("link-section"):hide("link-section");
+    tab==="image"?show("image-section"):hide("image-section");
+    resetDrop();
+  }
 }
+
 function resetDrop(){S.file=null;$("file-input").value="";show("drop-placeholder");hide("drop-chosen");}
 function setFile(f){
   if(!f)return;S.file=f;
   hide("drop-placeholder");$("drop-chosen").classList.remove("hidden");
-  $("drop-chosen").innerHTML="<div style='font-size:32px'>✅</div><div style='font-weight:600;margin-top:6px'>"+f.name+"</div><div style='font-size:12px;color:#888'>"+(f.size/1024).toFixed(1)+" KB</div>";
+  $("drop-chosen").innerHTML='<span class="material-symbols-rounded" style="font-size:40px;display:block;margin-bottom:8px">description</span><div style="font-weight:600">'+f.name+'</div><div style="font-size:12px;opacity:.7;margin-top:4px">'+(f.size/1024).toFixed(1)+' KB</div>';
 }
 function showErr(msg){$("upload-error").textContent=msg;show("upload-error");}
 
 function submitReceipt(){
   hide("upload-error");hide("upload-success");
   if(S.tab==="link"){
-    var link=$("link-input").value.trim();if(!link){showErr(isEn?"Enter a link":"הכנס קישור");return;}
+    var link=$("link-input").value.trim();
+    if(!link){showErr(isEn?"Enter a link":"הכנס קישור");return;}
     spin(true,isEn?"Uploading...":"מעלה...");
     addReceipt(S.username,"קישור",link).then(function(){
-      spin(false);$("link-input").value="";show("upload-success");
-      setTimeout(function(){hide("upload-success");},3500);
+      spin(false);$("link-input").value="";$("link-field").classList.remove("has-value");
+      show("upload-success");setTimeout(function(){hide("upload-success");},3500);
     }).catch(function(e){spin(false);showErr("שגיאה: "+e.message);});
   } else if(S.tab==="image"){
     if(!S.file){showErr(isEn?"Select a file":"בחר קובץ");return;}
@@ -615,24 +1098,22 @@ function loadHistory(){
   show("history-loading");hide("history-list");hide("history-empty");
   getReceipts().then(function(data){
     hide("history-loading");
-    var mine = data.filter(function(r){return r.user===S.username;});
+    var mine=data.filter(function(r){return r.user===S.username;});
     if(!mine.length){show("history-empty");return;}
     $("history-list").innerHTML=mine.map(function(r){
       var chk=r.status==="נבדק";
       var typeTxt=isEn?(r.type==="תמונה"?"Image":"Link"):r.type;
-      return "<div class='history-item'><div style='flex:1'><div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap'><span class='type-badge'>"+typeTxt+"</span><span class='badge "+(chk?"badge-checked":"badge-unchecked")+"'>"+(chk?(isEn?"✓ Checked":"✓ נבדק"):(isEn?"⏳ Pending":"⏳ לא נבדק"))+"</span></div><div class='history-meta'>"+r.uploadedAt+"</div></div><a href='"+r.content+"' target='_blank'><button class='action-btn'>🔗 "+(isEn?"Open":"פתח")+"</button></a></div>";
+      return '<div class="history-item"><div style="flex:1"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="md-type-chip">'+typeTxt+'</span><span class="md-badge '+(chk?"md-badge--green":"md-badge--yellow")+'">'+(chk?(isEn?"✓ Checked":"✓ נבדק"):(isEn?"⏳ Pending":"⏳ לא נבדק"))+'</span></div><span class="history-item__meta">'+r.uploadedAt+'</span></div><a href="'+r.content+'" target="_blank"><button class="md-btn md-btn--tonal" style="width:auto;padding:0 16px"><span class="material-symbols-rounded">open_in_new</span>'+(isEn?"Open":"פתח")+'</button></a></div>';
     }).join("");
     show("history-list");
   }).catch(function(){hide("history-loading");show("history-empty");});
 }
 
-// ── ADMIN ──────────────────────────────────────────────────────────────────
+// ── ADMIN ─────────────────────────────────────────────────────────────
 function adminLogin(){
-  var pass=$("admin-pass").value;
-  if(pass===ADMIN_PASS){
-    window.adminIn=true;hide("admin-login");show("admin-dash");
-    hide("admin-auth-banner");loadReceipts();
-  } else { show("admin-error"); }
+  if($("admin-pass").value===ADMIN_PASS){
+    window.adminIn=true;hide("admin-login");show("admin-dash");loadReceipts();
+  } else show("admin-error");
 }
 function adminLogout(){window.adminIn=false;$("admin-pass").value="";hide("admin-dash");show("admin-login");}
 
@@ -654,25 +1135,35 @@ function updateStats(){
 
 function setAdminTab(tab){
   S.adminTab=tab;S.selected.clear();updateBulkBar();
-  $("atab-all").classList.toggle("active",tab==="all");$("atab-users").classList.toggle("active",tab==="users");
-  tab==="all"?show("view-all"):hide("view-all");tab==="users"?show("view-users"):hide("view-users");
+  $("atab-all").classList.toggle("active",tab==="all");
+  $("atab-users").classList.toggle("active",tab==="users");
+  tab==="all"?show("view-all"):hide("view-all");
+  tab==="users"?show("view-users"):hide("view-users");
   if(tab==="users")renderGrid();
 }
 
 function getFiltered(){
   var search=($("search-input")||{value:""}).value.toLowerCase();
-  return S.receipts.filter(function(r){return S.filter==="הכל"||r.status===S.filter;}).filter(function(r){return r.user.toLowerCase().includes(search)||r.content.toLowerCase().includes(search);});
+  return S.receipts.filter(function(r){return S.filter==="הכל"||r.status===S.filter;})
+    .filter(function(r){return r.user.toLowerCase().includes(search)||r.content.toLowerCase().includes(search);});
 }
 
 function rowHtml(r,i,includeUser){
   var chk=r.status==="נבדק";var sel=S.selected.has(r.rowIndex);
-  var statusBadge="<span class='badge "+(chk?"badge-checked":"badge-unchecked")+"'>"+(chk?"✓ נבדק":"⏳ לא נבדק")+"</span>";
-  var toggleBtn="<button class='action-btn toggle-btn' data-row='"+r.rowIndex+"' data-status='"+r.status+"'>"+(chk?"↩ בטל":"☑ נבדק")+"</button>";
-  var delBtn="<button class='delete-btn del-btn' data-row='"+r.rowIndex+"'>🗑️</button>";
-  var openBtn="<a href='"+r.content+"' target='_blank' class='preview-link'><button class='action-btn'>👁 צפה</button></a>";
-  var checkCell=includeUser?"<td><input type='checkbox' class='row-check' data-row='"+r.rowIndex+"' "+(sel?"checked":"")+" /></td>":"";
-  var userCell=includeUser?"<td><strong>"+r.user+"</strong></td>":"";
-  return "<tr class='"+(sel?"selected":"")+"' style='background:"+(i%2===0?"#fff":"#f9fafb")+"'>"+checkCell+userCell+"<td><span class='type-badge'>"+r.type+"</span></td><td>"+openBtn+"</td><td style='white-space:nowrap;font-size:13px;color:var(--muted)'>"+r.uploadedAt+"</td><td>"+statusBadge+"</td><td><div style='display:flex;gap:6px'>"+toggleBtn+delBtn+"</div></td></tr>";
+  var badge='<span class="md-badge '+(chk?"md-badge--green":"md-badge--yellow")+'">'+(chk?"✓ נבדק":"⏳ לא נבדק")+'</span>';
+  var toggleBtn='<button class="md-btn md-btn--'+(chk?"outlined":"tonal")+' toggle-btn" style="width:auto;padding:0 12px;height:32px" data-row="'+r.rowIndex+'" data-status="'+r.status+'">'+(chk?"↩ בטל":"☑ נבדק")+'</button>';
+  var delBtn='<button class="md-btn md-btn--text del-btn" style="width:auto;padding:0 8px;height:32px;color:var(--md-sys-color-error)" data-row="'+r.rowIndex+'"><span class="material-symbols-rounded">delete</span></button>';
+  var openBtn='<a href="'+r.content+'" target="_blank" class="preview-link"><button class="md-btn md-btn--text" style="width:auto;padding:0 8px;height:32px"><span class="material-symbols-rounded">open_in_new</span></button></a>';
+  var checkCell=includeUser?'<td><input type="checkbox" class="row-check" data-row="'+r.rowIndex+'" '+(sel?"checked":"")+'></td>':'';
+  var userCell=includeUser?'<td><strong>'+r.user+'</strong></td>':'';
+  return '<tr class="'+(sel?"selected":"")+'" style="background:'+(i%2===0?"":"var(--md-sys-color-surface-container-lowest)")+'">'
+    +checkCell+userCell
+    +'<td><span class="md-type-chip">'+r.type+'</span></td>'
+    +'<td>'+openBtn+'</td>'
+    +'<td style="white-space:nowrap;color:var(--md-sys-color-on-surface-variant);font-size:13px">'+r.uploadedAt+'</td>'
+    +'<td>'+badge+'</td>'
+    +'<td><div style="display:flex;gap:4px">'+toggleBtn+delBtn+'</div></td>'
+    +'</tr>';
 }
 
 function renderTable(){
@@ -721,18 +1212,18 @@ function bindTableBtns(tbodyId){
   });
 }
 
-// ── BULK ───────────────────────────────────────────────────────────────────
 function updateBulkBar(){var n=S.selected.size;if(n>0){show("bulk-bar");$("bulk-count").textContent=n+" נבחרו";}else hide("bulk-bar");}
 function clearSelection(){S.selected.clear();updateBulkBar();renderTable();}
+
 function askDelete(rowIndex){
   S.confirmAction={type:"single",rowIndex:rowIndex};
-  $("confirm-title").textContent="🗑️ מחיקת קבלה";
-  $("confirm-msg").textContent="האם אתה בטוח שברצונך למחוק קבלה זו?";
+  $("confirm-title").textContent="מחיקת קבלה";
+  $("confirm-msg").textContent="האם אתה בטוח שברצונך למחוק קבלה זו? פעולה זו אינה הפיכה.";
   show("confirm-overlay");
 }
 function askBulkDelete(){
   var rows=Array.from(S.selected);S.confirmAction={type:"bulk-delete",rows:rows};
-  $("confirm-title").textContent="🗑️ מחיקה מרובה";
+  $("confirm-title").textContent="מחיקה מרובה";
   $("confirm-msg").textContent="האם אתה בטוח שברצונך למחוק "+rows.length+" קבלות?";
   show("confirm-overlay");
 }
@@ -754,7 +1245,6 @@ function doConfirm(){
   }
 }
 
-// ── USERS GRID ─────────────────────────────────────────────────────────────
 function renderGrid(){
   hide("user-detail-view");show("users-grid-view");
   var byUser={};
@@ -764,12 +1254,17 @@ function renderGrid(){
   hide("users-empty");
   $("users-grid").innerHTML=users.map(function(u){
     var d=byUser[u];
-    var p=d.pending>0?"<div class='folder-pending'>⏳ "+d.pending+" ממתינות</div>":"<div style='font-size:11px;color:var(--green);font-weight:600;margin-top:2px'>✓ הכל נבדק</div>";
-    return "<div class='user-folder' data-user='"+u+"'><div class='folder-icon'>🏠</div><div class='folder-name'>דירה "+u+"</div><div class='folder-count'>"+d.total+" קבלות</div>"+p+"</div>";
+    var p=d.pending>0?'<span class="folder-card__pending">⏳ '+d.pending+' ממתינות</span>':'<span style="font-size:11px;color:var(--md-custom-green);font-weight:600;margin-top:4px;display:block">✓ הכל נבדק</span>';
+    return '<button class="folder-card" data-user="'+u+'"><span class="folder-card__icon">🏠</span><span class="folder-card__title">דירה '+u+'</span><span class="folder-card__sub">'+d.total+' קבלות</span>'+p+'</button>';
   }).join("");
-  $("users-grid").querySelectorAll(".user-folder").forEach(function(el){el.addEventListener("click",function(){openDetail(this.dataset.user);});});
+  $("users-grid").querySelectorAll(".folder-card").forEach(function(el){el.addEventListener("click",function(){openDetail(this.dataset.user);});});
 }
-function openDetail(u){S.detailUser=u;$("user-detail-name").textContent="🏠 דירה "+u;hide("users-grid-view");show("user-detail-view");renderDetail(u);}
+
+function openDetail(u){
+  S.detailUser=u;
+  $("user-detail-name").textContent="🏠 דירה "+u;
+  hide("users-grid-view");show("user-detail-view");renderDetail(u);
+}
 function renderDetail(u){
   var list=S.receipts.filter(function(r){return r.user===u;});
   $("user-detail-stats").textContent=list.length+" קבלות · "+list.filter(function(r){return r.status==="לא נבדק";}).length+" ממתינות";
@@ -777,10 +1272,17 @@ function renderDetail(u){
   bindTableBtns("user-detail-body");
 }
 
-// ── EVENTS ─────────────────────────────────────────────────────────────────
-window.addEventListener("load", function(){
+window.addEventListener("load",function(){
+  setupField("username-input","username-field");
+  setupField("link-input","link-field");
+  setupField("admin-pass","pass-field");
+  setupField("search-input","search-input");
+
   $("nav-user").addEventListener("click",function(){switchView("user");});
   $("nav-admin").addEventListener("click",function(){switchView("admin");});
+  $("mob-nav-user").addEventListener("click",function(){switchView("user");});
+  $("mob-nav-admin").addEventListener("click",function(){switchView("admin");});
+  $("mob-nav-lang").addEventListener("click",function(){isEn=!isEn;applyLang();});
   $("btn-lang").addEventListener("click",function(){isEn=!isEn;applyLang();});
   $("btn-user-login").addEventListener("click",userLogin);
   $("username-input").addEventListener("keydown",function(e){if(e.key==="Enter")userLogin();});
@@ -798,27 +1300,27 @@ window.addEventListener("load", function(){
   $("admin-pass").addEventListener("keydown",function(e){if(e.key==="Enter")adminLogin();});
   $("btn-admin-logout").addEventListener("click",adminLogout);
   $("btn-refresh").addEventListener("click",loadReceipts);
-  var sortAsc = false;
-  $("btn-sort").addEventListener("click",function(){
-    sortAsc=!sortAsc;
-    this.textContent=sortAsc?"📅 ישן → חדש":"📅 חדש → ישן";
-    this.style.background=sortAsc?"var(--primary)":"var(--light)";
-    this.style.color=sortAsc?"#fff":"#475569";
-    this.style.borderColor=sortAsc?"var(--primary)":"var(--border)";
-    S.receipts.sort(function(a,b){ return sortAsc ? a.rowIndex-b.rowIndex : b.rowIndex-a.rowIndex; });
-    renderTable();
-  });
   $("atab-all").addEventListener("click",function(){setAdminTab("all");});
   $("atab-users").addEventListener("click",function(){setAdminTab("users");});
   $("stat-users-card").addEventListener("click",function(){setAdminTab("users");});
   $("search-input").addEventListener("input",renderTable);
-  document.querySelectorAll(".filter-btn").forEach(function(btn){
+
+  document.querySelectorAll(".md-chip[data-filter]").forEach(function(btn){
     btn.addEventListener("click",function(){
       S.filter=this.dataset.filter;
-      document.querySelectorAll(".filter-btn").forEach(function(b){b.classList.remove("active");});
-      this.classList.add("active");renderTable();
+      document.querySelectorAll(".md-chip[data-filter]").forEach(function(b){b.classList.remove("selected");});
+      this.classList.add("selected");renderTable();
     });
   });
+
+  $("btn-sort").addEventListener("click",function(){
+    sortAsc=!sortAsc;
+    this.innerHTML='<span class="material-symbols-rounded">sort</span>'+(sortAsc?"ישן → חדש":"חדש → ישן");
+    this.classList.toggle("selected",sortAsc);
+    S.receipts.sort(function(a,b){return sortAsc?a.rowIndex-b.rowIndex:b.rowIndex-a.rowIndex;});
+    renderTable();
+  });
+
   $("select-all").addEventListener("change",function(){
     var list=getFiltered();
     if(this.checked){list.forEach(function(r){S.selected.add(r.rowIndex);});}
