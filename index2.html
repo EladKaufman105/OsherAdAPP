@@ -644,6 +644,9 @@ a { color: var(--md-sys-color-primary); text-decoration: none; }
   .stat-card { padding: 12px 8px; min-width: 70px; }
   .stat-card__num { font-size: 20px; }
   th, td { padding: 8px 10px; font-size: 13px; }
+  .md-badge { height: 20px; padding: 0 8px; font-size: 11px; white-space: nowrap; }
+  .md-btn.toggle-btn { height: 28px; font-size: 11px; padding: 0 8px; }
+  .md-btn.del-btn { height: 28px; width: 28px; padding: 0; }
   .folders-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
   .history-item { flex-direction: column; align-items: flex-start; gap: 8px; }
   #bulk-bar { gap: 6px; }
@@ -705,12 +708,6 @@ a { color: var(--md-sys-color-primary); text-decoration: none; }
         <span class="material-symbols-rounded">admin_panel_settings</span>
       </div>
       <span class="nav-bar__label" id="mob-label-admin">מנהל</span>
-    </button>
-    <button id="mob-nav-lang" class="nav-bar__item">
-      <div class="nav-bar__indicator">
-        <span class="material-symbols-rounded">language</span>
-      </div>
-      <span class="nav-bar__label" id="mob-label-lang">EN</span>
     </button>
   </div>
 </nav>
@@ -1282,7 +1279,6 @@ window.addEventListener("load",function(){
   $("nav-admin").addEventListener("click",function(){switchView("admin");});
   $("mob-nav-user").addEventListener("click",function(){switchView("user");});
   $("mob-nav-admin").addEventListener("click",function(){switchView("admin");});
-  $("mob-nav-lang").addEventListener("click",function(){isEn=!isEn;applyLang();});
   $("btn-lang").addEventListener("click",function(){isEn=!isEn;applyLang();});
   $("btn-user-login").addEventListener("click",userLogin);
   $("username-input").addEventListener("keydown",function(e){if(e.key==="Enter")userLogin();});
