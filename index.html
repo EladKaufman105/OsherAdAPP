@@ -632,15 +632,19 @@ a { color: var(--md-sys-color-primary); text-decoration: none; }
   .top-app-bar { height: 56px; }
   .top-app-bar .seg-btn-group { display: none; }
   .nav-bar { display: flex; }
-  main {
-    padding: 16px;
-    padding-bottom: 96px;
-    display: block;
-  }
-  .md-card {
-    border-radius: var(--md-sys-shape-extra-large);
-    max-width: 100% !important;
-  }
+ main {
+  padding: 0;
+  padding-bottom: 80px;
+  display: block;
+  background: var(--md-sys-color-surface-container-low);
+}
+.md-card {
+  border-radius: 0;
+  max-width: 100% !important;
+  box-shadow: none;
+  min-height: calc(100vh - 56px - 80px);
+  background: var(--md-sys-color-surface);
+}
   .stat-row { gap: 8px; }
   .stat-card { padding: 12px 8px; min-width: 70px; }
   .stat-card__num { font-size: 20px; }
