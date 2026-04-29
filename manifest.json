@@ -2,7 +2,7 @@
   "name": "מערכת קבלות",
   "short_name": "קבלות",
   "description": "מערכת להעלאה וניהול קבלות",
-  "start_url": "/OsherAd/index.html",
+  "start_url": "/OsherAdAPP/index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#F8F9FF",
