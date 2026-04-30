@@ -906,11 +906,11 @@ a { color: var(--md-sys-color-primary); text-decoration: none; }
   <div class="top-app-bar__actions">
     <button id="btn-lang" class="md-btn md-btn--text" style="width:auto;padding:0 12px;color:var(--md-sys-color-on-surface-variant)">EN</button>
     <div class="seg-btn-group">
-      <button id="nav-user" class="seg-btn active" data-he="👤 משתמש" data-en="👤 User">
-        <span class="material-symbols-rounded">person</span> משתמש
+      <button id="nav-user" class="seg-btn active">
+        <span class="material-symbols-rounded">person</span><span id="nav-user-label"> משתמש</span>
       </button>
-      <button id="nav-admin" class="seg-btn" data-he="🔐 מנהל" data-en="🔐 Admin">
-        <span class="material-symbols-rounded">admin_panel_settings</span> מנהל
+      <button id="nav-admin" class="seg-btn">
+        <span class="material-symbols-rounded">admin_panel_settings</span><span id="nav-admin-label"> מנהל</span>
       </button>
     </div>
   </div>
@@ -1230,8 +1230,8 @@ function applyLang(){
   $("tab-image").querySelector("span:last-child").textContent=isEn?"Image":"תמונה";
   $("tab-history").querySelector("span:last-child").textContent=isEn?"History":"היסטוריה";
   // Nav buttons
-  $("nav-user").querySelector("span:last-child").textContent=" "+(isEn?"User":"משתמש");
-  $("nav-admin").querySelector("span:last-child").textContent=" "+(isEn?"Admin":"מנהל");
+  $("nav-user-label").textContent=" "+(isEn?"User":"משתמש");
+  $("nav-admin-label").textContent=" "+(isEn?"Admin":"מנהל");
   if(S.username)$("user-greeting").textContent=l.greet+" "+S.username+" 👋";
 }
 
