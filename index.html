@@ -390,16 +390,19 @@ main {
 ═══════════════════════════════════════════════ */
 .md-primary-tabs {
   display: flex;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
   margin-bottom: 20px;
 }
 .md-primary-tab {
-  flex: 1; height: 44px; font-size: 12px; white-space: nowrap; border: none; background: transparent;
-  cursor: pointer; font: var(--md-sys-typescale-title-medium); font-family: inherit;
+  flex: 1; height: 44px; border: none; background: transparent;
+  cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit;
   color: var(--md-sys-color-on-surface-variant);
   border-bottom: 3px solid transparent; margin-bottom: -1px;
   transition: all .2s; display: flex; align-items: center;
-  justify-content: center; gap: 8px;
+  justify-content: center; gap: 4px; white-space: nowrap;
+  padding: 0 8px;
 }
 .md-primary-tab.active {
   color: var(--md-sys-color-primary);
@@ -1064,14 +1067,8 @@ a { color: var(--md-sys-color-primary); text-decoration: none; }
 
     <!-- PRIMARY TABS -->
     <div class="md-primary-tabs">
-      <button id="atab-all" class="md-primary-tab active">
-        <span class="material-symbols-rounded">receipt_long</span>
-        כל הקבלות
-      </button>
-      <button id="atab-users" class="md-primary-tab">
-        <span class="material-symbols-rounded">apartment</span>
-        לפי דירה
-      </button>
+      <button id="atab-all" class="md-primary-tab active">📋 כל הקבלות</button>
+      <button id="atab-users" class="md-primary-tab">🏠 לפי דירה</button>
     </div>
 
     <!-- ALL VIEW -->
