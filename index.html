@@ -1230,8 +1230,8 @@ function applyLang(){
   $("tab-image").querySelector("span:last-child").textContent=isEn?"Image":"תמונה";
   $("tab-history").querySelector("span:last-child").textContent=isEn?"History":"היסטוריה";
   // Nav buttons
-  $("nav-user").querySelector("span:last-child").textContent=isEn?"User":"משתמש";
-  $("nav-admin").querySelector("span:last-child").textContent=isEn?"Admin":"מנהל";
+  $("nav-user").querySelector("span:last-child").textContent=" "+(isEn?"User":"משתמש");
+  $("nav-admin").querySelector("span:last-child").textContent=" "+(isEn?"Admin":"מנהל");
   if(S.username)$("user-greeting").textContent=l.greet+" "+S.username+" 👋";
 }
 
