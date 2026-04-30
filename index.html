@@ -389,11 +389,12 @@ main {
    PRIMARY TABS (MD3) - admin
 ═══════════════════════════════════════════════ */
 .md-primary-tabs {
-  display: flex;
+  display: flex !important;
   flex-direction: row !important;
   flex-wrap: nowrap !important;
   border-bottom: 1px solid var(--md-sys-color-outline-variant);
   margin-bottom: 20px;
+  width: 100%;
 }
 .md-primary-tab {
   flex: 1; height: 44px; border: none; background: transparent;
@@ -1067,8 +1068,8 @@ a { color: var(--md-sys-color-primary); text-decoration: none; }
 
     <!-- PRIMARY TABS -->
     <div class="md-primary-tabs">
-      <button id="atab-all" class="md-primary-tab active">📋 כל הקבלות</button>
-      <button id="atab-users" class="md-primary-tab">🏠 לפי דירה</button>
+      <button id="atab-all" class="md-primary-tab active"><span class="material-symbols-rounded">receipt_long</span> כל הקבלות</button>
+      <button id="atab-users" class="md-primary-tab"><span class="material-symbols-rounded">apartment</span> לפי דירה</button>
     </div>
 
     <!-- ALL VIEW -->
