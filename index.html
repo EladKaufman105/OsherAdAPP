@@ -2,1502 +2,911 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<meta name="theme-color" content="#141218"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-title" content="קבלות"/>
-<link rel="manifest" href="manifest.json"/>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧾</text></svg>"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
 <title>מערכת קבלות</title>
-<link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,1,0" rel="stylesheet"/>
 <style>
-/* ═══════════════════════════════════════════════
-   MD3 TOKEN SYSTEM
-═══════════════════════════════════════════════ */
-:root {
-  /* MD3 Dynamic Color - Dark Purple Theme */
-  --md-sys-color-primary: #D0BCFF;
-  --md-sys-color-on-primary: #381E72;
-  --md-sys-color-primary-container: #4F378B;
-  --md-sys-color-on-primary-container: #EADDFF;
-
-  --md-sys-color-secondary: #CCC2DC;
-  --md-sys-color-on-secondary: #332D41;
-  --md-sys-color-secondary-container: #4A4458;
-  --md-sys-color-on-secondary-container: #E8DEF8;
-
-  --md-sys-color-tertiary: #EFB8C8;
-  --md-sys-color-on-tertiary: #492532;
-  --md-sys-color-tertiary-container: #633B48;
-  --md-sys-color-on-tertiary-container: #FFD8E4;
-
-  --md-sys-color-error: #F2B8B5;
-  --md-sys-color-on-error: #601410;
-  --md-sys-color-error-container: #8C1D18;
-  --md-sys-color-on-error-container: #F9DEDC;
-
-  --md-sys-color-surface: #141218;
-  --md-sys-color-on-surface: #E6E0E9;
-  --md-sys-color-surface-variant: #49454F;
-  --md-sys-color-on-surface-variant: #CAC4D0;
-  --md-sys-color-surface-container-lowest: #0F0D13;
-  --md-sys-color-surface-container-low: #1D1B20;
-  --md-sys-color-surface-container: #211F26;
-  --md-sys-color-surface-container-high: #2B2930;
-  --md-sys-color-surface-container-highest: #36343B;
-
-  --md-sys-color-outline: #938F99;
-  --md-sys-color-outline-variant: #49454F;
-
-  --md-custom-green: #B7F397;
-  --md-custom-green-container: #1A3A0A;
-  --md-custom-yellow: #FEF08A;
-  --md-custom-yellow-container: #3A2E00;
-
-  /* Shape */
-  --md-sys-shape-none: 0px;
-  --md-sys-shape-extra-small: 4px;
-  --md-sys-shape-small: 8px;
-  --md-sys-shape-medium: 12px;
-  --md-sys-shape-large: 16px;
-  --md-sys-shape-extra-large: 28px;
-  --md-sys-shape-full: 9999px;
-
-  /* Elevation */
-  --md-sys-elevation-1: 0px 1px 2px rgba(0,0,0,0.3), 0px 1px 3px 1px rgba(0,0,0,0.15);
-  --md-sys-elevation-2: 0px 1px 2px rgba(0,0,0,0.3), 0px 2px 6px 2px rgba(0,0,0,0.15);
-  --md-sys-elevation-3: 0px 4px 8px 3px rgba(0,0,0,0.15), 0px 1px 3px rgba(0,0,0,0.3);
-
-  /* Typography */
-  --md-sys-typescale-display-large: 700 57px/64px 'Google Sans', sans-serif;
-  --md-sys-typescale-headline-large: 700 32px/40px 'Google Sans', sans-serif;
-  --md-sys-typescale-headline-medium: 700 28px/36px 'Google Sans', sans-serif;
-  --md-sys-typescale-title-large: 600 22px/28px 'Google Sans', sans-serif;
-  --md-sys-typescale-title-medium: 600 16px/24px 'Google Sans', sans-serif;
-  --md-sys-typescale-body-large: 400 16px/24px 'Google Sans', sans-serif;
-  --md-sys-typescale-body-medium: 400 14px/20px 'Google Sans', sans-serif;
-  --md-sys-typescale-label-large: 500 14px/20px 'Google Sans', sans-serif;
-  --md-sys-typescale-label-medium: 500 12px/16px 'Google Sans', sans-serif;
-}
-
-/* ═══════════════════════════════════════════════
-   RESET & BASE
-═══════════════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; min-height: 100vh; overflow-x: hidden; }
-body {
-  font: var(--md-sys-typescale-body-large);
-  background: var(--md-sys-color-surface);
-  color: var(--md-sys-color-on-surface);
-  direction: rtl;
-}
-.material-symbols-rounded { font-size: 20px; vertical-align: middle; }
-
-/* ═══════════════════════════════════════════════
-   ANIMATIONS
-═══════════════════════════════════════════════ */
-@keyframes md-fade-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes md-spin { to { transform: rotate(360deg); } }
-@keyframes md-ripple {
-  from { transform: scale(0); opacity: .3; }
-  to   { transform: scale(4); opacity: 0; }
-}
-.md-anim { animation: md-fade-in .25s cubic-bezier(.2,0,0,1) both; }
-
-/* ═══════════════════════════════════════════════
-   TOP APP BAR (MD3)
-═══════════════════════════════════════════════ */
-.top-app-bar {
-  background: var(--md-sys-color-surface-container);
-  height: 64px;
-  padding: 0 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: sticky; top: 0; z-index: 100;
-  box-shadow: var(--md-sys-elevation-1);
-}
-.top-app-bar__headline {
-  font: var(--md-sys-typescale-title-large);
-  color: var(--md-sys-color-on-surface);
-  display: flex; align-items: center; gap: 8px;
-}
-.top-app-bar__actions { display: flex; gap: 4px; align-items: center; }
-
-/* ═══════════════════════════════════════════════
-   NAVIGATION BAR (MD3) - bottom on mobile
-═══════════════════════════════════════════════ */
-.nav-bar {
-  display: none;
-  position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-  background: var(--md-sys-color-surface-container);
-  box-shadow: 0 -1px 0 var(--md-sys-color-outline-variant);
-  height: 80px;
-  padding: 0 8px;
-}
-.nav-bar__items { display: flex; height: 100%; align-items: center; justify-content: center; gap: 0; width: 100%; }
-.nav-bar__item { flex: 1; max-width: 160px; }
-.nav-bar__item {
-  flex: 1; display: flex; flex-direction: column; align-items: center;
-  justify-content: center; gap: 4px; cursor: pointer; border: none;
-  background: transparent; font-family: inherit; padding: 4px 0;
-  position: relative;
-}
-.nav-bar__indicator {
-  width: 64px; height: 32px; border-radius: var(--md-sys-shape-full);
-  display: flex; align-items: center; justify-content: center;
-  transition: background .2s;
-}
-.nav-bar__item.active .nav-bar__indicator {
-  background: var(--md-sys-color-secondary-container);
-}
-.nav-bar__label {
-  font: var(--md-sys-typescale-label-medium);
-  color: var(--md-sys-color-on-surface-variant);
-}
-.nav-bar__item.active .nav-bar__label,
-.nav-bar__item.active .material-symbols-rounded {
-  color: var(--md-sys-color-on-surface);
-  font-weight: 600;
-}
-.material-symbols-rounded { color: var(--md-sys-color-on-surface-variant); }
-
-/* ═══════════════════════════════════════════════
-   SEGMENTED BUTTON (top nav on desktop)
-═══════════════════════════════════════════════ */
-.seg-btn-group {
-  display: flex; border: 1px solid var(--md-sys-color-outline);
-  border-radius: var(--md-sys-shape-full); overflow: hidden;
-}
-.seg-btn {
-  padding: 6px 20px; border: none; background: transparent;
-  color: var(--md-sys-color-on-surface); cursor: pointer;
-  font: var(--md-sys-typescale-label-large);
-  font-family: inherit; transition: background .2s;
-  position: relative; overflow: hidden;
-  display: flex; align-items: center; gap: 6px;
-}
-.seg-btn + .seg-btn { border-right: 1px solid var(--md-sys-color-outline); }
-.seg-btn.active { background: var(--md-sys-color-secondary-container); }
-.seg-btn:hover { background: rgba(103,80,164,.08); }
-
-/* ═══════════════════════════════════════════════
-   ICON BUTTON (MD3)
-═══════════════════════════════════════════════ */
-.icon-btn {
-  width: 40px; height: 40px; border-radius: var(--md-sys-shape-full);
-  border: none; background: transparent; cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  color: var(--md-sys-color-on-surface-variant); transition: background .2s;
-  position: relative; overflow: hidden;
-}
-.icon-btn:hover { background: rgba(28,27,31,.08); }
-
-/* ═══════════════════════════════════════════════
-   MAIN LAYOUT
-═══════════════════════════════════════════════ */
-main {
-  display: flex; justify-content: center;
-  align-items: flex-start; padding: 24px 16px;
-  min-height: calc(100vh - 64px);
-}
-
-/* ═══════════════════════════════════════════════
-   CARD (MD3 Surface)
-═══════════════════════════════════════════════ */
-.md-card {
-  background: var(--md-sys-color-surface-container-low);
-  border-radius: var(--md-sys-shape-extra-large);
-  padding: 28px 24px;
-  width: 100%; max-width: 480px;
-  display: flex; flex-direction: column; gap: 20px;
-  animation: md-fade-in .3s cubic-bezier(.2,0,0,1) both;
-}
-.md-card.wide { max-width: 1200px; }
-
-/* ═══════════════════════════════════════════════
-   FILLED TEXT FIELD (MD3)
-═══════════════════════════════════════════════ */
-.md-field {
-  position: relative;
-  background: var(--md-sys-color-surface-container-highest);
-  border-radius: var(--md-sys-shape-extra-small) var(--md-sys-shape-extra-small) 0 0;
-  border-bottom: 1px solid var(--md-sys-color-on-surface-variant);
-  transition: border-color .2s;
-}
-.md-field:focus-within {
-  border-bottom: 2px solid var(--md-sys-color-primary);
-}
-.md-field input {
-  width: 100%; padding: 20px 16px 8px;
-  border: none; background: transparent; outline: none;
-  font: var(--md-sys-typescale-body-large); font-family: inherit;
-  color: var(--md-sys-color-on-surface);
-}
-.md-field label {
-  position: absolute; right: 16px; top: 50%;
-  transform: translateY(-50%);
-  font: var(--md-sys-typescale-body-large); font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant);
-  pointer-events: none; transition: all .2s;
-}
-.md-field:focus-within label,
-.md-field.has-value label {
-  top: 10px; transform: none;
-  font: var(--md-sys-typescale-label-medium); font-family: inherit;
-  color: var(--md-sys-color-primary);
-}
-
-/* ═══════════════════════════════════════════════
-   BUTTONS (MD3)
-═══════════════════════════════════════════════ */
-.md-btn {
-  display: inline-flex; align-items: center; justify-content: center;
-  gap: 8px; height: 40px; padding: 0 24px;
-  border-radius: var(--md-sys-shape-full); border: none; cursor: pointer;
-  font: var(--md-sys-typescale-label-large); font-family: inherit;
-  letter-spacing: .1px; transition: box-shadow .2s;
-  position: relative; overflow: hidden; width: 100%;
-}
-.md-btn::after {
-  content: ''; position: absolute; inset: 0;
-  background: currentColor; opacity: 0; transition: opacity .2s;
-  border-radius: inherit;
-}
-.md-btn:hover::after { opacity: .08; }
-.md-btn:active::after { opacity: .12; }
-
-.md-btn--filled {
-  background: var(--md-sys-color-primary);
-  color: var(--md-sys-color-on-primary);
-  box-shadow: var(--md-sys-elevation-1);
-}
-.md-btn--filled:hover { box-shadow: var(--md-sys-elevation-2); }
-
-.md-btn--tonal {
-  background: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-on-secondary-container);
-}
-
-.md-btn--outlined {
-  background: transparent;
-  color: var(--md-sys-color-primary);
-  border: 1px solid var(--md-sys-color-outline);
-}
-
-.md-btn--text {
-  background: transparent;
-  color: var(--md-sys-color-primary);
-  padding: 0 12px; width: auto;
-}
-
-/* ═══════════════════════════════════════════════
-   CHIP (MD3 Filter/Assist Chips)
-═══════════════════════════════════════════════ */
-.md-chip {
-  display: inline-flex; align-items: center; gap: 6px;
-  height: 32px; padding: 0 16px;
-  border-radius: var(--md-sys-shape-small);
-  border: 1px solid var(--md-sys-color-outline-variant);
-  background: transparent; cursor: pointer;
-  font: var(--md-sys-typescale-label-large); font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant);
-  transition: all .2s; white-space: nowrap;
-}
-.md-chip:hover { background: rgba(103,80,164,.08); }
-.md-chip.selected {
-  background: var(--md-sys-color-secondary-container);
-  border-color: transparent;
-  color: var(--md-sys-color-on-secondary-container);
-}
-
-/* ═══════════════════════════════════════════════
-   SEGMENTED TABS (MD3)
-═══════════════════════════════════════════════ */
-.md-tabs {
-  display: flex; background: var(--md-sys-color-surface-container-highest);
-  border-radius: var(--md-sys-shape-full); padding: 2px; gap: 2px;
-}
-.md-tab {
-  flex: 1; height: 36px; border: none; background: transparent;
-  border-radius: var(--md-sys-shape-full); cursor: pointer;
-  font: var(--md-sys-typescale-label-large); font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant); transition: all .2s;
-  display: flex; align-items: center; justify-content: center; gap: 6px;
-}
-.md-tab.active {
-  background: var(--md-sys-color-surface-container-lowest);
-  color: var(--md-sys-color-on-surface);
-  box-shadow: var(--md-sys-elevation-1);
-}
-
-/* ═══════════════════════════════════════════════
-   BADGES
-═══════════════════════════════════════════════ */
-.md-badge {
-  display: inline-flex; align-items: center; gap: 4px;
-  height: 24px; padding: 0 10px;
-  border-radius: var(--md-sys-shape-full);
-  font: var(--md-sys-typescale-label-medium); font-family: inherit;
-  font-weight: 600;
-}
-.md-badge--green {
-  background: var(--md-custom-green-container);
-  color: var(--md-custom-green);
-}
-.md-badge--yellow {
-  background: var(--md-custom-yellow-container);
-  color: var(--md-custom-yellow);
-}
-.md-type-chip {
-  display: inline-flex; align-items: center;
-  height: 24px; padding: 0 10px;
-  border-radius: var(--md-sys-shape-small);
-  background: var(--md-sys-color-secondary-container);
-  color: var(--md-sys-color-on-secondary-container);
-  font: var(--md-sys-typescale-label-medium); font-family: inherit;
-}
-
-/* ═══════════════════════════════════════════════
-   STAT CARDS
-═══════════════════════════════════════════════ */
-.stat-row { display: flex; gap: 12px; flex-wrap: wrap; }
-.stat-card {
-  flex: 1; min-width: 80px;
-  background: var(--md-sys-color-surface-container);
-  border-radius: var(--md-sys-shape-large);
-  padding: 16px 12px; text-align: center; cursor: pointer;
-  transition: all .2s; border: none;
-}
-.stat-card:hover {
-  background: var(--md-sys-color-surface-container-high);
-  box-shadow: var(--md-sys-elevation-1);
-}
-.stat-card__num {
-  font-size: 28px; font-weight: 700;
-  font-family: inherit; display: block;
-}
-.stat-card__label { font-size: 12px; color: var(--md-sys-color-on-surface-variant); display: block; margin-top: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-}
-
-/* ═══════════════════════════════════════════════
-   PRIMARY TABS (MD3) - admin
-═══════════════════════════════════════════════ */
-.md-primary-tabs {
-  display: flex !important;
-  flex-direction: row !important;
-  flex-wrap: nowrap !important;
-  border-bottom: 1px solid var(--md-sys-color-outline-variant);
-  margin-bottom: 20px;
-  width: 100%;
-}
-.md-primary-tab {
-  flex: 1 1 auto !important;
-  min-width: 0 !important;
-  height: 44px; border: none; background: transparent;
-  cursor: pointer; font-size: 14px; font-weight: 600; font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant);
-  border-bottom: 3px solid transparent; margin-bottom: -1px;
-  transition: all .2s; display: inline-flex !important; align-items: center;
-  justify-content: center; gap: 6px; white-space: nowrap; padding: 0 12px;
-}
-.md-primary-tab {
-  flex: 1; height: 44px; border: none; background: transparent;
-  cursor: pointer; font-size: 13px; font-weight: 600; font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant);
-  border-bottom: 3px solid transparent; margin-bottom: -1px;
-  transition: all .2s; display: flex; align-items: center;
-  justify-content: center; gap: 4px; white-space: nowrap;
-  padding: 0 8px;
-}
-.md-primary-tab.active {
-  color: var(--md-sys-color-primary);
-  border-bottom-color: var(--md-sys-color-primary);
-}
-
-/* ═══════════════════════════════════════════════
-   TABLE (MD3)
-═══════════════════════════════════════════════ */
-.md-table-wrap {
-  overflow-x: auto;
-  border-radius: var(--md-sys-shape-large);
-  border: 1px solid var(--md-sys-color-outline-variant);
-}
-table { width: 100%; border-collapse: collapse; }
-thead { background: var(--md-sys-color-surface-container-high); }
-th {
-  padding: 12px 16px; text-align: right;
-  font: var(--md-sys-typescale-label-medium); font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant); white-space: nowrap;
-  border-bottom: 1px solid var(--md-sys-color-outline-variant);
-}
-td {
-  padding: 12px 16px;
-  border-bottom: 1px solid var(--md-sys-color-surface-variant);
-  font: var(--md-sys-typescale-body-medium); font-family: inherit;
-  color: var(--md-sys-color-on-surface); vertical-align: middle;
-}
-tbody tr { transition: background .15s; }
-tbody tr:hover td { background: rgba(103,80,164,.05); }
-tbody tr.selected td { background: var(--md-sys-color-primary-container); }
-tbody tr.last-viewed td { background: #E8F5E9; }
-
-/* ═══════════════════════════════════════════════
-   CHECKBOX (MD3)
-═══════════════════════════════════════════════ */
-input[type=checkbox] {
-  width: 18px; height: 18px; cursor: pointer;
-  accent-color: var(--md-sys-color-primary);
-}
-
-/* ═══════════════════════════════════════════════
-   USER FOLDER CARDS
-═══════════════════════════════════════════════ */
-.folders-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 12px;
-}
-.folder-card {
-  background: var(--md-sys-color-surface-container);
-  border-radius: var(--md-sys-shape-large);
-  padding: 20px 16px; text-align: center; cursor: pointer;
-  border: none; transition: all .2s; display: block; width: 100%;
-}
-.folder-card:hover {
-  background: var(--md-sys-color-surface-container-high);
-  box-shadow: var(--md-sys-elevation-2);
-}
-.folder-card__icon { font-size: 40px; margin-bottom: 12px; display: block; }
-.folder-card__title {
-  font: var(--md-sys-typescale-title-medium); font-family: inherit;
-  color: var(--md-sys-color-on-surface); display: block;
-}
-.folder-card__sub {
-  font: var(--md-sys-typescale-body-medium); font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant); margin-top: 4px; display: block;
-}
-.folder-card__pending {
-  font: var(--md-sys-typescale-label-medium); font-family: inherit;
-  color: var(--md-custom-yellow); margin-top: 4px; display: block; font-weight: 600;
-}
-
-/* ═══════════════════════════════════════════════
-   HISTORY ITEMS
-═══════════════════════════════════════════════ */
-.history-list { display: flex; flex-direction: column; gap: 8px; }
-.history-item {
-  background: var(--md-sys-color-surface-container);
-  border-radius: var(--md-sys-shape-large);
-  padding: 16px; display: flex; justify-content: space-between;
-  align-items: center; gap: 12px;
-  animation: md-fade-in .25s ease both;
-}
-.history-item__meta {
-  font: var(--md-sys-typescale-label-medium); font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant); margin-top: 6px; display: block;
-}
-
-/* ═══════════════════════════════════════════════
-   DROPZONE
-═══════════════════════════════════════════════ */
-.md-dropzone {
-  border: 2px dashed var(--md-sys-color-outline-variant);
-  border-radius: var(--md-sys-shape-large);
-  padding: 32px 20px; text-align: center; cursor: pointer;
-  color: var(--md-sys-color-on-surface-variant);
-  background: var(--md-sys-color-surface-container);
-  transition: all .2s;
-}
-.md-dropzone:hover, .md-dropzone.drag {
-  border-color: var(--md-sys-color-primary);
-  background: var(--md-sys-color-primary-container);
-  color: var(--md-sys-color-on-primary-container);
-}
-
-/* ═══════════════════════════════════════════════
-   BANNER / ALERT
-═══════════════════════════════════════════════ */
-.md-banner {
-  background: var(--md-sys-color-surface-container-high);
-  border-radius: var(--md-sys-shape-medium);
-  padding: 14px 16px; display: flex; align-items: center;
-  gap: 12px; font: var(--md-sys-typescale-body-medium); font-family: inherit;
-}
-.md-banner--error {
-  background: var(--md-sys-color-error-container);
-  color: var(--md-sys-color-on-error-container);
-}
-.md-banner--success {
-  background: var(--md-custom-green-container);
-  color: var(--md-custom-green);
-}
-.md-banner--warning {
-  background: var(--md-custom-yellow-container);
-  color: var(--md-custom-yellow);
-}
-
-/* ═══════════════════════════════════════════════
-   BULK BAR
-═══════════════════════════════════════════════ */
-#bulk-bar {
-  background: var(--md-sys-color-on-surface);
-  border-radius: var(--md-sys-shape-large);
-  padding: 12px 16px; display: flex; align-items: center;
-  gap: 8px; margin-bottom: 12px; flex-wrap: wrap;
-  animation: md-fade-in .2s ease;
-}
-#bulk-count {
-  color: var(--md-sys-color-surface); flex: 1;
-  font: var(--md-sys-typescale-label-large); font-family: inherit;
-}
-.bulk-btn {
-  height: 32px; padding: 0 14px; border-radius: var(--md-sys-shape-full);
-  border: none; cursor: pointer; font: var(--md-sys-typescale-label-medium);
-  font-family: inherit;
-}
-
-/* ═══════════════════════════════════════════════
-   DIALOG (MD3)
-═══════════════════════════════════════════════ */
-.md-scrim {
-  position: fixed; inset: 0; background: rgba(0,0,0,.32);
-  display: flex; align-items: center; justify-content: center;
-  z-index: 1000; animation: md-fade-in .2s ease;
-}
-.md-dialog {
-  background: var(--md-sys-color-surface-container-high);
-  border-radius: var(--md-sys-shape-extra-large);
-  padding: 24px; max-width: 340px; width: 90%;
-  box-shadow: var(--md-sys-elevation-3);
-  animation: md-fade-in .2s cubic-bezier(.2,0,0,1) both;
-}
-.md-dialog__icon { text-align: center; font-size: 36px; margin-bottom: 16px; }
-.md-dialog__title {
-  font: var(--md-sys-typescale-headline-medium); font-family: inherit;
-  text-align: center; margin-bottom: 8px;
-}
-.md-dialog__body {
-  font: var(--md-sys-typescale-body-medium); font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant);
-  text-align: center; line-height: 1.5; margin-bottom: 24px;
-}
-.md-dialog__actions { display: flex; gap: 8px; justify-content: flex-end; }
-
-/* ═══════════════════════════════════════════════
-   PROGRESS INDICATOR (MD3)
-═══════════════════════════════════════════════ */
-#spinner {
-  position: fixed; inset: 0;
-  background: rgba(255,251,254,.85);
-  display: none; flex-direction: column;
-  align-items: center; justify-content: center;
-  z-index: 999; gap: 16px;
-  backdrop-filter: blur(4px);
-}
-.md-progress-ring {
-  width: 48px; height: 48px;
-  border: 4px solid var(--md-sys-color-surface-container-highest);
-  border-top-color: var(--md-sys-color-primary);
-  border-radius: 50%;
-  animation: md-spin .8s linear infinite;
-}
-.spinner-text {
-  font: var(--md-sys-typescale-label-large); font-family: inherit;
-  color: var(--md-sys-color-on-surface-variant);
-}
-
-/* ═══════════════════════════════════════════════
-   VIBRANT MD3 OVERRIDES
-═══════════════════════════════════════════════ */
-
-/* Background with gradient */
-body {
-  background: radial-gradient(ellipse at top right, #2D1B69 0%, #141218 50%, #1A0A2E 100%) !important;
-  min-height: 100vh;
-}
-
-/* Top App Bar */
-.top-app-bar {
-  background: rgba(21,17,28,.85) !important;
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(208,188,255,.15);
-  box-shadow: none !important;
-}
-.top-app-bar__headline { color: #D0BCFF !important; font-weight: 700; }
-
-/* Nav bar */
-.nav-bar {
-  background: rgba(21,17,28,.92) !important;
-  backdrop-filter: blur(20px);
-  border-top: 1px solid rgba(208,188,255,.15) !important;
-  box-shadow: none !important;
-}
-.nav-bar__item.active .nav-bar__indicator { background: rgba(208,188,255,.2) !important; }
-.nav-bar__item.active .nav-bar__label,
-.nav-bar__item.active .material-symbols-rounded { color: #D0BCFF !important; }
-.material-symbols-rounded { color: #938F99; }
-.nav-bar__label { color: #938F99; }
-
-/* Seg buttons */
-.seg-btn-group { border-color: rgba(208,188,255,.3) !important; }
-.seg-btn { color: rgba(208,188,255,.7) !important; }
-.seg-btn + .seg-btn { border-right-color: rgba(208,188,255,.3) !important; }
-.seg-btn.active { background: rgba(208,188,255,.2) !important; color: #D0BCFF !important; }
-.seg-btn:hover { background: rgba(208,188,255,.1) !important; }
-#btn-lang { color: rgba(208,188,255,.7) !important; }
-
-/* Cards - glass morphism */
-.md-card {
-  background: rgba(33,31,38,.8) !important;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(208,188,255,.12);
-  box-shadow: 0 8px 32px rgba(0,0,0,.4) !important;
-}
-
-/* Login card - special gradient */
-#user-login, #admin-login {
-  background: linear-gradient(145deg, rgba(79,55,139,.6), rgba(33,31,38,.9)) !important;
-  border: 1px solid rgba(208,188,255,.2);
-}
-
-/* Filled button - glowing */
-.md-btn--filled {
-  background: linear-gradient(135deg, #D0BCFF, #9A82DB) !important;
-  color: #381E72 !important;
-  box-shadow: 0 0 20px rgba(208,188,255,.3), 0 4px 15px rgba(0,0,0,.3) !important;
-  font-weight: 700 !important;
-}
-.md-btn--filled:hover { box-shadow: 0 0 30px rgba(208,188,255,.5) !important; }
-
-/* Tonal button */
-.md-btn--tonal {
-  background: rgba(208,188,255,.15) !important;
-  color: #D0BCFF !important;
-  border: 1px solid rgba(208,188,255,.2);
-}
-
-/* Outlined button */
-.md-btn--outlined {
-  border-color: rgba(208,188,255,.4) !important;
-  color: #D0BCFF !important;
-}
-
-/* Text button */
-.md-btn--text { color: #D0BCFF !important; }
-
-/* Input field */
-.md-field {
-  background: rgba(54,52,59,.8) !important;
-  border-bottom-color: rgba(208,188,255,.4) !important;
-}
-.md-field:focus-within { border-bottom-color: #D0BCFF !important; }
-.md-field input { color: #E6E0E9 !important; }
-.md-field label { color: #938F99 !important; }
-.md-field:focus-within label, .md-field.has-value label { color: #D0BCFF !important; }
-
-/* Tabs */
-.md-tabs {
-  background: rgba(54,52,59,.6) !important;
-}
-.md-tab { color: #938F99 !important; }
-.md-tab.active {
-  background: linear-gradient(135deg, #4F378B, #6B4EAF) !important;
-  color: #EADDFF !important;
-  box-shadow: 0 2px 12px rgba(208,188,255,.3) !important;
-}
-
-/* Primary tabs */
-.md-primary-tab { color: #938F99 !important; border-bottom-color: transparent !important; }
-.md-primary-tab.active { color: #D0BCFF !important; border-bottom-color: #D0BCFF !important; }
-
-/* Chips */
-.md-chip {
-  border-color: rgba(208,188,255,.3) !important;
-  color: #CAC4D0 !important;
-}
-.md-chip:hover { background: rgba(208,188,255,.1) !important; }
-.md-chip.selected {
-  background: linear-gradient(135deg, #4F378B, #6B4EAF) !important;
-  color: #EADDFF !important;
-  border-color: transparent !important;
-  box-shadow: 0 2px 8px rgba(208,188,255,.2);
-}
-
-/* Badges */
-.md-badge--green { background: rgba(183,243,151,.15) !important; color: #B7F397 !important; border: 1px solid rgba(183,243,151,.3); }
-.md-badge--yellow { background: rgba(254,240,138,.15) !important; color: #FEF08A !important; border: 1px solid rgba(254,240,138,.3); }
-.md-type-chip { background: rgba(208,188,255,.15) !important; color: #D0BCFF !important; }
-
-/* Stat cards */
-.stat-card {
-  background: rgba(43,41,48,.8) !important;
-  border: 1px solid rgba(208,188,255,.1);
-}
-.stat-card:hover { background: rgba(54,52,59,.9) !important; }
-.stat-row .stat-card:nth-child(1) { border-top: 3px solid #D0BCFF; }
-.stat-row .stat-card:nth-child(2) { border-top: 3px solid #B7F397; }
-.stat-row .stat-card:nth-child(3) { border-top: 3px solid #FEF08A; }
-.stat-row .stat-card:nth-child(4) { border-top: 3px solid #EFB8C8; }
-.stat-card__label { color: #938F99 !important; }
-
-/* Table */
-.md-table-wrap { border-color: rgba(208,188,255,.15) !important; }
-thead { background: rgba(43,41,48,.9) !important; }
-th { color: #CAC4D0 !important; border-bottom-color: rgba(208,188,255,.15) !important; }
-td { border-bottom-color: rgba(208,188,255,.08) !important; color: #E6E0E9 !important; }
-tbody tr:hover td { background: rgba(208,188,255,.06) !important; }
-tbody tr.selected td { background: rgba(79,55,139,.4) !important; }
-
-/* Folder cards */
-.folder-card {
-  background: rgba(43,41,48,.8) !important;
-  border: 1px solid rgba(208,188,255,.1);
-}
-.folder-card:hover { background: rgba(79,55,139,.4) !important; box-shadow: 0 4px 20px rgba(208,188,255,.15) !important; }
-.folder-card__title { color: #E6E0E9 !important; }
-.folder-card__sub { color: #938F99 !important; }
-
-/* History items */
-.history-item { background: rgba(43,41,48,.8) !important; border: 1px solid rgba(208,188,255,.1); }
-
-/* Dropzone */
-.md-dropzone {
-  background: rgba(43,41,48,.6) !important;
-  border-color: rgba(208,188,255,.3) !important;
-  color: #938F99 !important;
-}
-.md-dropzone:hover, .md-dropzone.drag {
-  border-color: #D0BCFF !important;
-  background: rgba(79,55,139,.3) !important;
-  color: #D0BCFF !important;
-}
-
-/* Bulk bar */
-#bulk-bar { background: rgba(43,41,48,.95) !important; border: 1px solid rgba(208,188,255,.2); }
-
-/* Dialog */
-.md-scrim { background: rgba(0,0,0,.6) !important; }
-.md-dialog { background: rgba(33,31,38,.95) !important; backdrop-filter: blur(20px); border: 1px solid rgba(208,188,255,.2); }
-
-/* Spinner */
-#spinner { background: rgba(20,18,24,.85) !important; backdrop-filter: blur(10px); }
-.md-progress-ring { border-top-color: #D0BCFF !important; border-color: rgba(208,188,255,.2) !important; }
-.spinner-text { color: #CAC4D0 !important; }
-
-/* Back button */
-.back-btn { border-color: rgba(208,188,255,.3) !important; color: #D0BCFF !important; }
-.back-btn:hover { background: rgba(208,188,255,.1) !important; }
-
-/* Banner */
-.md-banner--error { background: rgba(140,29,24,.4) !important; color: #F2B8B5 !important; border: 1px solid rgba(242,184,181,.3); }
-.md-banner--success { background: rgba(26,58,10,.4) !important; color: #B7F397 !important; border: 1px solid rgba(183,243,151,.3); }
-
-/* Checkbox */
-input[type=checkbox] { accent-color: #D0BCFF !important; }
-
-/* Mobile overrides */
-@media (max-width: 600px) {
-  main { background: transparent !important; }
-  .md-card { background: rgba(33,31,38,.85) !important; backdrop-filter: blur(20px); }
-  #user-login, #admin-login {
-    background: linear-gradient(145deg, rgba(79,55,139,.5), rgba(33,31,38,.95)) !important;
-  }
-}
-
-/* Glow on focus */
-.md-field:focus-within {
-  box-shadow: 0 0 0 2px rgba(208,188,255,.1);
-}
-
-/* Heading colors */
-#login-title, .md-dialog__title { color: #E6E0E9 !important; }
-#login-sub, .md-dialog__body { color: #938F99 !important; }
-#user-greeting { color: #D0BCFF !important; }
-
-/* ═══════════════════════════════════════════════
-   MISC
-═══════════════════════════════════════════════ */
-a { color: var(--md-sys-color-primary); text-decoration: none; }
-.hidden { display: none !important; }
-.md-divider { height: 1px; background: var(--md-sys-color-outline-variant); margin: 4px 0; }
-.back-btn {
-  display: inline-flex; align-items: center; gap: 4px;
-  height: 40px; padding: 0 16px 0 12px;
-  border-radius: var(--md-sys-shape-full);
-  border: 1px solid var(--md-sys-color-outline-variant);
-  background: transparent; cursor: pointer;
-  font: var(--md-sys-typescale-label-large); font-family: inherit;
-  color: var(--md-sys-color-on-surface); transition: background .2s;
-  margin-bottom: 16px;
-}
-.back-btn:hover { background: rgba(103,80,164,.08); }
-
-/* ═══════════════════════════════════════════════
-   MOBILE
-═══════════════════════════════════════════════ */
-@media (max-width: 600px) {
-  .top-app-bar { height: 56px; }
-  .top-app-bar .seg-btn-group { display: none; }
-  .nav-bar { display: flex; }
- main {
-  padding: 0;
-  padding-bottom: 80px;
-  display: block;
-  background: var(--md-sys-color-surface-container-low);
-}
-.md-card {
-  border-radius: 0;
-  max-width: 100% !important;
-  box-shadow: none;
-  min-height: calc(100vh - 56px - 80px);
-  background: var(--md-sys-color-surface);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding: 32px 24px;
-}
-  .stat-row { gap: 8px; }
-  .stat-card { padding: 12px 8px; min-width: 70px; }
-  .stat-card__num { font-size: 20px; }
-  th, td { padding: 8px 10px; font-size: 13px; }
-  .md-badge { height: 20px; padding: 0 8px; font-size: 11px; white-space: nowrap; }
-  .md-btn.toggle-btn { height: 28px; font-size: 11px; padding: 0 8px; white-space: nowrap; min-width: 0; }
-  .md-btn.del-btn { height: 28px; width: 28px; padding: 0; min-width: 0; }
-  .folders-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
-  .history-item { flex-direction: column; align-items: flex-start; gap: 8px; }
-  #bulk-bar { gap: 6px; }
-  .bulk-btn { padding: 0 10px; font-size: 11px; }
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Hebrew:wght@300;400;500;600;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;min-height:100vh;direction:rtl}
+body{
+  font-family:'Segoe UI Variable','Segoe UI','Noto Sans Hebrew',system-ui,sans-serif;
+  font-weight:400;font-size:14px;
+  /* Mica-like background: subtle tinted gradient */
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%,rgba(204,228,255,.55) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%,rgba(186,214,255,.35) 0%,transparent 55%),
+    #f3f3f3;
+  min-height:100vh;
+  color:#1a1a1a;
+}
+
+:root{
+  /* Win11 Light */
+  --w-bg:rgba(249,249,249,.85);
+  --w-bg-solid:#f3f3f3;
+  --w-surface:rgba(255,255,255,.7);
+  --w-surface2:rgba(255,255,255,.5);
+  --w-surface3:rgba(243,243,243,.6);
+  --w-card:rgba(255,255,255,.75);
+  --w-border:rgba(0,0,0,.08);
+  --w-border2:rgba(0,0,0,.14);
+  --w-text:#1a1a1a;
+  --w-text2:#5d5d5d;
+  --w-muted:#9d9d9d;
+  --w-accent:#0067c0;
+  --w-accent-hover:#0060b0;
+  --w-accent-lt:rgba(0,103,192,.1);
+  --w-accent-lt2:rgba(0,103,192,.06);
+  --w-green:#0f7b0f;
+  --w-green-lt:rgba(15,123,15,.1);
+  --w-amber:#9d5d00;
+  --w-amber-lt:rgba(157,93,0,.1);
+  --w-red:#c42b1c;
+  --w-red-lt:rgba(196,43,28,.08);
+  /* Win11 shadows — soft layered */
+  --w-shadow-sm:0 2px 4px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);
+  --w-shadow:0 4px 8px rgba(0,0,0,.06),0 2px 4px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.06);
+  --w-shadow-md:0 8px 16px rgba(0,0,0,.08),0 4px 8px rgba(0,0,0,.06),0 0 0 1px rgba(0,0,0,.06);
+  --w-shadow-lg:0 16px 32px rgba(0,0,0,.1),0 8px 16px rgba(0,0,0,.07),0 0 0 1px rgba(0,0,0,.06);
+  /* Win11 corners */
+  --r:8px;--r-sm:4px;--r-lg:12px;--r-xl:16px;--r-pill:100px;
+}
+
+/* ── DARK MODE ── */
+[data-theme="dark"]{
+  --w-bg:rgba(32,32,32,.9);
+  --w-bg-solid:#202020;
+  --w-surface:rgba(255,255,255,.06);
+  --w-surface2:rgba(255,255,255,.04);
+  --w-surface3:rgba(255,255,255,.08);
+  --w-card:rgba(255,255,255,.07);
+  --w-border:rgba(255,255,255,.09);
+  --w-border2:rgba(255,255,255,.15);
+  --w-text:#ffffff;
+  --w-text2:#ababab;
+  --w-muted:#6b6b6b;
+  --w-accent:#60a3e8;
+  --w-accent-hover:#7ab5f0;
+  --w-accent-lt:rgba(96,163,232,.15);
+  --w-accent-lt2:rgba(96,163,232,.08);
+  --w-green:#6ccb6c;
+  --w-green-lt:rgba(108,203,108,.12);
+  --w-amber:#e8b84b;
+  --w-amber-lt:rgba(232,184,75,.12);
+  --w-red:#f08080;
+  --w-red-lt:rgba(240,128,128,.1);
+  --w-shadow-sm:0 2px 4px rgba(0,0,0,.3),0 1px 2px rgba(0,0,0,.25);
+  --w-shadow:0 4px 8px rgba(0,0,0,.35),0 2px 4px rgba(0,0,0,.25),0 0 0 1px rgba(255,255,255,.06);
+  --w-shadow-md:0 8px 16px rgba(0,0,0,.4),0 4px 8px rgba(0,0,0,.3),0 0 0 1px rgba(255,255,255,.06);
+  --w-shadow-lg:0 16px 32px rgba(0,0,0,.45),0 8px 16px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.06);
+}
+
+[data-theme="dark"] body{
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 0%,rgba(30,60,120,.5) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 40% at 80% 100%,rgba(20,50,110,.35) 0%,transparent 55%),
+    #202020;
+}
+[data-theme="dark"] .topbar{background:rgba(32,32,32,.85)}
+[data-theme="dark"] thead{background:rgba(255,255,255,.04)}
+[data-theme="dark"] td{background:rgba(255,255,255,.04)}
+[data-theme="dark"] tbody tr:hover td{background:var(--w-surface3)!important}
+[data-theme="dark"] tbody tr.selected td{background:rgba(96,163,232,.1)}
+[data-theme="dark"] .dlg{background:rgba(45,45,45,.96);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] #spinner{background:rgba(32,32,32,.75)}
+[data-theme="dark"] .bnav-pill{background:rgba(40,40,40,.9);border-color:rgba(255,255,255,.1)}
+[data-theme="dark"] .w-chip{background:rgba(255,255,255,.06);color:var(--w-text2);border-color:var(--w-border)}
+[data-theme="dark"] .w-chip.selected{background:var(--w-accent-lt);color:var(--w-accent);border-color:var(--w-accent)}
+[data-theme="dark"] .w-search{background:rgba(255,255,255,.06);color:#fff}
+[data-theme="dark"] .w-input{background:rgba(255,255,255,.07);color:#fff;border-color:var(--w-border2);border-bottom-color:rgba(255,255,255,.25)}
+[data-theme="dark"] .w-input:focus{background:rgba(255,255,255,.1);border-bottom-color:var(--w-accent)}
+[data-theme="dark"] .w-drop{background:rgba(255,255,255,.04)}
+[data-theme="dark"] .w-hi{background:rgba(255,255,255,.05)}
+[data-theme="dark"] .w-btn-default{background:rgba(255,255,255,.08);color:#fff;border-color:var(--w-border2)}
+[data-theme="dark"] .w-btn-default:hover{background:rgba(255,255,255,.12)}
+[data-theme="dark"] .w-sm-btn{background:rgba(255,255,255,.07);color:var(--w-text2);border-color:var(--w-border)}
+[data-theme="dark"] .w-sm-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+[data-theme="dark"] .w-lang{background:rgba(255,255,255,.07);color:var(--w-text2);border-color:var(--w-border)}
+[data-theme="dark"] .w-lang:hover{background:rgba(255,255,255,.12);color:#fff}
+[data-theme="dark"] .w-sw{background:rgba(0,0,0,.3);border-color:rgba(255,255,255,.08)}
+[data-theme="dark"] .w-sw-btn.active{background:rgba(255,255,255,.12);color:#fff}
+[data-theme="dark"] #btn-theme{background:rgba(255,255,255,.07);border-color:var(--w-border)}
+[data-theme="dark"] .w-fc{background:rgba(255,255,255,.06)}
+[data-theme="dark"] .w-card{border-color:rgba(255,255,255,.08)}
+[data-theme="dark"] .w-fc:hover{background:rgba(255,255,255,.1)}
+[data-theme="dark"] .w-back{background:rgba(255,255,255,.07);border-color:var(--w-border)}
+[data-theme="dark"] .w-table-wrap{border-color:rgba(255,255,255,.08)}
+[data-theme="dark"] td{border-bottom-color:rgba(255,255,255,.06)}
+
+/* ── ANIMATIONS ── */
+@keyframes wIn{from{opacity:0;transform:translateY(12px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes wViewIn{from{opacity:0;transform:scale(.97)}to{opacity:1;transform:none}}
+@keyframes wSlide{from{opacity:0;transform:translateX(-8px)}to{opacity:1;transform:none}}
+@keyframes wPop{0%{transform:scale(.9);opacity:0}70%{transform:scale(1.02)}100%{transform:scale(1);opacity:1}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.w-in{animation:wIn .25s cubic-bezier(.22,1,.36,1) both}
+.w-view-in{animation:wViewIn .3s cubic-bezier(.22,1,.36,1) both}
+
+/* ── TITLEBAR / TOP ── */
+.topbar{
+  height:48px;padding:0 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(243,243,243,.85);
+  backdrop-filter:blur(20px) saturate(180%);
+  -webkit-backdrop-filter:blur(20px) saturate(180%);
+  border-bottom:1px solid rgba(0,0,0,.08);
+  position:sticky;top:0;z-index:100;
+}
+.logo{
+  display:flex;align-items:center;gap:10px;
+  font-size:14px;font-weight:600;color:var(--w-text);letter-spacing:-.1px;
+}
+.logo-icon{
+  width:28px;height:28px;border-radius:6px;
+  background:linear-gradient(145deg,#0078d4,#0067c0);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 6px rgba(0,103,192,.35);
+  font-size:16px;
+}
+.top-right{display:flex;gap:6px;align-items:center}
+
+/* ── NAV SWITCH ── */
+.w-sw{display:flex;background:rgba(0,0,0,.04);border-radius:var(--r-sm);padding:2px;gap:2px;border:1px solid var(--w-border)}
+.w-sw-btn{
+  padding:4px 16px;border:none;background:transparent;border-radius:var(--r-sm);
+  cursor:pointer;font-size:13px;font-weight:400;font-family:inherit;
+  color:var(--w-text2);transition:all .15s;
+}
+.w-sw-btn.active{
+  background:rgba(255,255,255,.85);color:var(--w-text);
+  box-shadow:0 1px 4px rgba(0,0,0,.1),0 0 0 .5px rgba(0,0,0,.06);
+}
+.w-sw-btn:hover:not(.active){background:rgba(255,255,255,.5);color:var(--w-text)}
+.w-lang{
+  padding:4px 12px;border:1px solid var(--w-border2);border-radius:var(--r-sm);
+  background:rgba(255,255,255,.5);cursor:pointer;font-size:13px;
+  font-family:inherit;color:var(--w-text2);transition:all .15s;
+}
+.w-lang:hover{background:rgba(255,255,255,.8);color:var(--w-text)}
+.w-lang:active{background:rgba(0,0,0,.04)}
+
+/* ── MAIN ── */
+main{
+  display:flex;justify-content:center;
+  min-height:calc(100vh - 48px);padding:28px 20px 100px;
+}
+.w-wrap{width:100%;max-width:420px}
+.w-wrap.wide{max-width:1040px}
+
+/* ── CARD (Acrylic surface) ── */
+.w-card{
+  background:var(--w-card);
+  backdrop-filter:blur(40px) saturate(150%);
+  -webkit-backdrop-filter:blur(40px) saturate(150%);
+  border:1px solid var(--w-border);
+  border-radius:var(--r-lg);
+  padding:20px;margin-bottom:12px;
+  box-shadow:var(--w-shadow);
+}
+.w-card.sm{border-radius:var(--r);padding:14px;margin-bottom:8px}
+.w-card.flat{border-radius:var(--r);box-shadow:var(--w-shadow-sm)}
+
+/* ── LOGIN ── */
+.w-login-brand{text-align:center;margin-bottom:24px}
+.w-login-icon{
+  width:72px;height:72px;border-radius:var(--r-xl);margin:0 auto 16px;
+  background:linear-gradient(145deg,#0078d4,#004fa3);
+  display:flex;align-items:center;justify-content:center;font-size:32px;
+  box-shadow:0 4px 16px rgba(0,103,192,.4);
+  animation:wPop .4s cubic-bezier(.34,1.56,.64,1) both;
+}
+.w-login-title{font-size:22px;font-weight:600;color:var(--w-text);margin-bottom:5px;letter-spacing:-.2px}
+.w-login-sub{font-size:13px;color:var(--w-text2);font-weight:400}
+
+/* ── FIELDS ── */
+.w-field{display:flex;flex-direction:column;gap:6px;margin-bottom:14px}
+.w-label{font-size:12px;font-weight:600;color:var(--w-text);letter-spacing:.05px}
+.w-input{
+  width:100%;height:34px;padding:0 10px;
+  border-radius:var(--r-sm);
+  border:1px solid var(--w-border2);
+  border-bottom:2px solid var(--w-border2);
+  background:rgba(255,255,255,.7);
+  backdrop-filter:blur(8px);
+  font-size:14px;font-family:inherit;color:var(--w-text);outline:none;
+  transition:border-color .15s,box-shadow .15s;
+}
+.w-input:hover{border-color:rgba(0,0,0,.3);border-bottom-color:rgba(0,0,0,.4)}
+.w-input:focus{
+  border-color:var(--w-border2);
+  border-bottom:2px solid var(--w-accent);
+  background:rgba(255,255,255,.9);
+}
+.w-input::placeholder{color:var(--w-muted)}
+
+/* ── BUTTONS ── */
+.w-btn{
+  height:34px;padding:0 16px;border:none;border-radius:var(--r-sm);cursor:pointer;
+  font-size:14px;font-weight:500;font-family:inherit;
+  background:var(--w-accent);color:#fff;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),var(--w-shadow-sm);
+  transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+}
+.w-btn:hover{background:var(--w-accent-hover);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),var(--w-shadow)}
+.w-btn:active{background:#005499;box-shadow:inset 0 2px 4px rgba(0,0,0,.2)}
+.w-btn.full{width:100%}
+.w-btn-default{
+  height:34px;padding:0 16px;border-radius:var(--r-sm);cursor:pointer;
+  font-size:14px;font-weight:400;font-family:inherit;
+  background:rgba(255,255,255,.7);color:var(--w-text);
+  border:1px solid var(--w-border2);border-bottom:1px solid rgba(0,0,0,.18);
+  box-shadow:var(--w-shadow-sm);
+  transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+}
+.w-btn-default:hover{background:rgba(255,255,255,.9)}
+.w-btn-default:active{background:rgba(0,0,0,.04)}
+.w-sm-btn{
+  height:28px;padding:0 10px;border-radius:var(--r-sm);cursor:pointer;
+  font-size:12px;font-weight:500;font-family:inherit;
+  background:rgba(255,255,255,.6);color:var(--w-text2);
+  border:1px solid var(--w-border);box-shadow:var(--w-shadow-sm);transition:all .15s;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.w-sm-btn:hover{background:rgba(255,255,255,.9);color:var(--w-text)}
+.w-sm-btn:active{background:rgba(0,0,0,.04)}
+
+/* ── PERSONA ── */
+.w-persona{display:flex;align-items:center;gap:10px}
+.w-avatar{
+  width:36px;height:36px;border-radius:50%;flex-shrink:0;
+  background:linear-gradient(135deg,var(--w-accent),#40b4ff);
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;color:#fff;font-weight:700;font-family:inherit;
+  box-shadow:0 2px 6px rgba(0,103,192,.3);
+}
+.w-persona-name{font-size:14px;font-weight:600;color:var(--w-text)}
+.w-persona-sub{font-size:12px;color:var(--w-text2);margin-top:1px}
+
+/* ── TAB CONTROL (Win11 style) ── */
+.w-pivot{
+  display:flex;border-bottom:1px solid var(--w-border);
+  margin-bottom:16px;gap:0;
+}
+.w-pivot-btn{
+  padding:8px 16px;border:none;background:transparent;cursor:pointer;
+  font-size:13px;font-weight:400;font-family:inherit;color:var(--w-text2);
+  position:relative;border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .15s;display:flex;align-items:center;gap:6px;
+}
+.w-pivot-btn::after{
+  content:'';position:absolute;bottom:-1px;left:20%;right:20%;
+  height:2px;background:var(--w-accent);border-radius:2px 2px 0 0;
+  transform:scaleX(0);transition:transform .2s cubic-bezier(.22,1,.36,1);
+}
+.w-pivot-btn.active{color:var(--w-text);font-weight:600}
+.w-pivot-btn.active::after{transform:scaleX(1)}
+.w-pivot-btn:hover:not(.active){color:var(--w-text);background:rgba(0,0,0,.03);border-radius:var(--r-sm) var(--r-sm) 0 0}
+
+/* ── DROP ZONE ── */
+.w-drop{
+  border:1.5px dashed var(--w-border2);border-radius:var(--r);
+  padding:28px;text-align:center;cursor:pointer;
+  background:rgba(255,255,255,.4);color:var(--w-text2);transition:all .15s;
+}
+.w-drop:hover,.w-drop.drag{
+  border-color:var(--w-accent);background:var(--w-accent-lt2);color:var(--w-accent);
+}
+
+/* ── HISTORY ITEMS ── */
+.w-hi{
+  display:flex;justify-content:space-between;align-items:center;gap:10px;
+  padding:8px 10px;border-radius:var(--r-sm);margin-bottom:2px;
+  transition:background .12s;animation:wSlide .2s ease both;
+}
+.w-hi:hover{background:rgba(0,0,0,.04)}
+.w-type{
+  display:inline-flex;align-items:center;height:20px;padding:0 8px;
+  border-radius:var(--r-pill);font-size:11px;font-weight:600;
+  background:var(--w-accent-lt);color:var(--w-accent);
+;white-space:nowrap}
+.w-badge{display:inline-flex;align-items:center;height:20px;padding:0 8px;border-radius:var(--r-pill);font-size:11px;font-weight:600}
+.w-g{background:var(--w-green-lt);color:var(--w-green);white-space:nowrap}
+.w-a{background:var(--w-amber-lt);color:var(--w-amber);white-space:nowrap}
+
+/* ── INFO BAR ── */
+.w-ban{
+  border-radius:var(--r-sm);padding:9px 12px;font-size:13px;
+  display:flex;align-items:center;gap:8px;margin-top:8px;
+}
+.w-ban-e{background:var(--w-red-lt);color:var(--w-red);border-right:3px solid var(--w-red)}
+.w-ban-s{background:var(--w-green-lt);color:var(--w-green);border-right:3px solid var(--w-green)}
+
+/* ── STATS ── */
+.w-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:20px}
+.w-stat{
+  background:var(--w-card);
+  backdrop-filter:blur(30px);-webkit-backdrop-filter:blur(30px);
+  border:1px solid var(--w-border);
+  border-radius:var(--r);padding:14px 16px;
+  box-shadow:var(--w-shadow);cursor:pointer;
+  transition:all .2s cubic-bezier(.22,1,.36,1);
+}
+.w-stat:hover{transform:translateY(-2px);box-shadow:var(--w-shadow-md)}
+.w-stat:active{transform:translateY(0)}
+.w-stat-num{font-size:26px;font-weight:700;letter-spacing:-1px;color:var(--w-text);display:block;line-height:1}
+.w-stat-label{font-size:11px;font-weight:400;color:var(--w-text2);display:block;margin-top:4px}
+
+/* ── TOOLBAR ── */
+.w-cmdbar{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--w-border)}
+.w-cmdbar-title{font-size:20px;font-weight:600;color:var(--w-text);letter-spacing:-.2px}
+.w-cmdbar-sub{font-size:12px;color:var(--w-text2);margin-top:2px}
+.w-cmdbar-btns{display:flex;gap:6px}
+
+/* ── ADMIN TABS ── */
+.w-admin-pivot{display:flex;border-bottom:1px solid var(--w-border);margin-bottom:16px}
+.w-admin-tab{
+  padding:8px 20px;border:none;background:transparent;cursor:pointer;
+  font-size:13px;font-weight:400;font-family:inherit;color:var(--w-text2);
+  position:relative;border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:color .15s;display:flex;align-items:center;gap:6px;
+}
+.w-admin-tab::after{
+  content:'';position:absolute;bottom:-1px;left:20%;right:20%;
+  height:2px;background:var(--w-accent);border-radius:2px 2px 0 0;
+  transform:scaleX(0);transition:transform .2s cubic-bezier(.22,1,.36,1);
+}
+.w-admin-tab.active{color:var(--w-text);font-weight:600}
+.w-admin-tab.active::after{transform:scaleX(1)}
+.w-admin-tab:hover:not(.active){color:var(--w-text);background:rgba(0,0,0,.03);border-radius:var(--r-sm) var(--r-sm) 0 0}
+
+/* ── SEARCH + CHIPS ── */
+.w-toolbar{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;align-items:center}
+.w-search-wrap{position:relative;flex:1;min-width:140px}
+.w-search-icon{position:absolute;right:9px;top:50%;transform:translateY(-50%);color:var(--w-muted);pointer-events:none}
+.w-search{
+  width:100%;height:32px;padding:0 8px 0 32px;
+  border:1px solid var(--w-border2);border-radius:var(--r-pill);
+  background:rgba(255,255,255,.7);backdrop-filter:blur(8px);
+  font-size:13px;font-family:inherit;color:var(--w-text);outline:none;
+  transition:all .15s;
+}
+.w-search:hover{background:rgba(255,255,255,.9);border-color:rgba(0,0,0,.25)}
+.w-search:focus{background:#fff;border-color:var(--w-accent);box-shadow:0 0 0 2px var(--w-accent-lt)}
+.w-search::placeholder{color:var(--w-muted)}
+.w-chip{
+  height:28px;padding:0 14px;
+  border:1px solid var(--w-border);border-radius:var(--r-pill);
+  background:rgba(255,255,255,.6);cursor:pointer;font-size:12px;font-weight:500;
+  font-family:inherit;color:var(--w-text2);transition:all .15s;
+  display:inline-flex;align-items:center;gap:4px;
+}
+.w-chip:hover{background:rgba(255,255,255,.9);border-color:var(--w-border2);color:var(--w-text)}
+.w-chip.selected{background:var(--w-accent-lt);border-color:var(--w-accent);color:var(--w-accent);font-weight:600}
+.w-chip:active{background:rgba(0,0,0,.04)}
+
+/* ── TABLE ── */
+.w-table-wrap{border-radius:var(--r);overflow:hidden;box-shadow:var(--w-shadow);border:1px solid rgba(255,255,255,.6)}
+table{width:100%;border-collapse:collapse}
+thead{background:var(--w-surface3)}
+th{
+  padding:10px 14px;text-align:right;font-size:11px;font-weight:700;
+  color:var(--w-text2);white-space:nowrap;letter-spacing:.3px;
+  border-bottom:1.5px solid var(--w-border2);
+}
+td{
+  padding:11px 14px;border-bottom:1px solid var(--w-border);
+  font-size:13px;font-weight:400;color:var(--w-text);vertical-align:middle;
+  background:var(--w-surface);
+  transition:background .1s;
+}
+tbody tr:hover td{background:rgba(0,103,192,.05)}
+tbody tr.selected td{background:var(--w-accent-lt2)}
+tbody tr:last-child td{border-bottom:none}
+
+/* ── BULK BAR ── */
+#bulk-bar{
+  background:var(--w-accent-lt);border:1px solid rgba(0,103,192,.25);
+  border-radius:var(--r-sm);padding:7px 12px;
+  display:flex;align-items:center;gap:6px;margin-bottom:10px;flex-wrap:wrap;
+}
+#bulk-count{color:var(--w-accent);flex:1;font-size:13px;font-weight:600}
+.bkb{
+  height:26px;padding:0 10px;border:1px solid var(--w-border2);border-radius:var(--r-sm);
+  background:rgba(255,255,255,.7);cursor:pointer;font-size:12px;font-weight:500;
+  font-family:inherit;color:var(--w-text2);transition:all .1s;
+}
+.bkb:hover{background:rgba(255,255,255,.95);color:var(--w-text)}
+.bkb:active{background:rgba(0,0,0,.06)}
+
+/* ── ACTION BTNS ── */
+.w-ab{
+  padding:4px 10px;border:1px solid var(--w-border);border-radius:var(--r-pill);
+  background:var(--w-surface);color:var(--w-text2);cursor:pointer;
+  font-size:11px;font-weight:500;font-family:inherit;transition:all .1s;
+}
+.w-ab:hover{background:rgba(255,255,255,.95);border-color:var(--w-border2);color:var(--w-text)}
+.w-ab-del{
+  padding:3px 9px;border:1px solid rgba(196,43,28,.2);border-radius:var(--r-sm);
+  background:var(--w-red-lt);color:var(--w-red);cursor:pointer;
+  font-size:11px;font-weight:500;font-family:inherit;transition:all .1s;
+}
+.w-ab-del:hover{background:rgba(196,43,28,.14)}
+
+/* ── FOLDER CARDS ── */
+.fg{display:grid;grid-template-columns:repeat(auto-fill,minmax(156px,1fr));gap:10px}
+.w-fc{
+  background:var(--w-card);backdrop-filter:blur(20px);
+  border:1px solid var(--w-border);
+  border-radius:var(--r);padding:16px;cursor:pointer;
+  box-shadow:var(--w-shadow);font-family:inherit;
+  transition:all .2s cubic-bezier(.22,1,.36,1);
+  display:flex;flex-direction:column;align-items:flex-start;width:100%;
+}
+.w-fc:hover{transform:translateY(-2px) scale(1.01);box-shadow:var(--w-shadow-md)}
+.w-fc:active{transform:translateY(0) scale(.99);box-shadow:var(--w-shadow-sm)}
+.w-fc-icon{font-size:24px;margin-bottom:8px}
+.w-fc-title{font-size:13px;font-weight:600;color:var(--w-text)}
+.w-fc-sub{font-size:11px;color:var(--w-text2);margin-top:3px}
+.w-fc-pend{font-size:11px;font-weight:600;color:var(--w-amber);margin-top:4px}
+
+/* ── BACK / BREADCRUMB ── */
+.w-back{
+  display:inline-flex;align-items:center;gap:5px;height:28px;padding:0 10px;
+  border:1px solid var(--w-border);border-radius:var(--r-sm);
+  background:var(--w-surface);color:var(--w-text2);cursor:pointer;
+  font-size:12px;font-weight:500;font-family:inherit;margin-bottom:14px;transition:all .15s;
+}
+.w-back:hover{background:rgba(255,255,255,.9);color:var(--w-text)}
+
+/* ── DIALOG ── */
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.35);backdrop-filter:blur(12px) saturate(80%);display:flex;align-items:center;justify-content:center;z-index:1000}
+.dlg{
+  background:rgba(243,243,243,.95);backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid rgba(255,255,255,.7);border-bottom-color:rgba(0,0,0,.08);
+  border-radius:var(--r-xl);padding:24px 28px;max-width:340px;width:90%;
+  box-shadow:var(--w-shadow-lg);animation:wIn .25s cubic-bezier(.22,1,.36,1);
+}
+.dlg-title{font-size:20px;font-weight:600;margin-bottom:8px;color:var(--w-text)}
+.dlg-body{font-size:13px;color:var(--w-text2);margin-bottom:20px;line-height:1.5}
+.dlg-actions{display:flex;gap:8px}
+
+/* ── SPINNER ── */
+#spinner{position:fixed;inset:0;background:rgba(243,243,243,.6);backdrop-filter:blur(20px);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:999;gap:12px}
+.sp-ring{width:32px;height:32px;border:2.5px solid rgba(0,0,0,.1);border-top:2.5px solid var(--w-accent);border-radius:50%;animation:spin .7s linear infinite}
+.sp-txt{font-size:13px;font-weight:500;color:var(--w-text2)}
+
+/* ── BOTTOM NAV ── */
+.bnav{display:none;position:fixed;bottom:16px;left:50%;transform:translateX(-50%);z-index:100}
+.bnav-pill{
+  display:flex;align-items:center;
+  background:rgba(249,249,249,.85);backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  border:1px solid var(--w-border2);
+  border-radius:var(--r-pill);padding:4px;gap:2px;
+  box-shadow:var(--w-shadow-md);
+}
+.bnav-item{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;
+  cursor:pointer;border:none;background:transparent;font-family:inherit;
+  padding:8px 26px;border-radius:var(--r-pill);transition:all .15s;
+  color:var(--w-text2);
+}
+.bnav-item.active{background:rgba(0,103,192,.1);color:var(--w-accent)}
+.bnav-item:active{transform:scale(.92)}
+.bnav-lbl{font-size:10px;font-weight:600;color:inherit}
+
+
+/* ── MISC ── */
+.hidden{display:none!important}
+a{color:var(--w-accent);text-decoration:none;font-weight:500}
+input[type=checkbox]{
+  accent-color:var(--w-accent);width:16px;height:16px;cursor:pointer;
+  border-radius:4px;
+}
+[data-theme="dark"] input[type=checkbox]{
+  accent-color:var(--w-accent);
+  color-scheme:dark;
+}
+
+@media(max-width:600px){
+  .bnav{display:flex}
+  .topbar .w-sw{display:none}
+  main{padding:16px 12px 90px;display:flex;flex-direction:column;align-items:center}
+  .w-wrap,.w-wrap.wide{max-width:100%!important}
+  .w-stats{grid-template-columns:repeat(2,1fr)}
+  .w-stat-num{font-size:22px}
+  .w-table-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;border-radius:var(--r-sm)}
+  /* hide less important columns on mobile */
+  .w-table-wrap th:nth-child(4),
+  .w-table-wrap td:nth-child(4){display:none}
+  th,td{padding:8px 10px;font-size:12px;white-space:nowrap}
+  .fg{grid-template-columns:repeat(2,1fr)}
+  .w-hi{flex-direction:column;align-items:flex-start;gap:5px}
 }
 </style>
 </head>
 <body>
 
-<!-- PROGRESS INDICATOR -->
-<div id="spinner">
-  <div class="md-progress-ring"></div>
-  <span class="spinner-text" id="spinner-text">טוען...</span>
-</div>
+<div id="spinner"><div class="sp-ring"></div><span class="sp-txt" id="spinner-text">טוען...</span></div>
 
-<!-- CONFIRM DIALOG -->
-<div id="confirm-overlay" class="md-scrim hidden">
-  <div class="md-dialog">
-    <div class="md-dialog__icon" id="confirm-icon">🗑️</div>
-    <div class="md-dialog__title" id="confirm-title">אישור</div>
-    <div class="md-dialog__body" id="confirm-msg"></div>
-    <div class="md-dialog__actions">
-      <button id="confirm-no" class="md-btn md-btn--text" style="color:var(--md-sys-color-on-surface-variant)">ביטול</button>
-      <button id="confirm-yes" class="md-btn md-btn--filled" style="background:var(--md-sys-color-error);width:auto;padding:0 24px">מחק</button>
+<div id="confirm-overlay" class="scrim hidden">
+  <div class="dlg">
+    <div class="dlg-title" id="confirm-title">מחיקה</div>
+    <div class="dlg-body" id="confirm-msg"></div>
+    <div class="dlg-actions">
+      <button id="confirm-yes" class="w-btn" style="background:var(--w-red)">מחק</button>
+      <button id="confirm-no" class="w-btn-default">ביטול</button>
     </div>
   </div>
 </div>
 
-<!-- TOP APP BAR -->
-<header class="top-app-bar">
-  <div class="top-app-bar__headline">
-    <span>🧾</span>
+<header class="topbar">
+  <div class="logo">
+    <div class="logo-icon">🧾</div>
     <span id="logo-text">מערכת קבלות</span>
   </div>
-  <div class="top-app-bar__actions">
-    <button id="btn-lang" class="md-btn md-btn--text" style="width:auto;padding:0 12px;color:var(--md-sys-color-on-surface-variant)">EN</button>
-    <div class="seg-btn-group">
-      <button id="nav-user" class="seg-btn active">
-        <span class="material-symbols-rounded">person</span><span id="nav-user-label"> משתמש</span>
-      </button>
-      <button id="nav-admin" class="seg-btn">
-        <span class="material-symbols-rounded">admin_panel_settings</span><span id="nav-admin-label"> מנהל</span>
-      </button>
+  <div class="top-right">
+    <button id="btn-theme" class="w-lang" title="Dark mode" style="font-size:16px;min-width:36px">🌙</button>
+    <button id="btn-lang" class="w-lang">EN</button>
+    <div class="w-sw">
+      <button id="nav-user" class="w-sw-btn active"><span id="nav-user-label">משתמש</span></button>
+      <button id="nav-admin" class="w-sw-btn"><span id="nav-admin-label">מנהל</span></button>
     </div>
   </div>
 </header>
 
-<!-- BOTTOM NAV (mobile) -->
-<nav class="nav-bar">
-  <div class="nav-bar__items">
-    <button id="mob-nav-user" class="nav-bar__item active">
-      <div class="nav-bar__indicator">
-        <span class="material-symbols-rounded">person</span>
-      </div>
-      <span class="nav-bar__label" id="mob-label-user">משתמש</span>
+<nav class="bnav">
+  <div class="bnav-pill">
+    <button id="mob-nav-user" class="bnav-item active">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <circle cx="12" cy="8" r="4" fill="currentColor"/>
+        <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span class="bnav-lbl" id="mob-label-user">משתמש</span>
     </button>
-    <button id="mob-nav-admin" class="nav-bar__item">
-      <div class="nav-bar__indicator">
-        <span class="material-symbols-rounded">admin_panel_settings</span>
-      </div>
-      <span class="nav-bar__label" id="mob-label-admin">מנהל</span>
+    <button id="mob-nav-admin" class="bnav-item">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+        <rect x="5" y="11" width="14" height="10" rx="2" fill="currentColor"/>
+        <path d="M8 11V7a4 4 0 0 1 8 0v4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+      <span class="bnav-lbl" id="mob-label-admin">מנהל</span>
     </button>
   </div>
 </nav>
 
 <main>
-  <!-- USER LOGIN -->
-  <div class="md-card md-anim" id="user-login">
-    <div style="text-align:center;font-size:56px">🧾</div>
-    <div>
-      <div style="font:var(--md-sys-typescale-headline-medium);font-family:inherit;text-align:center" id="login-title">העלאת קבלה</div>
-      <div style="font:var(--md-sys-typescale-body-medium);font-family:inherit;color:var(--md-sys-color-on-surface-variant);text-align:center;margin-top:8px" id="login-sub">הכנס את מספר הדירה כדי להתחיל</div>
-    </div>
-    <div class="md-field" id="username-field">
-      <label for="username-input" id="username-label">מספר הדירה</label>
-      <input id="username-input" dir="rtl" autocomplete="off"/>
-    </div>
-    <button id="btn-user-login" class="md-btn md-btn--filled">
-      <span class="material-symbols-rounded">login</span>
-      <span id="login-btn-text">כניסה</span>
-    </button>
+
+<!-- USER LOGIN -->
+<div class="w-wrap" id="user-login">
+  <div class="w-login-brand">
+    <div class="w-login-icon">🧾</div>
+    <div class="w-login-title" id="login-title">העלאת קבלה</div>
+    <div class="w-login-sub" id="login-sub">הכנס מספר דירה להמשך</div>
   </div>
-
-  <!-- USER UPLOAD -->
-  <div class="md-card hidden" id="user-upload">
-    <div style="display:flex;justify-content:space-between;align-items:center">
-      <div style="font:var(--md-sys-typescale-title-large);font-family:inherit" id="user-greeting"></div>
-      <button id="btn-user-logout" class="md-btn md-btn--text" style="width:auto;padding:0 12px">
-        <span class="material-symbols-rounded">logout</span>
-        <span id="logout-text">התנתק</span>
-      </button>
+  <div class="w-card">
+    <div class="w-field">
+      <label class="w-label" id="username-label">מספר הדירה</label>
+      <input class="w-input" id="username-input" dir="rtl" autocomplete="off" placeholder="42"/>
     </div>
+    <button id="btn-user-login" class="w-btn full"><span id="login-btn-text">כניסה</span></button>
+  </div>
+</div>
 
-    <div class="md-tabs">
-      <button id="tab-link" class="md-tab active" data-he="קישור" data-en="Link">
-        <span class="material-symbols-rounded">link</span>
-        <span>קישור</span>
-      </button>
-      <button id="tab-image" class="md-tab" data-he="תמונה" data-en="Image">
-        <span class="material-symbols-rounded">photo_camera</span>
-        <span>תמונה</span>
-      </button>
-      <button id="tab-history" class="md-tab" data-he="היסטוריה" data-en="History">
-        <span class="material-symbols-rounded">history</span>
-        <span>היסטוריה</span>
-      </button>
-    </div>
-
-    <div id="panel-upload">
-      <div id="link-section">
-        <div class="md-field" id="link-field">
-          <label for="link-input" id="link-label">קישור לקבלה</label>
-          <input id="link-input" dir="ltr" autocomplete="off"/>
-        </div>
+<!-- USER UPLOAD -->
+<div class="w-wrap hidden" id="user-upload" style="max-width:480px">
+  <div class="w-card sm flat" style="display:flex;justify-content:space-between;align-items:center">
+    <div class="w-persona">
+      <div class="w-avatar">🏠</div>
+      <div>
+        <div class="w-persona-name" id="user-greeting"></div>
+        <div class="w-persona-sub" id="greet-sub-text">ברוך הבא</div>
       </div>
-      <div id="image-section" class="hidden">
-        <div class="md-dropzone" id="dropzone">
+    </div>
+    <button id="btn-user-logout" class="w-sm-btn"><span id="logout-text">התנתקות</span></button>
+  </div>
+  <div class="w-card" style="padding-bottom:0">
+    <div class="w-pivot">
+      <button id="tab-link" class="w-pivot-btn active">🔗 <span>קישור</span></button>
+      <button id="tab-image" class="w-pivot-btn">📎 <span>קובץ</span></button>
+      <button id="tab-history" class="w-pivot-btn">📋 <span>היסטוריה</span></button>
+    </div>
+    <div id="panel-upload">
+      <div id="link-section" style="padding-bottom:16px">
+        <div class="w-field">
+          <label class="w-label" id="link-label">קישור לקבלה</label>
+          <input class="w-input" id="link-input" dir="ltr" autocomplete="off" placeholder="https://..."/>
+        </div>
+        <div id="upload-error" class="w-ban w-ban-e hidden"></div>
+        <div id="upload-success" class="w-ban w-ban-s hidden">✓ <span id="success-text">הקבלה הועלתה!</span></div>
+        <button id="btn-submit" class="w-btn full" style="margin-top:10px"><span id="submit-text">העלאה</span></button>
+      </div>
+      <div id="image-section" class="hidden" style="padding-bottom:16px">
+        <div class="w-drop" id="dropzone">
           <div id="drop-placeholder">
-            <div style="font-size:40px;margin-bottom:12px">☁️</div>
-            <div style="font:var(--md-sys-typescale-title-medium);font-family:inherit" id="drop-main">גרור קובץ לכאן</div>
-            <div style="font:var(--md-sys-typescale-body-medium);font-family:inherit;margin-top:4px" id="drop-sub">או לחץ לבחירה · תמונה / PDF</div>
+            <div style="font-size:28px;margin-bottom:8px">📁</div>
+            <div style="font-size:14px;font-weight:600;color:var(--w-text)" id="drop-main">גרור קובץ לכאן</div>
+            <div style="font-size:12px;margin-top:4px;color:var(--w-text2)" id="drop-sub">או לחץ לבחירה · תמונה / PDF</div>
           </div>
           <div id="drop-chosen" class="hidden"></div>
         </div>
         <input type="file" id="file-input" accept="image/*,.pdf" style="display:none"/>
+        <div id="upload-error2" class="w-ban w-ban-e hidden"></div>
+        <div id="upload-success2" class="w-ban w-ban-s hidden">✓ הקבלה הועלתה!</div>
+        <button id="btn-submit2" class="w-btn full" style="margin-top:10px">העלאה</button>
       </div>
-      <div id="upload-error" class="md-banner md-banner--error hidden" style="margin-top:8px"></div>
-      <div id="upload-success" class="md-banner md-banner--success hidden" style="margin-top:8px">
-        <span class="material-symbols-rounded">check_circle</span>
-        <span id="success-text">הקבלה הועלתה בהצלחה!</span>
-      </div>
-      <button id="btn-submit" class="md-btn md-btn--filled" style="margin-top:8px">
-        <span class="material-symbols-rounded">upload</span>
-        <span id="submit-text">העלה קבלה</span>
-      </button>
     </div>
-
-    <div id="panel-history" class="hidden">
-      <div id="history-loading" style="text-align:center;padding:32px;color:var(--md-sys-color-on-surface-variant)">
-        <div class="md-progress-ring" style="margin:0 auto 12px"></div>
-        <span id="hist-loading-text">טוען היסטוריה...</span>
+    <div id="panel-history" class="hidden" style="padding-bottom:16px">
+      <div id="history-loading" style="text-align:center;padding:28px;color:var(--w-text2)">
+        <div class="sp-ring" style="margin:0 auto 10px;width:24px;height:24px;border-width:2px"></div>
+        <span id="hist-loading-text" style="font-size:13px">טוען...</span>
       </div>
-      <div id="history-list" class="history-list hidden"></div>
-      <div id="history-empty" class="hidden" style="text-align:center;padding:32px;color:var(--md-sys-color-on-surface-variant)">
-        <div style="font-size:48px;margin-bottom:12px">📭</div>
-        <div style="font:var(--md-sys-typescale-body-large);font-family:inherit" id="hist-empty-text">עדיין לא העלית קבלות</div>
+      <div id="history-list" class="hidden"></div>
+      <div id="history-empty" class="hidden" style="text-align:center;padding:28px;color:var(--w-text2)">
+        <div style="font-size:32px;margin-bottom:8px">📭</div>
+        <div style="font-size:14px;font-weight:600" id="hist-empty-text">אין קבלות עדיין</div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ADMIN LOGIN -->
-  <div class="md-card hidden md-anim" id="admin-login">
-    <div style="text-align:center;font-size:56px">🔐</div>
+<!-- ADMIN LOGIN -->
+<div class="w-wrap hidden" id="admin-login" style="max-width:360px">
+  <div class="w-login-brand">
+    <div class="w-login-icon">🔐</div>
+    <div class="w-login-title">כניסת מנהל</div>
+    <div class="w-login-sub">גישה מורשית בלבד</div>
+  </div>
+  <div class="w-card">
+    <div class="w-field">
+      <label class="w-label" id="pass-label">סיסמה</label>
+      <input class="w-input" type="password" id="admin-pass" dir="ltr" placeholder="הכנס סיסמה"/>
+    </div>
+    <div id="admin-error" class="w-ban w-ban-e hidden">⚠ סיסמה שגויה</div>
+    <button id="btn-admin-login" class="w-btn full" style="margin-top:10px">כניסה</button>
+  </div>
+</div>
+
+<!-- ADMIN DASH -->
+<div class="w-wrap wide hidden" id="admin-dash">
+  <div class="w-cmdbar">
     <div>
-      <div style="font:var(--md-sys-typescale-headline-medium);font-family:inherit;text-align:center">כניסת מנהל</div>
-      <div style="font:var(--md-sys-typescale-body-medium);font-family:inherit;color:var(--md-sys-color-on-surface-variant);text-align:center;margin-top:8px">הכנס סיסמה להמשך</div>
+      <div class="w-cmdbar-title">לוח בקרה</div>
+      <div class="w-cmdbar-sub">ניהול קבלות דיירים</div>
     </div>
-    <div class="md-field" id="pass-field">
-      <label for="admin-pass" id="pass-label">סיסמה</label>
-      <input type="password" id="admin-pass" dir="ltr"/>
+    <div class="w-cmdbar-btns">
+      <button id="btn-refresh" class="w-btn-default">↺ רענון</button>
+      <button id="btn-admin-logout" class="w-btn-default">התנתקות</button>
     </div>
-    <div id="admin-error" class="md-banner md-banner--error hidden">
-      <span class="material-symbols-rounded">error</span>
-      סיסמה שגויה
-    </div>
-    <button id="btn-admin-login" class="md-btn md-btn--filled">
-      <span class="material-symbols-rounded">lock_open</span>
-      כניסה
-    </button>
   </div>
 
-  <!-- ADMIN DASH -->
-  <div class="md-card wide hidden" id="admin-dash">
-    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
-      <div style="font:var(--md-sys-typescale-headline-medium);font-family:inherit">לוח מנהל</div>
-      <div style="display:flex;gap:8px">
-        <button id="btn-refresh" class="md-btn md-btn--tonal" style="width:auto;padding:0 16px">
-          <span class="material-symbols-rounded">refresh</span>
-          רענן
-        </button>
-        <button id="btn-admin-logout" class="md-btn md-btn--outlined" style="width:auto;padding:0 16px">
-          <span class="material-symbols-rounded">logout</span>
-          יציאה
-        </button>
-      </div>
+  <div class="w-stats">
+    <div class="w-stat"><span class="w-stat-num" id="stat-total">0</span><span class="w-stat-label" id="stat-label-total">סה״כ קבלות</span></div>
+    <div class="w-stat"><span class="w-stat-num" style="color:var(--w-green)" id="stat-checked">0</span><span class="w-stat-label" id="stat-label-checked">נבדקו</span></div>
+    <div class="w-stat"><span class="w-stat-num" style="color:var(--w-amber)" id="stat-pending">0</span><span class="w-stat-label" id="stat-label-pending">ממתינות</span></div>
+    <div class="w-stat" id="stat-users-card"><span class="w-stat-num" style="color:var(--w-accent)" id="stat-users">0</span><span class="w-stat-label" id="stat-label-users">דירות</span></div>
+  </div>
+
+  <div class="w-card flat" style="box-shadow:var(--w-shadow)">
+    <div class="w-admin-pivot">
+      <button id="atab-all" class="w-admin-tab active"><span id="atab-all-label">כל הקבלות</span></button>
+      <button id="atab-users" class="w-admin-tab"><span id="atab-users-label">לפי דירה</span></button>
     </div>
 
-    <!-- STAT CARDS -->
-    <div class="stat-row">
-      <div class="stat-card" id="stat-card-total">
-        <span class="stat-card__num" style="color:var(--md-sys-color-primary)" id="stat-total">0</span>
-        <span class="stat-card__label">📥 סה"כ</span>
-      </div>
-      <div class="stat-card" id="stat-card-checked">
-        <span class="stat-card__num" style="color:var(--md-custom-green)" id="stat-checked">0</span>
-        <span class="stat-card__label">✅ נבדקו</span>
-      </div>
-      <div class="stat-card" id="stat-card-pending">
-        <span class="stat-card__num" style="color:var(--md-custom-yellow)" id="stat-pending">0</span>
-        <span class="stat-card__label">⏳ ממתינות</span>
-      </div>
-      <div class="stat-card" id="stat-users-card">
-        <span class="stat-card__num" style="color:var(--md-sys-color-tertiary)" id="stat-users">0</span>
-        <span class="stat-card__label">🏠 דירות</span>
-      </div>
-    </div>
-
-    <!-- PRIMARY TABS -->
-    <div class="md-primary-tabs">
-      <button id="atab-all" class="md-primary-tab active"><span class="material-symbols-rounded">receipt_long</span> כל הקבלות</button>
-      <button id="atab-users" class="md-primary-tab"><span class="material-symbols-rounded">apartment</span> לפי דירה</button>
-    </div>
-
-    <!-- ALL VIEW -->
     <div id="view-all">
-      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;align-items:center">
-        <div class="md-field" style="flex:1;min-width:160px;border-radius:var(--md-sys-shape-full);background:var(--md-sys-color-surface-container-highest)">
-          <label for="search-input" style="right:16px">🔍 חיפוש</label>
-          <input id="search-input" dir="rtl" style="padding:16px 16px 8px" autocomplete="off"/>
+      <div class="w-toolbar">
+        <div class="w-search-wrap">
+          <svg class="w-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input class="w-search" id="search-input" dir="rtl" autocomplete="off" placeholder="חיפוש..."/>
         </div>
-        <button id="btn-sort" class="md-chip">
-          <span class="material-symbols-rounded">sort</span>
-          חדש → ישן
-        </button>
+        <button id="btn-sort" class="w-chip">⇅ חדש → ישן</button>
       </div>
-      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-        <button class="md-chip selected" data-filter="הכל">הכל</button>
-        <button class="md-chip" data-filter="לא נבדק">⏳ לא נבדק</button>
-        <button class="md-chip" data-filter="נבדק">✅ נבדק</button>
+      <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+        <button class="w-chip selected" data-filter="הכל">הכל</button>
+        <button class="w-chip" data-filter="לא נבדק">⏳ ממתין</button>
+        <button class="w-chip" data-filter="נבדק">✅ נבדק</button>
       </div>
-
       <div id="bulk-bar" class="hidden">
         <span id="bulk-count"></span>
-        <button class="bulk-btn" id="bulk-check" style="background:var(--md-custom-green-container);color:var(--md-custom-green)">✓ נבדק</button>
-        <button class="bulk-btn" id="bulk-uncheck" style="background:var(--md-custom-yellow-container);color:var(--md-custom-yellow)">↩ לא נבדק</button>
-        <button class="bulk-btn" id="bulk-delete" style="background:var(--md-sys-color-error-container);color:var(--md-sys-color-error)">🗑️ מחק</button>
-        <button class="bulk-btn" id="bulk-cancel" style="background:var(--md-sys-color-surface-variant);color:var(--md-sys-color-on-surface-variant)">ביטול</button>
+        <button class="bkb" id="bulk-check">✓ נבדק</button>
+        <button class="bkb" id="bulk-uncheck">↩ לא נבדק</button>
+        <button class="bkb" id="bulk-delete" style="color:var(--w-red)">🗑️ מחק</button>
+        <button class="bkb" id="bulk-cancel">ביטול</button>
       </div>
-
-      <div id="table-loading" style="text-align:center;padding:48px;color:var(--md-sys-color-on-surface-variant)">
-        <div class="md-progress-ring" style="margin:0 auto 12px"></div>
-        <span>טוען...</span>
+      <div id="table-loading" style="text-align:center;padding:36px;color:var(--w-text2)">
+        <div class="sp-ring" style="margin:0 auto 10px"></div><span style="font-size:13px">טוען...</span>
       </div>
-      <div id="table-empty" class="hidden" style="text-align:center;padding:48px;color:var(--md-sys-color-on-surface-variant)">
-        <span class="material-symbols-rounded" style="font-size:48px">inbox</span>
-        <div style="margin-top:12px">אין קבלות להצגה</div>
+      <div id="table-empty" class="hidden" style="text-align:center;padding:36px;color:var(--w-text2)">
+        <div style="font-size:36px;margin-bottom:8px">📭</div><div style="font-size:14px;font-weight:600">אין קבלות</div>
       </div>
-      <div class="md-table-wrap hidden" id="table-wrap">
+      <div class="w-table-wrap hidden" id="table-wrap">
         <table>
-          <thead>
-            <tr>
-              <th style="width:40px"><input type="checkbox" id="select-all"/></th>
-              <th>דירה</th><th>סוג</th><th>קבלה</th><th>תאריך</th><th>סטטוס</th><th>פעולות</th>
-            </tr>
-          </thead>
+          <thead><tr>
+            <th style="width:32px"><input type="checkbox" id="select-all"/></th>
+            <th>דירה</th><th>סוג</th><th>קבלה</th><th>תאריך</th><th>סטטוס</th><th>פעולות</th>
+          </tr></thead>
           <tbody id="table-body"></tbody>
         </table>
       </div>
     </div>
 
-    <!-- USERS VIEW -->
     <div id="view-users" class="hidden">
       <div id="users-grid-view">
-        <div id="users-grid" class="folders-grid"></div>
-        <div id="users-empty" class="hidden" style="text-align:center;padding:48px;color:var(--md-sys-color-on-surface-variant)">
-          <span class="material-symbols-rounded" style="font-size:48px">apartment</span>
-          <div style="margin-top:12px">אין דירות עדיין</div>
-        </div>
+        <div id="users-grid" class="fg"></div>
+        <div id="users-empty" class="hidden" style="text-align:center;padding:36px;color:var(--w-text2);font-size:14px">אין דירות</div>
       </div>
       <div id="user-detail-view" class="hidden">
-        <button id="btn-back" class="back-btn">
-          <span class="material-symbols-rounded">arrow_forward</span>
-          חזור
-        </button>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;flex-wrap:wrap;gap:8px">
-          <div style="font:var(--md-sys-typescale-title-large);font-family:inherit" id="user-detail-name"></div>
-          <span style="font:var(--md-sys-typescale-body-medium);font-family:inherit;color:var(--md-sys-color-on-surface-variant)" id="user-detail-stats"></span>
+        <button id="btn-back" class="w-back">← חזרה</button>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px;flex-wrap:wrap;gap:8px;border-bottom:1px solid var(--w-border);padding-bottom:10px">
+          <div style="font-size:18px;font-weight:600;color:var(--w-text)" id="user-detail-name"></div>
+          <span style="font-size:12px;color:var(--w-text2)" id="user-detail-stats"></span>
         </div>
-        <div class="md-table-wrap">
-          <table>
-            <thead><tr><th>סוג</th><th>קבלה</th><th>תאריך</th><th>סטטוס</th><th>פעולות</th></tr></thead>
-            <tbody id="user-detail-body"></tbody>
-          </table>
+        <div class="w-table-wrap">
+          <table><thead><tr><th>סוג</th><th>קבלה</th><th>תאריך</th><th>סטטוס</th><th>פעולות</th></tr></thead>
+          <tbody id="user-detail-body"></tbody></table>
         </div>
       </div>
     </div>
   </div>
+</div>
+
 </main>
-
 <script>
-var API_URL  = "https://osherad.hevrutagapyearprogram.workers.dev";
-var ADMIN_PASS = "admin123";
-
-var S = {
-  view:"user", username:"", tab:"link", filter:"הכל",
-  adminTab:"all", file:null, receipts:[], detailUser:null,
-  selected:new Set(), confirmAction:null
-};
-var isEn = false;
-var sortAsc = false;
-
+var API_URL="https://osherad.hevrutagapyearprogram.workers.dev";
+var ADMIN_PASS="admin123";
+var S={view:"user",username:"",tab:"link",filter:"הכל",adminTab:"all",file:null,receipts:[],detailUser:null,selected:new Set(),confirmAction:null};
+var isEn=false,sortAsc=false;
 function $(id){return document.getElementById(id);}
 function show(id){var el=$(id);if(el)el.classList.remove("hidden");}
 function hide(id){var el=$(id);if(el)el.classList.add("hidden");}
 function spin(on,msg){$("spinner").style.display=on?"flex":"none";if(msg)$("spinner-text").textContent=msg;}
-
-// ── API ──────────────────────────────────────────────────────────────
-function apiGet(action){
-  return fetch(API_URL+"?action="+action,{redirect:"follow"}).then(function(r){return r.json();});
-}
-function apiPost(data){
-  return fetch(API_URL,{method:"POST",redirect:"follow",body:JSON.stringify(data)}).then(function(r){return r.json();});
-}
-function addReceipt(u,type,content){return apiPost({action:"addReceipt",username:u,type:type,content:content});}
+function apiGet(a){return fetch(API_URL+"?action="+a,{redirect:"follow"}).then(function(r){return r.json();});}
+function apiPost(d){return fetch(API_URL,{method:"POST",redirect:"follow",body:JSON.stringify(d)}).then(function(r){return r.json();});}
+function addReceipt(u,t,c){return apiPost({action:"addReceipt",username:u,type:t,content:c});}
 function getReceipts(){return apiGet("getReceipts").then(function(d){return Array.isArray(d)?d:[];});}
-function setStatusAPI(idx,s){return apiPost({action:"setStatus",rowIndex:idx,status:s});}
-function deleteRow(idx){return apiPost({action:"deleteReceipt",rowIndex:idx});}
-function bulkDeleteRows(idxs){return apiPost({action:"bulkDelete",rowIndexes:idxs});}
-function bulkSetStatusAPI(idxs,s){return apiPost({action:"bulkSetStatus",rowIndexes:idxs,status:s});}
-function uploadToDrive(file){
-  return new Promise(function(res,rej){
-    var r=new FileReader();
-    r.onload=function(e){
-      var b64=e.target.result.split(",")[1];
-      apiPost({action:"uploadImage",base64Data:b64,fileName:file.name,mimeType:file.type})
-        .then(function(d){res(d.url||"");}).catch(rej);
-    };
-    r.readAsDataURL(file);
-  });
-}
-
-// ── LANG ─────────────────────────────────────────────────────────────
+function setStatusAPI(i,s){return apiPost({action:"setStatus",rowIndex:i,status:s});}
+function deleteRow(i){return apiPost({action:"deleteReceipt",rowIndex:i});}
+function bulkDeleteRows(i){return apiPost({action:"bulkDelete",rowIndexes:i});}
+function bulkSetStatusAPI(i,s){return apiPost({action:"bulkSetStatus",rowIndexes:i,status:s});}
+function uploadToDrive(f){return new Promise(function(res,rej){var r=new FileReader();r.onload=function(e){var b=e.target.result.split(",")[1];apiPost({action:"uploadImage",base64Data:b,fileName:f.name,mimeType:f.type}).then(function(d){res(d.url||"");}).catch(rej);};r.readAsDataURL(f);});}
 var T={
-  he:{loginTitle:"העלאת קבלה",loginSub:"הכנס את מספר הדירה כדי להתחיל",loginBtn:"כניסה",logout:"התנתק",submitBtn:"העלה קבלה",success:"הקבלה הועלתה בהצלחה!",dropMain:"גרור קובץ לכאן",dropSub:"או לחץ לבחירה · תמונה / PDF",linkLabel:"קישור לקבלה",histLoad:"טוען היסטוריה...",histEmpty:"עדיין לא העלית קבלות",greet:"שלום,",logo:"מערכת קבלות",userLabel:"מספר הדירה",passLabel:"סיסמה"},
-  en:{loginTitle:"Receipt Upload",loginSub:"Enter your apartment number to start",loginBtn:"Enter",logout:"Logout",submitBtn:"Upload Receipt",success:"Receipt uploaded successfully!",dropMain:"Drag file here",dropSub:"or click to select · Image / PDF",linkLabel:"Receipt link",histLoad:"Loading history...",histEmpty:"No receipts yet",greet:"Hello,",logo:"Receipt System",userLabel:"Apartment number",passLabel:"Password"}
+  he:{loginTitle:"העלאת קבלה",loginSub:"הכנס את מספר הדירה כדי להתחיל",loginSubTop:"מערכת קבלות",loginBtn:"כניסה",logout:"התנתק",submitBtn:"העלה קבלה",success:"הקבלה הועלתה!",dropMain:"גרור קובץ לכאן",dropSub:"או לחץ לבחירה · תמונה / PDF",linkLabel:"קישור לקבלה",histLoad:"טוען...",histEmpty:"עדיין לא העלית קבלות",greet:"שלום,",logo:"מערכת קבלות",userLabel:"מספר הדירה",passLabel:"סיסמה",greetSub:"ברוך הבא למערכת",statTotal:"סה״כ",statChecked:"נבדקו",statPending:"ממתינות",statUsers:"דירות",adminTabAll:"כל הקבלות",adminTabUsers:"לפי דירה"},
+  en:{loginTitle:"Receipt Upload",loginSub:"Enter your apartment number",loginSubTop:"Receipt System",loginBtn:"Enter",logout:"Logout",submitBtn:"Upload",success:"Uploaded!",dropMain:"Drag file here",dropSub:"or click to select",linkLabel:"Receipt link",histLoad:"Loading...",histEmpty:"No receipts yet",greet:"Hello,",logo:"Receipt System",userLabel:"Apartment no.",passLabel:"Password",greetSub:"Welcome back",statTotal:"Total",statChecked:"Checked",statPending:"Pending",statUsers:"Units",adminTabAll:"All Receipts",adminTabUsers:"By Apartment"}
 };
 function t(){return isEn?T.en:T.he;}
+function setText(id,val){var el=$(id);if(el)el.textContent=val;}
+function setText(id,val){var el=document.getElementById(id);if(el)el.textContent=val;}
 function applyLang(){
   var l=t();
-  $("logo-text").textContent=l.logo;
-  $("btn-lang").textContent=isEn?"עב":"EN";
-  $("login-title").textContent=l.loginTitle;
-  $("login-sub").textContent=l.loginSub;
-  $("login-btn-text").textContent=l.loginBtn;
-  $("logout-text").textContent=l.logout;
-  $("submit-text").textContent=l.submitBtn;
-  $("success-text").textContent=l.success;
-  $("drop-main").textContent=l.dropMain;
-  $("drop-sub").textContent=l.dropSub;
-  $("hist-loading-text").textContent=l.histLoad;
-  $("hist-empty-text").textContent=l.histEmpty;
-  $("username-label").textContent=l.userLabel;
-  $("link-label").textContent=l.linkLabel;
-  $("pass-label").textContent=l.passLabel;
-  $("mob-label-user").textContent=isEn?"User":"משתמש";
-  $("mob-label-admin").textContent=isEn?"Admin":"מנהל";
-  // Tab labels
-  $("tab-link").querySelector("span:last-child").textContent=isEn?"Link":"קישור";
-  $("tab-image").querySelector("span:last-child").textContent=isEn?"Image":"תמונה";
-  $("tab-history").querySelector("span:last-child").textContent=isEn?"History":"היסטוריה";
-  // Nav buttons
-  $("nav-user-label").textContent=" "+(isEn?"User":"משתמש");
-  $("nav-admin-label").textContent=" "+(isEn?"Admin":"מנהל");
-  if(S.username)$("user-greeting").textContent=l.greet+" "+S.username+" 👋";
+  setText("logo-text",l.logo);
+  var bl=document.getElementById("btn-lang");if(bl)bl.textContent=isEn?"עב":"EN";
+  setText("login-title",l.loginTitle);
+  setText("login-sub",l.loginSub);
+  setText("login-sub-top",l.loginSubTop);
+  setText("login-btn-text",l.loginBtn);
+  setText("logout-text",l.logout);
+  setText("submit-text",l.submitBtn);
+  setText("success-text",l.success);
+  setText("drop-main",l.dropMain);
+  setText("drop-sub",l.dropSub);
+  setText("hist-loading-text",l.histLoad);
+  setText("hist-empty-text",l.histEmpty);
+  setText("username-label",l.userLabel);
+  setText("link-label",l.linkLabel);
+  setText("pass-label",l.passLabel);
+  setText("mob-label-user",isEn?"User":"משתמש");
+  setText("mob-label-admin",isEn?"Admin":"מנהל");
+  setText("nav-user-label",isEn?"User":"משתמש");
+  setText("nav-admin-label",isEn?"Admin":"מנהל");
+  var tl=$("tab-link");if(tl){var sp=tl.querySelector("span");if(sp)sp.textContent=isEn?"Link":"קישור";}
+  var ti=$("tab-image");if(ti){var sp=ti.querySelector("span");if(sp)sp.textContent=isEn?"Image":"תמונה";}
+  var th=$("tab-history");if(th){var sp=th.querySelector("span");if(sp)sp.textContent=isEn?"History":"היסטוריה";}
+  setText("greet-sub-text",l.greetSub);
+  if(S.username)setText("user-greeting",l.greet+" "+S.username+" 👋");
 }
+function switchView(v){S.view=v;["nav-user","nav-admin"].forEach(function(id){$(id).classList.remove("active");});["mob-nav-user","mob-nav-admin"].forEach(function(id){$(id).classList.remove("active");});$(v==="user"?"nav-user":"nav-admin").classList.add("active");$(v==="user"?"mob-nav-user":"mob-nav-admin").classList.add("active");["user-login","user-upload","admin-login","admin-dash"].forEach(hide);if(v==="user"){S.username?show("user-upload"):show("user-login");}else{window.adminIn?show("admin-dash"):show("admin-login");}}
+function userLogin(){var n=$("username-input").value.trim();if(!n)return;S.username=n;$("user-greeting").textContent=t().greet+" "+n+" 👋";hide("user-login");show("user-upload");}
+function userLogout(){S.username="";$("username-input").value="";hide("user-upload");show("user-login");}
+function switchTab(tab){S.tab=tab;S.file=null;["tab-link","tab-image","tab-history"].forEach(function(id){$(id).classList.remove("active");});$(tab==="link"?"tab-link":tab==="image"?"tab-image":"tab-history").classList.add("active");function animShow(id){var el=$(id);if(!el)return;el.classList.remove("hidden");el.classList.remove("tab-panel-show");void el.offsetWidth;el.classList.add("tab-panel-show");}if(tab==="history"){hide("panel-upload");animShow("panel-history");loadHistory();}else{hide("panel-history");animShow("panel-upload");if(tab==="link"){hide("image-section");animShow("link-section");}else{hide("link-section");animShow("image-section");resetDrop();}}}
+function resetDrop(){S.file=null;$("file-input").value="";show("drop-placeholder");hide("drop-chosen");}
+function setFile(f){if(!f)return;S.file=f;hide("drop-placeholder");$("drop-chosen").classList.remove("hidden");$("drop-chosen").innerHTML="<div style='font-size:24px;margin-bottom:8px'>📄</div><div style='font-weight:600;color:#fff'>"+f.name+"</div><div style='font-size:11px;color:var(--w-muted);margin-top:3px;'>"+(f.size/1024).toFixed(1)+" KB</div>";}
+function showErr(msg){$("upload-error").textContent=msg;show("upload-error");}
+function submitReceipt(){hide("upload-error");hide("upload-success");if(S.tab==="link"){var link=$("link-input").value.trim();if(!link){showErr(isEn?"Enter a link":"הכנס קישור");return;}spin(true,"מעלה...");addReceipt(S.username,"קישור",link).then(function(){spin(false);$("link-input").value="";show("upload-success");setTimeout(function(){hide("upload-success");},3500);}).catch(function(e){spin(false);showErr("שגיאה: "+e.message);});}else if(S.tab==="image"){if(!S.file){showErr(isEn?"Select a file":"בחר קובץ");return;}spin(true,"מעלה...");uploadToDrive(S.file).then(function(url){return addReceipt(S.username,"תמונה",url);}).then(function(){spin(false);resetDrop();show("upload-success");setTimeout(function(){hide("upload-success");},3500);}).catch(function(e){spin(false);showErr("שגיאה: "+e.message);});}}
+function loadHistory(){show("history-loading");hide("history-list");hide("history-empty");getReceipts().then(function(data){hide("history-loading");var mine=data.filter(function(r){return r.user===S.username;});if(!mine.length){show("history-empty");return;}$("history-list").innerHTML=mine.map(function(r){var chk=r.status==="נבדק";var tp=isEn?(r.type==="תמונה"?"Image":"Link"):r.type;return '<div class="w-hi"><div style="flex:1"><div style="display:flex;align-items:center;gap:7px;flex-wrap:wrap"><span class="w-type">'+tp+'</span><span class="w-badge '+(chk?"w-g":"w-a")+'">'+(chk?(isEn?"✓ Checked":"✓ נבדק"):(isEn?"⏳ Pending":"⏳ לא נבדק"))+'</span></div><div style="font-size:11px;color:var(--w-text2);margin-top:5px;font-weight:300">'+r.uploadedAt+'</div></div><a href="'+r.content+'" target="_blank"><button class="w-sm-btn" style="">↗ '+(isEn?"Open":"פתח")+'</button></a></div>';}).join("");show("history-list");}).catch(function(){hide("history-loading");show("history-empty");});}
+function adminLogin(){if($("admin-pass").value===ADMIN_PASS){window.adminIn=true;hide("admin-login");show("admin-dash");loadReceipts();}else show("admin-error");}
+function adminLogout(){window.adminIn=false;$("admin-pass").value="";hide("admin-dash");show("admin-login");}
+function loadReceipts(){show("table-loading");hide("table-wrap");hide("table-empty");S.selected.clear();updateBulkBar();getReceipts().then(function(data){S.receipts=data;updateStats();renderTable();hide("table-loading");if(S.adminTab==="users")renderGrid();}).catch(function(e){hide("table-loading");alert("שגיאה: "+e.message);});}
+function updateStats(){$("stat-total").textContent=S.receipts.length;$("stat-checked").textContent=S.receipts.filter(function(x){return x.status==="נבדק";}).length;$("stat-pending").textContent=S.receipts.filter(function(x){return x.status==="לא נבדק";}).length;$("stat-users").textContent=new Set(S.receipts.map(function(x){return x.user;})).size;}
+function setAdminTab(tab){S.adminTab=tab;S.selected.clear();updateBulkBar();$("atab-all").classList.toggle("active",tab==="all");$("atab-users").classList.toggle("active",tab==="users");tab==="all"?show("view-all"):hide("view-all");tab==="users"?show("view-users"):hide("view-users");if(tab==="users")renderGrid();}
+function getFiltered(){var s=($("search-input")||{value:""}).value.toLowerCase();return S.receipts.filter(function(r){return S.filter==="הכל"||r.status===S.filter;}).filter(function(r){return r.user.toLowerCase().includes(s)||r.content.toLowerCase().includes(s);});}
+function rowHtml(r,i,inc){var chk=r.status==="נבדק";var sel=S.selected.has(r.rowIndex);var badge='<span class="w-badge '+(chk?"w-g":"w-a")+'">'+(chk?"✓ נבדק":"⏳ לא נבדק")+'</span>';var tb='<button class="w-ab toggle-btn" data-row="'+r.rowIndex+'" data-status="'+r.status+'">'+(chk?"↩ בטל":"☑ נבדק")+'</button>';var db='<button class="w-ab-del del-btn" data-row="'+r.rowIndex+'">🗑️</button>';var ob='<a href="'+r.content+'" target="_blank" class="preview-link"><button class="w-ab">↗</button></a>';var cc=inc?'<td><input type="checkbox" class="row-check" data-row="'+r.rowIndex+'" '+(sel?"checked":"")+'></td>':'';var uc=inc?'<td style="font-weight:700;color:var(--w-text)">'+r.user+'</td>':'';return '<tr class="'+(sel?"selected":"")+'">'+ cc+uc+'<td><span class="w-type">'+r.type+'</span></td><td>'+ob+'</td><td style="font-size:12px;color:var(--w-text2);white-space:nowrap;font-weight:300">'+r.uploadedAt+'</td><td>'+badge+'</td><td><div style="display:flex;gap:5px">'+tb+db+'</div></td></tr>';}
+function renderTable(){var list=getFiltered();if(!list.length){hide("table-wrap");show("table-empty");return;}hide("table-empty");show("table-wrap");$("table-body").innerHTML=list.map(function(r,i){return rowHtml(r,i,true);}).join("");bindBtns("table-body");var all=list.every(function(r){return S.selected.has(r.rowIndex);});var some=list.some(function(r){return S.selected.has(r.rowIndex);});var cb=$("select-all");cb.checked=all&&list.length>0;cb.indeterminate=some&&!all;}
+function bindBtns(tid){var tb=document.getElementById(tid);tb.querySelectorAll(".row-check").forEach(function(cb){cb.addEventListener("change",function(){var row=parseInt(this.dataset.row);if(this.checked)S.selected.add(row);else S.selected.delete(row);this.closest("tr").classList.toggle("selected",this.checked);updateBulkBar();var list=getFiltered();var all=list.every(function(r){return S.selected.has(r.rowIndex);});var some=list.some(function(r){return S.selected.has(r.rowIndex);});var scb=$("select-all");if(scb){scb.checked=all&&list.length>0;scb.indeterminate=some&&!all;}});});tb.querySelectorAll(".toggle-btn").forEach(function(btn){btn.addEventListener("click",function(){var row=parseInt(this.dataset.row);var cur=this.dataset.status;var ns=cur==="נבדק"?"לא נבדק":"נבדק";this.disabled=true;this.textContent="...";var self=this;setStatusAPI(row,ns).then(function(){var r=S.receipts.find(function(x){return x.rowIndex===row;});if(r)r.status=ns;updateStats();renderTable();if(S.detailUser)renderDetail(S.detailUser);}).catch(function(e){self.disabled=false;alert("שגיאה: "+e.message);});});});tb.querySelectorAll(".preview-link").forEach(function(a){a.addEventListener("click",function(){this.closest("tr").style.background="rgba(255,255,255,.05)";});});tb.querySelectorAll(".del-btn").forEach(function(btn){btn.addEventListener("click",function(){askDelete(parseInt(this.dataset.row));});});}
+function updateBulkBar(){var n=S.selected.size;if(n>0){show("bulk-bar");$("bulk-count").textContent=n+" נבחרו";}else hide("bulk-bar");}
+function clearSelection(){S.selected.clear();updateBulkBar();renderTable();}
+function askDelete(ri){S.confirmAction={type:"single",rowIndex:ri};$("confirm-title").textContent="מחיקת קבלה";$("confirm-msg").textContent="האם אתה בטוח שברצונך למחוק קבלה זו?";show("confirm-overlay");}
+function askBulkDelete(){var rows=Array.from(S.selected);S.confirmAction={type:"bulk-delete",rows:rows};$("confirm-title").textContent="מחיקה מרובה";$("confirm-msg").textContent="האם אתה בטוח שברצונך למחוק "+rows.length+" קבלות?";show("confirm-overlay");}
+function doBulkStatus(s){var rows=Array.from(S.selected);spin(true,"מעדכן...");bulkSetStatusAPI(rows,s).then(function(){spin(false);rows.forEach(function(r){var x=S.receipts.find(function(y){return y.rowIndex===r;});if(x)x.status=s;});S.selected.clear();updateStats();renderTable();updateBulkBar();}).catch(function(e){spin(false);alert("שגיאה: "+e.message);});}
+function doConfirm(){hide("confirm-overlay");var a=S.confirmAction;S.confirmAction=null;if(!a)return;if(a.type==="single"){spin(true,"מוחק...");deleteRow(a.rowIndex).then(function(){spin(false);loadReceipts();}).catch(function(e){spin(false);alert("שגיאה: "+e.message);});}else{spin(true,"מוחק...");bulkDeleteRows(a.rows).then(function(){spin(false);S.selected.clear();loadReceipts();}).catch(function(e){spin(false);alert("שגיאה: "+e.message);});}}
+function renderGrid(){hide("user-detail-view");show("users-grid-view");var byUser={};S.receipts.forEach(function(r){if(!byUser[r.user])byUser[r.user]={total:0,pending:0};byUser[r.user].total++;if(r.status==="לא נבדק")byUser[r.user].pending++;});var users=Object.keys(byUser);if(!users.length){$("users-grid").innerHTML="";show("users-empty");return;}hide("users-empty");$("users-grid").innerHTML=users.map(function(u){var d=byUser[u];var p=d.pending>0?'<span class="w-fc-pend">⏳ '+d.pending+' ממתינות</span>':'<span style="font-size:11px;color:#059669;font-weight:700;margin-top:3px;display:block">✓ הכל נבדק</span>';return '<button class="w-fc" data-user="'+u+'"><span class="w-fc-icon">🏠</span><span class="w-fc-title">דירה '+u+'</span><span class="w-fc-sub">'+d.total+' קבלות</span>'+p+'</button>';}).join("");$("users-grid").querySelectorAll(".w-fc").forEach(function(el){el.addEventListener("click",function(){openDetail(this.dataset.user);});});}
+function openDetail(u){S.detailUser=u;$("user-detail-name").textContent="🏠 דירה "+u;hide("users-grid-view");show("user-detail-view");renderDetail(u);}
+function renderDetail(u){var list=S.receipts.filter(function(r){return r.user===u;});$("user-detail-stats").textContent=list.length+" קבלות · "+list.filter(function(r){return r.status==="לא נבדק";}).length+" ממתינות";$("user-detail-body").innerHTML=list.map(function(r,i){return rowHtml(r,i,false);}).join("");bindBtns("user-detail-body");}
 
-// ── FIELD LABELS ──────────────────────────────────────────────────────
-function setupField(inputId, fieldId){
-  var input=$(inputId), field=$(fieldId);
-  if(!input||!field)return;
-  function update(){field.classList.toggle("has-value",input.value.length>0);}
-  input.addEventListener("input",update);
-  input.addEventListener("focus",function(){field.classList.add("has-value");});
-  input.addEventListener("blur",update);
-  update();
-}
 
-// ── VIEW ──────────────────────────────────────────────────────────────
+
+switchTab=function(tab){
+  S.tab=tab;S.file=null;
+  ["tab-link","tab-image","tab-history"].forEach(function(id){var el=$(id);if(el)el.classList.remove("active");});
+  var a=$(tab==="link"?"tab-link":tab==="image"?"tab-image":"tab-history");if(a)a.classList.add("active");
+  function animShow(id){var el=$(id);if(!el)return;el.classList.remove("hidden");void el.offsetWidth;el.classList.add("w-in");}
+  function animHide(id,cb){var el=$(id);if(!el||el.classList.contains("hidden")){if(cb)cb();return;}hide(id);if(cb)cb();}
+  if(tab==="history"){animHide("link-section");animHide("image-section",function(){hide("panel-upload");animShow("panel-history");loadHistory();});}
+  else{animHide("panel-history",function(){show("panel-upload");if(tab==="link"){animHide("image-section",function(){animShow("link-section");});}else{animHide("link-section",function(){animShow("image-section");resetDrop();});}});}
+};
+setFile=function(f){
+  if(!f)return;S.file=f;hide("drop-placeholder");
+  $("drop-chosen").classList.remove("hidden");
+  $("drop-chosen").innerHTML="<div style='font-size:13px;font-weight:500;color:var(--w-text);margin-bottom:2px'>"+f.name+"</div><div style='font-size:11px;color:var(--w-muted)'>"+(f.size/1024).toFixed(1)+" KB</div>";
+};
 function switchView(v){
   S.view=v;
   ["nav-user","nav-admin"].forEach(function(id){$(id).classList.remove("active");});
   ["mob-nav-user","mob-nav-admin"].forEach(function(id){$(id).classList.remove("active");});
   $(v==="user"?"nav-user":"nav-admin").classList.add("active");
   $(v==="user"?"mob-nav-user":"mob-nav-admin").classList.add("active");
-  ["user-login","user-upload","admin-login","admin-dash"].forEach(hide);
-  if(v==="user"){S.username?show("user-upload"):show("user-login");}
-  else{window.adminIn?show("admin-dash"):show("admin-login");}
-}
-
-// ── USER ──────────────────────────────────────────────────────────────
-function userLogin(){
-  var n=$("username-input").value.trim();if(!n)return;
-  S.username=n;
-  $("user-greeting").textContent=t().greet+" "+n+" 👋";
-  hide("user-login");show("user-upload");
-}
-function userLogout(){S.username="";$("username-input").value="";$("username-field").classList.remove("has-value");hide("user-upload");show("user-login");}
-
-function switchTab(tab){
-  S.tab=tab;S.file=null;
-  ["tab-link","tab-image","tab-history"].forEach(function(id){$(id).classList.remove("active");});
-  $(tab==="link"?"tab-link":tab==="image"?"tab-image":"tab-history").classList.add("active");
-  if(tab==="history"){hide("panel-upload");show("panel-history");loadHistory();}
-  else{show("panel-upload");hide("panel-history");
-    tab==="link"?show("link-section"):hide("link-section");
-    tab==="image"?show("image-section"):hide("image-section");
-    resetDrop();
+  var nextId=v==="user"?(S.username?"user-upload":"user-login"):(window.adminIn?"admin-dash":"admin-login");
+  var allIds=["user-login","user-upload","admin-login","admin-dash"];
+  var currentEl=null;
+  allIds.forEach(function(id){if(!$(id).classList.contains("hidden"))currentEl=$(id);});
+  function showNext(){
+    allIds.forEach(hide);show(nextId);
+    var el=$(nextId);el.classList.add("w-view-in");
+    setTimeout(function(){el.classList.remove("w-view-in");},320);
   }
+  if(currentEl&&currentEl.id!==nextId){
+    currentEl.style.transition="opacity .15s,transform .15s";
+    currentEl.style.opacity="0";currentEl.style.transform="scale(.98)";
+    setTimeout(function(){
+      currentEl.style.transition="";currentEl.style.opacity="";currentEl.style.transform="";
+      showNext();
+    },150);
+  } else {showNext();}
 }
-
-function resetDrop(){S.file=null;$("file-input").value="";show("drop-placeholder");hide("drop-chosen");}
-function setFile(f){
-  if(!f)return;S.file=f;
-  hide("drop-placeholder");$("drop-chosen").classList.remove("hidden");
-  $("drop-chosen").innerHTML='<span class="material-symbols-rounded" style="font-size:40px;display:block;margin-bottom:8px">description</span><div style="font-weight:600">'+f.name+'</div><div style="font-size:12px;opacity:.7;margin-top:4px">'+(f.size/1024).toFixed(1)+' KB</div>';
-}
-function showErr(msg){$("upload-error").textContent=msg;show("upload-error");}
-
-function submitReceipt(){
-  hide("upload-error");hide("upload-success");
-  if(S.tab==="link"){
-    var link=$("link-input").value.trim();
-    if(!link){showErr(isEn?"Enter a link":"הכנס קישור");return;}
-    spin(true,isEn?"Uploading...":"מעלה...");
-    addReceipt(S.username,"קישור",link).then(function(){
-      spin(false);$("link-input").value="";$("link-field").classList.remove("has-value");
-      show("upload-success");setTimeout(function(){hide("upload-success");},3500);
-    }).catch(function(e){spin(false);showErr("שגיאה: "+e.message);});
-  } else if(S.tab==="image"){
-    if(!S.file){showErr(isEn?"Select a file":"בחר קובץ");return;}
-    spin(true,isEn?"Uploading...":"מעלה תמונה...");
-    uploadToDrive(S.file).then(function(url){
-      return addReceipt(S.username,"תמונה",url);
-    }).then(function(){
-      spin(false);resetDrop();show("upload-success");
-      setTimeout(function(){hide("upload-success");},3500);
-    }).catch(function(e){spin(false);showErr("שגיאה: "+e.message);});
-  }
-}
-
-function loadHistory(){
-  show("history-loading");hide("history-list");hide("history-empty");
-  getReceipts().then(function(data){
-    hide("history-loading");
-    var mine=data.filter(function(r){return r.user===S.username;});
-    if(!mine.length){show("history-empty");return;}
-    $("history-list").innerHTML=mine.map(function(r){
-      var chk=r.status==="נבדק";
-      var typeTxt=isEn?(r.type==="תמונה"?"Image":"Link"):r.type;
-      return '<div class="history-item"><div style="flex:1"><div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap"><span class="md-type-chip">'+typeTxt+'</span><span class="md-badge '+(chk?"md-badge--green":"md-badge--yellow")+'">'+(chk?(isEn?"✓ Checked":"✓ נבדק"):(isEn?"⏳ Pending":"⏳ לא נבדק"))+'</span></div><span class="history-item__meta">'+r.uploadedAt+'</span></div><a href="'+r.content+'" target="_blank"><button class="md-btn md-btn--tonal" style="width:auto;padding:0 16px"><span class="material-symbols-rounded">open_in_new</span>'+(isEn?"Open":"פתח")+'</button></a></div>';
-    }).join("");
-    show("history-list");
-  }).catch(function(){hide("history-loading");show("history-empty");});
-}
-
-// ── ADMIN ─────────────────────────────────────────────────────────────
-function adminLogin(){
-  if($("admin-pass").value===ADMIN_PASS){
-    window.adminIn=true;hide("admin-login");show("admin-dash");loadReceipts();
-  } else show("admin-error");
-}
-function adminLogout(){window.adminIn=false;$("admin-pass").value="";hide("admin-dash");show("admin-login");}
-
-function loadReceipts(){
-  show("table-loading");hide("table-wrap");hide("table-empty");
-  S.selected.clear();updateBulkBar();
-  getReceipts().then(function(data){
-    S.receipts=data;updateStats();renderTable();hide("table-loading");
-    if(S.adminTab==="users")renderGrid();
-  }).catch(function(e){hide("table-loading");alert("שגיאה: "+e.message);});
-}
-
-function updateStats(){
-  $("stat-total").textContent=S.receipts.length;
-  $("stat-checked").textContent=S.receipts.filter(function(x){return x.status==="נבדק";}).length;
-  $("stat-pending").textContent=S.receipts.filter(function(x){return x.status==="לא נבדק";}).length;
-  $("stat-users").textContent=new Set(S.receipts.map(function(x){return x.user;})).size;
-}
-
 function setAdminTab(tab){
   S.adminTab=tab;S.selected.clear();updateBulkBar();
   $("atab-all").classList.toggle("active",tab==="all");
   $("atab-users").classList.toggle("active",tab==="users");
-  tab==="all"?show("view-all"):hide("view-all");
-  tab==="users"?show("view-users"):hide("view-users");
-  if(tab==="users")renderGrid();
+  var outId=tab==="all"?"view-users":"view-all";
+  var inId=tab==="all"?"view-all":"view-users";
+  function showIn(){show(inId);var el=$(inId);el.classList.add("w-in");setTimeout(function(){el.classList.remove("w-in");},260);if(tab==="users")renderGrid();}
+  hide(outId);showIn();
 }
-
-function getFiltered(){
-  var search=($("search-input")||{value:""}).value.toLowerCase();
-  return S.receipts.filter(function(r){return S.filter==="הכל"||r.status===S.filter;})
-    .filter(function(r){return r.user.toLowerCase().includes(search)||r.content.toLowerCase().includes(search);});
-}
-
-function rowHtml(r,i,includeUser){
-  var chk=r.status==="נבדק";var sel=S.selected.has(r.rowIndex);
-  var badge='<span class="md-badge '+(chk?"md-badge--green":"md-badge--yellow")+'">'+(chk?"✓ נבדק":"⏳ לא נבדק")+'</span>';
-  var toggleBtn='<button class="md-btn md-btn--'+(chk?"outlined":"tonal")+' toggle-btn" style="width:auto;padding:0 12px;height:32px" data-row="'+r.rowIndex+'" data-status="'+r.status+'">'+(chk?"↩ בטל":"☑ נבדק")+'</button>';
-  var delBtn='<button class="md-btn md-btn--text del-btn" style="width:auto;padding:0 8px;height:32px;color:var(--md-sys-color-error)" data-row="'+r.rowIndex+'"><span class="material-symbols-rounded">delete</span></button>';
-  var openBtn='<a href="'+r.content+'" target="_blank" class="preview-link"><button class="md-btn md-btn--text" style="width:auto;padding:0 8px;height:32px"><span class="material-symbols-rounded">open_in_new</span></button></a>';
-  var checkCell=includeUser?'<td><input type="checkbox" class="row-check" data-row="'+r.rowIndex+'" '+(sel?"checked":"")+'></td>':'';
-  var userCell=includeUser?'<td><strong>'+r.user+'</strong></td>':'';
-  return '<tr class="'+(sel?"selected":"")+'" style="background:'+(i%2===0?"":"var(--md-sys-color-surface-container-lowest)")+'">'
-    +checkCell+userCell
-    +'<td><span class="md-type-chip">'+r.type+'</span></td>'
-    +'<td>'+openBtn+'</td>'
-    +'<td style="white-space:nowrap;color:var(--md-sys-color-on-surface-variant);font-size:13px">'+r.uploadedAt+'</td>'
-    +'<td>'+badge+'</td>'
-    +'<td><div style="display:flex;gap:4px">'+toggleBtn+delBtn+'</div></td>'
-    +'</tr>';
-}
-
-function renderTable(){
-  var list=getFiltered();
-  if(!list.length){hide("table-wrap");show("table-empty");return;}
-  hide("table-empty");show("table-wrap");
-  $("table-body").innerHTML=list.map(function(r,i){return rowHtml(r,i,true);}).join("");
-  bindTableBtns("table-body");
-  var all=list.every(function(r){return S.selected.has(r.rowIndex);});
-  var some=list.some(function(r){return S.selected.has(r.rowIndex);});
-  var cb=$("select-all");cb.checked=all&&list.length>0;cb.indeterminate=some&&!all;
-}
-
-function bindTableBtns(tbodyId){
-  var tbody=document.getElementById(tbodyId);
-  tbody.querySelectorAll(".row-check").forEach(function(cb){
-    cb.addEventListener("change",function(){
-      var row=parseInt(this.dataset.row);
-      if(this.checked)S.selected.add(row);else S.selected.delete(row);
-      this.closest("tr").classList.toggle("selected",this.checked);
-      updateBulkBar();
-      var list=getFiltered();
-      var all=list.every(function(r){return S.selected.has(r.rowIndex);});
-      var some=list.some(function(r){return S.selected.has(r.rowIndex);});
-      var scb=$("select-all");if(scb){scb.checked=all&&list.length>0;scb.indeterminate=some&&!all;}
-    });
-  });
-  tbody.querySelectorAll(".toggle-btn").forEach(function(btn){
-    btn.addEventListener("click",function(){
-      var row=parseInt(this.dataset.row);var cur=this.dataset.status;var newS=cur==="נבדק"?"לא נבדק":"נבדק";
-      this.disabled=true;this.textContent="...";var self=this;
-      setStatusAPI(row,newS).then(function(){
-        var r=S.receipts.find(function(x){return x.rowIndex===row;});if(r)r.status=newS;
-        updateStats();renderTable();if(S.detailUser)renderDetail(S.detailUser);
-      }).catch(function(e){self.disabled=false;alert("שגיאה: "+e.message);});
-    });
-  });
-  tbody.querySelectorAll(".preview-link").forEach(function(a){
-    a.addEventListener("click",function(){
-      document.querySelectorAll("tr.last-viewed").forEach(function(r){r.classList.remove("last-viewed");});
-      this.closest("tr").classList.add("last-viewed");
-    });
-  });
-  tbody.querySelectorAll(".del-btn").forEach(function(btn){
-    btn.addEventListener("click",function(){askDelete(parseInt(this.dataset.row));});
-  });
-}
-
-function updateBulkBar(){var n=S.selected.size;if(n>0){show("bulk-bar");$("bulk-count").textContent=n+" נבחרו";}else hide("bulk-bar");}
-function clearSelection(){S.selected.clear();updateBulkBar();renderTable();}
-
-function askDelete(rowIndex){
-  S.confirmAction={type:"single",rowIndex:rowIndex};
-  $("confirm-title").textContent="מחיקת קבלה";
-  $("confirm-msg").textContent="האם אתה בטוח שברצונך למחוק קבלה זו? פעולה זו אינה הפיכה.";
-  show("confirm-overlay");
-}
-function askBulkDelete(){
-  var rows=Array.from(S.selected);S.confirmAction={type:"bulk-delete",rows:rows};
-  $("confirm-title").textContent="מחיקה מרובה";
-  $("confirm-msg").textContent="האם אתה בטוח שברצונך למחוק "+rows.length+" קבלות?";
-  show("confirm-overlay");
-}
-function doBulkStatus(status){
-  var rows=Array.from(S.selected);spin(true,"מעדכן...");
-  bulkSetStatusAPI(rows,status).then(function(){
-    spin(false);rows.forEach(function(row){var r=S.receipts.find(function(x){return x.rowIndex===row;});if(r)r.status=status;});
-    S.selected.clear();updateStats();renderTable();updateBulkBar();
-  }).catch(function(e){spin(false);alert("שגיאה: "+e.message);});
-}
-function doConfirm(){
-  hide("confirm-overlay");var action=S.confirmAction;S.confirmAction=null;if(!action)return;
-  if(action.type==="single"){
-    spin(true,"מוחק...");
-    deleteRow(action.rowIndex).then(function(){spin(false);loadReceipts();}).catch(function(e){spin(false);alert("שגיאה: "+e.message);});
-  } else {
-    spin(true,"מוחק...");
-    bulkDeleteRows(action.rows).then(function(){spin(false);S.selected.clear();loadReceipts();}).catch(function(e){spin(false);alert("שגיאה: "+e.message);});
-  }
-}
-
-function renderGrid(){
-  hide("user-detail-view");show("users-grid-view");
-  var byUser={};
-  S.receipts.forEach(function(r){if(!byUser[r.user])byUser[r.user]={total:0,pending:0};byUser[r.user].total++;if(r.status==="לא נבדק")byUser[r.user].pending++;});
-  var users=Object.keys(byUser);
-  if(!users.length){$("users-grid").innerHTML="";show("users-empty");return;}
-  hide("users-empty");
-  $("users-grid").innerHTML=users.map(function(u){
-    var d=byUser[u];
-    var p=d.pending>0?'<span class="folder-card__pending">⏳ '+d.pending+' ממתינות</span>':'<span style="font-size:11px;color:var(--md-custom-green);font-weight:600;margin-top:4px;display:block">✓ הכל נבדק</span>';
-    return '<button class="folder-card" data-user="'+u+'"><span class="folder-card__icon">🏠</span><span class="folder-card__title">דירה '+u+'</span><span class="folder-card__sub">'+d.total+' קבלות</span>'+p+'</button>';
-  }).join("");
-  $("users-grid").querySelectorAll(".folder-card").forEach(function(el){el.addEventListener("click",function(){openDetail(this.dataset.user);});});
-}
-
 function openDetail(u){
-  S.detailUser=u;
-  $("user-detail-name").textContent="🏠 דירה "+u;
-  hide("users-grid-view");show("user-detail-view");renderDetail(u);
+  S.detailUser=u;$("user-detail-name").textContent="📁 "+u;
+  var grid=$("users-grid-view");
+  grid.style.transition="opacity .14s,transform .14s";grid.style.opacity="0";grid.style.transform="translateX(8px)";
+  setTimeout(function(){
+    hide("users-grid-view");grid.style.transition="";grid.style.opacity="";grid.style.transform="";
+    show("user-detail-view");$("user-detail-view").classList.add("w-in");
+    setTimeout(function(){$("user-detail-view").classList.remove("w-in");},280);
+    renderDetail(u);
+  },140);
 }
-function renderDetail(u){
-  var list=S.receipts.filter(function(r){return r.user===u;});
-  $("user-detail-stats").textContent=list.length+" קבלות · "+list.filter(function(r){return r.status==="לא נבדק";}).length+" ממתינות";
-  $("user-detail-body").innerHTML=list.map(function(r,i){return rowHtml(r,i,false);}).join("");
-  bindTableBtns("user-detail-body");
-}
-
 window.addEventListener("load",function(){
-  setupField("username-input","username-field");
-  setupField("link-input","link-field");
-  setupField("admin-pass","pass-field");
-  setupField("search-input","search-input");
-
+  var initEl=document.querySelector(".w-wrap:not(.hidden)");
+  if(initEl){initEl.classList.add("w-view-in");setTimeout(function(){initEl.classList.remove("w-view-in");},320);}
   $("nav-user").addEventListener("click",function(){switchView("user");});
   $("nav-admin").addEventListener("click",function(){switchView("admin");});
   $("mob-nav-user").addEventListener("click",function(){switchView("user");});
   $("mob-nav-admin").addEventListener("click",function(){switchView("admin");});
   $("btn-lang").addEventListener("click",function(){isEn=!isEn;applyLang();});
+  $("btn-theme").addEventListener("click",function(){
+    var cur=document.documentElement.getAttribute("data-theme")||"light";
+    var next=cur==="dark"?"light":"dark";
+    document.documentElement.setAttribute("data-theme",next);
+    localStorage.setItem("w11-theme",next);
+    this.textContent=next==="dark"?"☀️":"🌙";
+  });
   $("btn-user-login").addEventListener("click",userLogin);
   $("username-input").addEventListener("keydown",function(e){if(e.key==="Enter")userLogin();});
   $("btn-user-logout").addEventListener("click",userLogout);
@@ -1510,6 +919,14 @@ window.addEventListener("load",function(){
   $("dropzone").addEventListener("drop",function(e){e.preventDefault();this.classList.remove("drag");setFile(e.dataTransfer.files[0]);});
   $("file-input").addEventListener("change",function(){setFile(this.files[0]);});
   $("btn-submit").addEventListener("click",submitReceipt);
+  $("btn-submit2").addEventListener("click",function(){
+    hide("upload-error2");hide("upload-success2");
+    if(!S.file){$("upload-error2").textContent=isEn?"Select a file":"בחר קובץ";show("upload-error2");return;}
+    spin(true,"מעלה...");
+    uploadToDrive(S.file).then(function(url){return addReceipt(S.username,"תמונה",url);})
+    .then(function(){spin(false);resetDrop();show("upload-success2");setTimeout(function(){hide("upload-success2");},3500);})
+    .catch(function(e){spin(false);$("upload-error2").textContent="שגיאה: "+e.message;show("upload-error2");});
+  });
   $("btn-admin-login").addEventListener("click",adminLogin);
   $("admin-pass").addEventListener("keydown",function(e){if(e.key==="Enter")adminLogin();});
   $("btn-admin-logout").addEventListener("click",adminLogout);
@@ -1518,23 +935,19 @@ window.addEventListener("load",function(){
   $("atab-users").addEventListener("click",function(){setAdminTab("users");});
   $("stat-users-card").addEventListener("click",function(){setAdminTab("users");});
   $("search-input").addEventListener("input",renderTable);
-
-  document.querySelectorAll(".md-chip[data-filter]").forEach(function(btn){
+  document.querySelectorAll("[data-filter]").forEach(function(btn){
     btn.addEventListener("click",function(){
       S.filter=this.dataset.filter;
-      document.querySelectorAll(".md-chip[data-filter]").forEach(function(b){b.classList.remove("selected");});
+      document.querySelectorAll("[data-filter]").forEach(function(b){b.classList.remove("selected");});
       this.classList.add("selected");renderTable();
     });
   });
-
   $("btn-sort").addEventListener("click",function(){
-    sortAsc=!sortAsc;
-    this.innerHTML='<span class="material-symbols-rounded">sort</span>'+(sortAsc?"ישן → חדש":"חדש → ישן");
+    sortAsc=!sortAsc;this.textContent=sortAsc?"⇅ ישן → חדש":"⇅ חדש → ישן";
     this.classList.toggle("selected",sortAsc);
     S.receipts.sort(function(a,b){return sortAsc?a.rowIndex-b.rowIndex:b.rowIndex-a.rowIndex;});
     renderTable();
   });
-
   $("select-all").addEventListener("change",function(){
     var list=getFiltered();
     if(this.checked){list.forEach(function(r){S.selected.add(r.rowIndex);});}
@@ -1547,8 +960,18 @@ window.addEventListener("load",function(){
   $("bulk-cancel").addEventListener("click",clearSelection);
   $("confirm-yes").addEventListener("click",doConfirm);
   $("confirm-no").addEventListener("click",function(){S.confirmAction=null;hide("confirm-overlay");});
-  $("btn-back").addEventListener("click",function(){S.detailUser=null;hide("user-detail-view");show("users-grid-view");});
+  $("btn-back").addEventListener("click",function(){
+    S.detailUser=null;
+    var d=$("user-detail-view");
+    d.style.transition="opacity .14s,transform .14s";d.style.opacity="0";d.style.transform="translateX(8px)";
+    setTimeout(function(){
+      hide("user-detail-view");d.style.transition="";d.style.opacity="";d.style.transform="";
+      show("users-grid-view");$("users-grid-view").classList.add("w-in");
+      setTimeout(function(){$("users-grid-view").classList.remove("w-in");},280);
+    },140);
+  });
 });
+
 </script>
 </body>
 </html>
